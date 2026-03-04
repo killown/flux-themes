@@ -1,193 +1,726 @@
-/* --- Flux: Exo-Shell (Biomechanical Interface) --- */
+/* ============================================================
+   Flux — E X O / / S H E L L
+   Biomechanical Interface v2 — Carapace Plating System
+   Organic asymmetry + bioluminescent nerve signals
+   ============================================================ */
 
-@define-color shell_core #05070a;
-@define-color shell_plate #0d1117;
-@define-color shell_fiber #21262d;
-@define-color shell_nerve #58a6ff;
+@define-color shell_void    #030508;
+@define-color shell_core    #060b10;
+@define-color shell_plate   #0c1219;
+@define-color shell_chitin  #131d27;
+@define-color shell_fiber   #1e2d3d;
+@define-color shell_scar    #2a3a4a;
+@define-color shell_nerve   #58a6ff;
+@define-color shell_nerve_d #2d6fa8;
+@define-color shell_synapse #00e5c8;
+@define-color shell_ichor   #7b5ea7;
+@define-color shell_threat  #ff4444;
+@define-color shell_warn    #f5a623;
 
-* {
-  font-family: "Tektur", "Geist Mono", "Orbitron", sans-serif;
+:root {
+  /* --- Bioluminescence glow layers --- */
+  --nerve-glow-hot:
+    0px 0px 4px alpha(@shell_nerve, 0.9), 0px 0px 14px alpha(@shell_nerve, 0.5),
+    0px 0px 32px alpha(@shell_nerve, 0.2);
+  --synapse-glow:
+    0px 0px 6px alpha(@shell_synapse, 0.5),
+    0px 0px 20px alpha(@shell_synapse, 0.2);
+  --threat-glow:
+    0px 0px 6px alpha(@shell_threat, 0.7),
+    0px 0px 20px alpha(@shell_threat, 0.3);
+  --ichor-glow:
+    0px 0px 8px alpha(@shell_ichor, 0.4), 0px 0px 22px alpha(@shell_ichor, 0.15);
+
+  /* --- Carapace shadow: hard offset like armour plates stacked --- */
+  --plate-shadow: 4px 6px 0px alpha(black, 0.55);
+  --plate-shadow-hover: 2px 3px 0px alpha(black, 0.7);
+
+  /* --- Organic radii: asymmetric per-corner, alternating sharp/rounded --- */
+  --r-bio-a: 2px 14px 2px 14px; /* ◜ ◝  — top-right and bottom-left round */
+  --r-bio-b: 14px 2px 14px 2px; /* ◜ ◞  — top-left and bottom-right round */
+  --r-bio-c: 2px 10px 2px 10px; /* tighter version of A                   */
+  --r-bio-d: 10px 2px 10px 2px; /* tighter version of B                   */
+  --r-chip: 3px; /* sharp technical components              */
+
+  /* --- Texture: fiber-weave via repeating diagonal gradient --- */
+  --weave: repeating-linear-gradient(
+    135deg,
+    transparent 0px,
+    transparent 3px,
+    alpha(black, 0.07) 3px,
+    alpha(black, 0.07) 4px
+  );
+
+  /* --- Fonts --- */
+  --font-exo: "Tektur", "Geist Mono", "Orbitron", "Share Tech Mono", monospace;
+  --font-mono: "Geist Mono", "JetBrains Mono", monospace;
 }
 
-window {
+/* ============================================================
+   1. GLOBAL
+   ============================================================ */
+
+* {
+  font-family: var(--font-exo);
+}
+
+window,
+window > box,
+.background {
   background-color: @shell_core;
+  background-image: var(--weave);
   color: alpha(white, 0.85);
 }
 
+gridview,
+scrolledwindow > viewport {
+  background: transparent;
+}
+
+/* ============================================================
+   2. HEADER BAR
+   ============================================================ */
+
 headerbar {
-  background-color: @shell_core;
-  border-bottom: 2px solid @shell_fiber;
-  padding: 15px;
+  background-color: @shell_void;
+  background-image: var(--weave);
+  border: none;
+  /* Asymmetric bottom border: thin left, thick right pulse — biomech EKG */
+  border-bottom: 1px solid @shell_fiber;
+  padding: 6px 14px;
+  min-height: 46px;
+  box-shadow:
+    0px 1px 0px @shell_nerve_d,
+    0px 4px 20px alpha(black, 0.6),
+    inset 0px -2px 0px alpha(@shell_nerve, 0.08);
 }
 
-headerbar label {
+headerbar label,
+headerbar .title {
+  color: @shell_nerve;
   font-weight: 900;
-  text-transform: uppercase;
+  font-size: 9.5pt;
   letter-spacing: 4px;
-  color: @shell_nerve;
-  text-shadow: 0 0 12px alpha(@shell_nerve, 0.4);
-  ellipsize: none;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 10px alpha(@shell_nerve, 0.6),
+    0 0 28px alpha(@shell_nerve, 0.2),
+    0 1px 0 alpha(black, 0.8);
 }
 
-.sidebar {
-  background-color: @shell_core;
-}
-
-.sidebar-row {
-  margin: 4px 12px;
-  padding: 10px 16px;
-  min-height: 38px;
-  background-color: alpha(@shell_plate, 0.5);
-  border-radius: 2px 12px 2px 12px;
+headerbar button {
+  background-color: alpha(@shell_chitin, 0.8);
+  background-image: var(--weave);
   border: 1px solid @shell_fiber;
-  transition: all 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  color: alpha(white, 0.7);
-}
-
-.sidebar-row label {
-  ellipsize: none;
-}
-
-.sidebar-row:hover:not(:selected) {
-  background-color: alpha(@shell_nerve, 0.1);
-  border-color: @shell_nerve;
-  color: white;
-  transform: translateX(5px);
-}
-
-.sidebar-row:selected {
-  background-color: @shell_nerve;
-  color: @shell_core;
-  font-weight: 900;
-  border-radius: 12px 2px 12px 2px;
-  box-shadow: 0 0 20px alpha(@shell_nerve, 0.4);
-  transform: scale(1.05);
-}
-
-.flux-card {
-  background-color: @shell_plate;
-  border: 2px solid @shell_fiber;
-  border-radius: 8px;
-  padding: 16px;
-  margin: 12px;
-  box-shadow: 8px 8px 0px alpha(black, 0.4);
-  transition: all 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.flux-card:hover {
-  background-color: @shell_core;
-  border-color: @shell_nerve;
-  transform: translateY(4px) translateX(4px);
-  box-shadow: 0px 0px 0px transparent;
-}
-
-.flux-label {
-  font-size: 10pt;
-  font-weight: 700;
+  border-radius: var(--r-bio-c);
   color: alpha(white, 0.6);
-  ellipsize: none;
+  padding: 4px 10px;
+  min-width: 30px;
+  min-height: 28px;
+  box-shadow: var(--plate-shadow);
+  transition: all 200ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.flux-card:hover .flux-label {
+headerbar button:hover {
+  background-color: alpha(@shell_nerve, 0.12);
+  border-color: @shell_nerve;
   color: @shell_nerve;
+  box-shadow:
+    var(--nerve-glow-soft),
+    2px 3px 0px alpha(black, 0.5);
+  transform: translateY(-1px);
 }
+
+headerbar button:active {
+  transform: translateY(2px) translateX(2px);
+  box-shadow: var(--plate-shadow-hover);
+  background-color: alpha(@shell_nerve, 0.2);
+}
+
+headerbar button:disabled {
+  color: alpha(white, 0.2);
+  border-color: alpha(@shell_fiber, 0.5);
+  box-shadow: none;
+}
+
+/* ============================================================
+   3. BREADCRUMBS  (.breadcrumb-btn)
+   ============================================================ */
 
 button.breadcrumb-btn {
-  background-color: alpha(@shell_fiber, 0.4);
+  background-color: alpha(@shell_fiber, 0.5);
+  background-image: var(--weave);
   border: 1px solid @shell_fiber;
-  border-radius: 2px 8px 2px 8px;
-  padding: 2px 10px;
-  margin-right: 4px;
+  border-radius: var(--r-bio-c);
+  padding: 3px 12px;
+  margin: 0 3px;
+  min-height: 26px;
+  box-shadow: var(--plate-shadow);
+  transition: all 220ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 button.breadcrumb-btn label {
-  color: alpha(white, 0.8);
-  font-size: 9pt;
+  color: alpha(white, 0.7);
+  font-size: 8.5pt;
   font-weight: 700;
-  letter-spacing: 0;
-  ellipsize: none;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 3px alpha(black, 0.7);
 }
 
 button.breadcrumb-btn:hover {
-  background-color: alpha(@shell_nerve, 0.2);
+  background-color: alpha(@shell_nerve, 0.14);
   border-color: @shell_nerve;
+  box-shadow:
+    var(--nerve-glow-soft),
+    2px 3px 0px alpha(black, 0.5);
+  transform: translateY(-2px);
 }
 
+button.breadcrumb-btn:hover label {
+  color: @shell_nerve;
+  text-shadow: var(--nerve-glow-soft);
+}
+
+/* Active / last — carapace plate lights up */
 button.breadcrumb-btn:last-child {
   background-color: @shell_nerve;
+  background-image: none;
+  border-color: alpha(white, 0.3);
+  border-radius: var(--r-bio-b);
+  box-shadow: var(--nerve-glow-hot), var(--plate-shadow);
 }
 
 button.breadcrumb-btn:last-child label {
   color: @shell_core;
   font-weight: 900;
+  letter-spacing: 1px;
+  text-shadow: none;
 }
 
+/* Path / search entries */
+headerbar entry,
+headerbar searchentry {
+  background-color: @shell_void;
+  background-image: var(--weave);
+  border: 1px solid @shell_fiber;
+  border-bottom: 2px solid @shell_nerve_d;
+  border-radius: var(--r-bio-a);
+  color: @shell_nerve;
+  font-family: var(--font-mono);
+  font-size: 9pt;
+  padding: 4px 12px;
+  min-height: 28px;
+  box-shadow: inset 0px 2px 6px alpha(black, 0.5);
+  transition: all 200ms ease;
+}
+
+headerbar entry:focus,
+headerbar searchentry:focus {
+  border-color: @shell_nerve;
+  box-shadow:
+    inset 0px 2px 6px alpha(black, 0.5),
+    var(--nerve-glow-hot);
+}
+
+/* ============================================================
+   4. SIDEBAR  (.sidebar, .sidebar-row, .sidebar-label)
+   ============================================================ */
+
+scrolledwindow.sidebar {
+  background-color: @shell_void;
+  background-image: var(--weave);
+  border-right: 1px solid @shell_fiber;
+}
+
+scrolledwindow.sidebar list,
+scrolledwindow.sidebar listbox {
+  background: transparent;
+}
+
+.sidebar-row {
+  background-color: alpha(@shell_plate, 0.7);
+  background-image: var(--weave);
+  border: 1px solid @shell_fiber;
+  border-radius: var(--r-bio-a);
+  margin: 4px 10px;
+  padding: 10px 16px;
+  min-height: 38px;
+  color: alpha(white, 0.6);
+  box-shadow: var(--plate-shadow);
+  transition: all 320ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.sidebar-row:hover {
+  background-color: alpha(@shell_nerve, 0.1);
+  border-color: @shell_nerve;
+  /* Flip to alternate asymmetric radius on hover — exoskeleton shifting */
+  border-radius: var(--r-bio-b);
+  color: white;
+  box-shadow: var(--nerve-glow-soft), var(--plate-shadow);
+  transform: translateX(5px);
+}
+
+.sidebar-row:selected {
+  background-color: @shell_nerve;
+  background-image: none;
+  border-radius: var(--r-bio-b);
+  border-color: alpha(white, 0.3);
+  color: @shell_core;
+  font-weight: 900;
+  box-shadow:
+    var(--nerve-glow-hot),
+    2px 3px 0px alpha(black, 0.6);
+  transform: scale(1.03) translateX(2px);
+}
+
+.sidebar-row image {
+  color: inherit;
+  -gtk-icon-size: 15px;
+}
+
+.sidebar-label {
+  color: inherit;
+  font-size: 10pt;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   5. FILE GRID CARDS  (.flux-card)
+   ============================================================ */
+
+.flux-card {
+  background-color: @shell_plate;
+  background-image: var(--weave);
+  border: 1px solid @shell_fiber;
+  border-left: 3px solid @shell_scar;
+  border-radius: var(--r-bio-a);
+  margin: 8px;
+  padding: 14px 10px 10px;
+  /* Hard plate shadow — segments stacked on the surface below */
+  box-shadow: var(--plate-shadow);
+  transition:
+    background-color 280ms cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    border-color 280ms ease,
+    box-shadow 280ms ease,
+    transform 280ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.flux-card:hover {
+  background-color: @shell_chitin;
+  border-color: @shell_nerve;
+  border-left-color: @shell_nerve;
+  /* Shadow collapses as card "presses into" the surface */
+  box-shadow:
+    var(--plate-shadow-hover),
+    0 0 18px alpha(@shell_nerve, 0.18),
+    inset 0px 0px 10px alpha(@shell_nerve, 0.06);
+  transform: translateY(3px) translateX(3px);
+}
+
+.flux-card:selected {
+  background-color: alpha(@shell_nerve, 0.1);
+  border-color: @shell_nerve;
+  border-left-color: @shell_synapse;
+  box-shadow:
+    0 0 20px alpha(@shell_nerve, 0.35),
+    inset 0px 0px 10px alpha(@shell_nerve, 0.08);
+  transform: translateY(1px) translateX(1px);
+}
+
+/* ============================================================
+   6. FILE LABELS  (.flux-label, .thumbnail)
+   ============================================================ */
+
+.flux-label {
+  color: alpha(white, 0.6);
+  font-size: 9pt;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  text-shadow: 0 1px 3px alpha(black, 0.7);
+  margin-top: 6px;
+}
+
+.thumbnail {
+  border-radius: var(--r-chip);
+  border: 1px solid @shell_fiber;
+}
+
+/* ============================================================
+   7. RENAME ENTRY  (.flux-rename-entry)
+   ============================================================ */
+
+entry.flux-rename-entry {
+  background-color: @shell_void;
+  border: 1px solid @shell_nerve;
+  border-bottom: 2px solid @shell_nerve;
+  border-radius: var(--r-bio-a);
+  color: @shell_nerve;
+  font-family: var(--font-mono);
+  font-size: 9pt;
+  padding: 2px 8px;
+  min-width: 110px;
+  box-shadow:
+    inset 0px 2px 4px alpha(black, 0.5),
+    var(--nerve-glow-hot);
+}
+
+/* ============================================================
+   8. SORT INDICATOR  (.sort-container, .sort-status-label)
+   ============================================================ */
+
+.sort-container {
+  background-color: @shell_chitin;
+  background-image: var(--weave);
+  border: 1px solid @shell_fiber;
+  border-radius: var(--r-bio-c);
+  padding: 1px 12px;
+  box-shadow: var(--plate-shadow);
+}
+
+.sort-status-label {
+  color: @shell_nerve;
+  font-size: 8pt;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-shadow: var(--nerve-glow-soft);
+}
+
+/* ============================================================
+   9. DESTRUCTIVE ACTION  (.destructive-action)
+   ============================================================ */
+
+.destructive-action {
+  background-color: alpha(@shell_threat, 0.07);
+  background-image: var(--weave);
+  border: 1px solid alpha(@shell_threat, 0.3);
+  border-bottom: 2px solid alpha(@shell_threat, 0.6);
+  border-radius: var(--r-bio-a);
+  color: @shell_threat;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 4px 16px;
+  box-shadow: var(--threat-glow), var(--plate-shadow);
+  transition: all 250ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.destructive-action:hover {
+  background-color: @shell_threat;
+  background-image: none;
+  color: white;
+  border-color: @shell_threat;
+  box-shadow: var(--threat-glow), var(--plate-shadow-hover);
+  transform: translateY(3px) translateX(3px);
+}
+
+.destructive-action:active {
+  transform: translateY(4px) translateX(4px);
+  box-shadow: 0 0 4px alpha(@shell_threat, 0.3);
+}
+
+/* ============================================================
+   10. CONTEXT MENU / POPOVER
+   ============================================================ */
+
+popover,
+popover.menu {
+  background: none;
+  padding: 0;
+}
+
+popover contents,
 popover.menu contents {
   background-color: @shell_plate;
-  border: 2px solid @shell_fiber;
-  border-radius: 15px 0 15px 0;
+  background-image: var(--weave);
+  border: 1px solid @shell_fiber;
+  border-top: 3px solid @shell_nerve;
+  /* Organic asymmetric corners on the popover hull */
+  border-radius: 14px 2px 14px 2px;
   padding: 8px;
-  box-shadow: 15px 15px 40px alpha(black, 0.7);
+  box-shadow:
+    var(--nerve-glow-soft),
+    12px 14px 0 alpha(black, 0.5),
+    20px 24px 40px alpha(black, 0.6);
 }
 
-popover.menu modelbutton label {
-  font-size: 11pt;
+popover.menu modelbutton {
+  background: transparent;
+  border-left: 3px solid transparent;
+  border-radius: 0px var(--r-chip) 0px var(--r-chip);
+  color: alpha(white, 0.8);
+  padding: 7px 14px;
+  font-size: 9.5pt;
   font-weight: 700;
-  ellipsize: none;
+  letter-spacing: 0.3px;
+  transition: all 150ms ease-out;
 }
 
 popover.menu modelbutton:hover {
-  background-color: alpha(@shell_nerve, 0.2);
-  border-left: 5px solid @shell_nerve;
+  background-color: alpha(@shell_nerve, 0.1);
+  border-left-color: @shell_nerve;
+  color: @shell_nerve;
+  text-shadow: var(--nerve-glow-soft);
 }
 
+popover.menu modelbutton accelerator {
+  color: alpha(@shell_nerve, 0.4);
+  font-size: 8pt;
+}
+
+popover.menu > contents separator {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    @shell_nerve_d 25%,
+    @shell_nerve_d 75%,
+    transparent
+  );
+  min-height: 1px;
+  margin: 4px 8px;
+  box-shadow: 0 0 4px alpha(@shell_nerve, 0.25);
+}
+
+/* ============================================================
+   11. ENTRIES (global)
+   ============================================================ */
+
 entry {
-  background-color: @shell_core;
+  background-color: @shell_void;
+  background-image: var(--weave);
   border: 1px solid @shell_fiber;
-  border-radius: 4px 10px;
-  padding: 8px;
+  border-radius: var(--r-bio-a);
   color: @shell_nerve;
+  font-family: var(--font-mono);
+  font-size: 9pt;
+  padding: 6px 12px;
+  box-shadow: inset 0px 2px 5px alpha(black, 0.5);
+  transition: all 200ms ease;
 }
 
 entry:focus {
   border-color: @shell_nerve;
-  box-shadow: 0 0 10px alpha(@shell_nerve, 0.2);
+  box-shadow:
+    inset 0px 2px 5px alpha(black, 0.5),
+    var(--nerve-glow-soft);
+}
+
+/* ============================================================
+   12. SELECTION STATUS BAR  (.selection-status)
+   ============================================================ */
+
+.selection-status {
+  background-color: @shell_void;
+  background-image: var(--weave);
+  border: none;
+  border-top: 1px solid @shell_fiber;
+  border-radius: 0;
+  padding: 3px 16px;
+  min-height: 26px;
+}
+
+.selection-status label.caption {
+  color: alpha(@shell_nerve, 0.6);
+  font-size: 8pt;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+progressbar trough,
+.selection-status progressbar trough {
+  background-color: @shell_chitin;
+  border: 1px solid @shell_fiber;
+  border-radius: var(--r-chip);
+  min-height: 4px;
+  box-shadow: inset 0px 1px 2px alpha(black, 0.5);
+}
+
+progressbar progress,
+.selection-status progressbar progress {
+  background-color: @shell_nerve;
+  background-image: linear-gradient(
+    90deg,
+    @shell_nerve_d,
+    @shell_nerve 50%,
+    @shell_synapse 100%
+  );
+  border-radius: var(--r-chip);
+  border: none;
+  box-shadow: var(--nerve-glow-hot);
+  transition: all 300ms ease;
+}
+
+/* ============================================================
+   13. SETTINGS WINDOW
+   ============================================================ */
+
+window.settings-window {
+  background-color: @shell_core;
+  background-image: var(--weave);
+  color: alpha(white, 0.85);
+}
+
+window.settings-window preferencespage,
+window.settings-window preferencesgroup,
+window.settings-window list,
+window.settings-window listbox,
+window.settings-window clamp,
+window.settings-window scrolledwindow {
+  background: transparent;
+  color: alpha(white, 0.85);
+}
+
+window.settings-window preferencesgroup > box > label,
+window.settings-window preferencesgroup label.title {
+  color: @shell_nerve;
+  font-size: 8pt;
+  font-weight: 900;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  text-shadow: var(--nerve-glow-soft);
+  margin-bottom: 6px;
+}
+
+window.settings-window .settings-row,
+window.settings-window actionrow {
+  background-color: @shell_plate;
+  background-image: var(--weave);
+  border: 1px solid @shell_fiber;
+  border-left: 3px solid @shell_scar;
+  border-radius: var(--r-bio-a);
+  color: alpha(white, 0.85);
+  margin-bottom: 3px;
+  padding: 4px 0;
+  box-shadow: var(--plate-shadow);
+  transition: all 200ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+window.settings-window .settings-row:hover,
+window.settings-window actionrow:hover {
+  background-color: alpha(@shell_nerve, 0.07);
+  border-left-color: @shell_nerve;
+  box-shadow: var(--nerve-glow-soft), var(--plate-shadow-hover);
+  transform: translateX(2px);
+}
+
+window.settings-window .settings-row label.title,
+window.settings-window actionrow label.title {
+  color: alpha(white, 0.9);
+  font-size: 10pt;
+  font-weight: 700;
+}
+
+window.settings-window .settings-row label.subtitle,
+window.settings-window actionrow label.subtitle {
+  color: alpha(@shell_nerve, 0.55);
+  font-size: 9pt;
+  font-style: italic;
+}
+
+window.settings-window spinbutton,
+window.settings-window entry,
+window.settings-window dropdown button {
+  background-color: @shell_void;
+  background-image: var(--weave);
+  border: 1px solid @shell_fiber;
+  border-bottom: 2px solid @shell_nerve_d;
+  border-radius: var(--r-bio-c);
+  color: @shell_nerve;
+  font-family: var(--font-mono);
+  padding: 4px 10px;
+  min-height: 28px;
+  box-shadow: inset 0px 2px 4px alpha(black, 0.5);
+}
+
+window.settings-window spinbutton:focus,
+window.settings-window entry:focus,
+window.settings-window dropdown button:focus {
+  border-color: @shell_nerve;
+  box-shadow:
+    inset 0px 2px 4px alpha(black, 0.5),
+    var(--nerve-glow-soft);
+}
+
+window.settings-window switch {
+  background-color: @shell_chitin;
+  border: 1px solid @shell_fiber;
+  border-radius: 2px 10px 2px 10px;
+  box-shadow: inset 0px 2px 4px alpha(black, 0.4);
+}
+
+window.settings-window switch:checked {
+  background-color: @shell_nerve;
+  border-color: alpha(white, 0.2);
+  box-shadow: var(--nerve-glow-hot);
+}
+
+window.settings-window switch slider {
+  background-color: white;
+  border-radius: 2px 8px 2px 8px;
+  box-shadow: 0 2px 5px alpha(black, 0.5);
+}
+
+/* ============================================================
+   14. SCROLLBARS
+   ============================================================ */
+
+scrollbar {
+  background: transparent;
+  border: none;
 }
 
 scrollbar slider {
-  background-color: @shell_fiber;
-  border-radius: 0px;
-  min-width: 6px;
+  background-color: @shell_scar;
+  border-radius: 0;
+  min-width: 5px;
+  min-height: 5px;
+  margin: 1px;
+  transition:
+    background 150ms ease,
+    box-shadow 150ms ease;
 }
 
 scrollbar slider:hover {
   background-color: @shell_nerve;
+  box-shadow: var(--nerve-glow-soft);
 }
 
-.sort-label {
-  background-color: @shell_fiber;
+/* ============================================================
+   15. LINKED BOX
+   ============================================================ */
+
+box.linked {
+  background: transparent;
+  border: none;
+}
+
+box.linked button {
+  background: transparent;
+  border: none;
+}
+
+/* ============================================================
+   16. FLAT BUTTON
+   ============================================================ */
+
+button.flat {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--r-bio-c);
+  color: alpha(white, 0.5);
+  font-size: 8.5pt;
+  letter-spacing: 0.5px;
+  padding: 4px 12px;
+  transition: all 200ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+button.flat:hover {
+  background-color: alpha(@shell_nerve, 0.08);
+  border-color: @shell_fiber;
   color: @shell_nerve;
-  border: 1px solid alpha(@shell_nerve, 0.3);
-  font-size: 8pt;
-  font-weight: 900;
-  padding: 2px 10px;
-  clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-}
-
-.destructive-action {
-  background-color: #1a080a;
-  border: 1px solid alpha(#ff3e3e, 0.2);
-  border-bottom: 2px solid alpha(#ff3e3e, 0.4);
-  color: #efefef;
-  border-radius: 2px 10px 2px 10px;
-  padding: 8px 16px;
-  font-weight: 800;
-  text-transform: uppercase;
-  transition: all 300ms cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-.destructive-action:hover {
-  background-color: #880808;
-  border-color: #ff3e3e;
-  transform: translateY(2px) translateX(2px);
+  box-shadow: var(--nerve-glow-soft);
 }

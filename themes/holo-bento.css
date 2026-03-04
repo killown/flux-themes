@@ -1,214 +1,781 @@
-/* --- Flux: Holographic Bento (2026 Volumetric Protocol) --- */
+/* ============================================================
+   Flux — H O L O  B E N T O  ∞
+   Spatial Interface Protocol — 2027 Edition
+   ============================================================
 
-@define-color bento_void #020204;
-@define-color bento_glass alpha(#121420, 0.8);
-@define-color bento_accent #00f3ff;
-@define-color bento_glow #7000ff;
-@define-color bento_text #ffffff;
+   Design language: Physical holographic glass panels floating
+   in a deep-space nebula. Every surface is a distinct bento
+   cell — a bounded, breathing slab of matter. Light refracts
+   through prism edges, casting spectral bleeds onto the void.
+   Depth is expressed through shadow mass, not opacity decay.
 
-/* 1. Global Setup */
-* {
-  font-family: "Geist", "Inter Variable", "Outfit", sans-serif;
-  -gtk-secondary-caret-color: @bento_accent;
-}
+   Palette:
+     void    #010108  → absolute black space
+     plasma  #04050e  → volumetric nebula substrate
+     hull    #080c18  → bento cell base plate
+     plate   #0d1022  → raised inner surface
+     rim     #131728  → edge highlight material
+     ─────────────────────────────────────────────
+     aqua    #00f3ff  → cold light / signal / active
+     violet  #8b5cf6  → spectral bloom / depth
+     rose    #f43f80  → hot spectral edge / danger
+     green   #00ffa3  → progress fill accent
+     ─────────────────────────────────────────────
+     dim     #4a5578  → dormant foreground
+     body    #c8d3f5  → readable text
+     bright  #e8eeff  → maximum luminance
 
-window {
-  /* Deep space background with a subtle "Nebula" top-glow */
-  background-image: radial-gradient(
-    circle at 50% -50%,
-    @bento_glow 0%,
-    @bento_void 70%
+   ============================================================ */
+
+@define-color hb_void    #010108;
+@define-color hb_plasma  #04050e;
+@define-color hb_hull    #080c18;
+@define-color hb_plate   #0d1022;
+@define-color hb_rim     #131728;
+@define-color hb_scar    #1e2440;
+@define-color hb_aqua    #00f3ff;
+@define-color hb_aqua_d  #0099aa;
+@define-color hb_violet  #8b5cf6;
+@define-color hb_rose    #f43f80;
+@define-color hb_green   #00ffa3;
+@define-color hb_dim     #4a5578;
+@define-color hb_body    #c8d3f5;
+@define-color hb_bright  #e8eeff;
+
+:root {
+  /* ─── Spectral glow system (all units explicit — no bare 0) */
+
+  --glow-aqua-s:
+    0px 0px 8px alpha(@hb_aqua, 0.45), 0px 0px 22px alpha(@hb_aqua, 0.15);
+  --glow-aqua-h:
+    0px 0px 5px alpha(@hb_aqua, 1), 0px 0px 15px alpha(@hb_aqua, 0.65),
+    0px 0px 36px alpha(@hb_aqua, 0.28), 0px 0px 70px alpha(@hb_aqua, 0.1);
+  --glow-violet-s:
+    0px 0px 10px alpha(@hb_violet, 0.4), 0px 0px 28px alpha(@hb_violet, 0.15);
+  --glow-violet-h:
+    0px 0px 6px alpha(@hb_violet, 0.9), 0px 0px 20px alpha(@hb_violet, 0.5),
+    0px 0px 50px alpha(@hb_violet, 0.2);
+  --glow-rose-h:
+    0px 0px 6px alpha(@hb_rose, 0.9), 0px 0px 18px alpha(@hb_rose, 0.5),
+    0px 0px 40px alpha(@hb_rose, 0.2);
+  /* Full prism bloom — all three channels simultaneously */
+  --glow-prism:
+    0px 0px 15px alpha(@hb_aqua, 0.25), 0px 0px 30px alpha(@hb_violet, 0.18),
+    0px 0px 55px alpha(@hb_rose, 0.1);
+
+  /* ─── Physical glass surface shader ─────────────────────── */
+  --glass:
+    inset 0px 1px 0px alpha(white, 0.16), inset 0px -1px 0px alpha(black, 0.32),
+    inset 1px 0px 0px alpha(white, 0.06), inset -1px 0px 0px alpha(black, 0.18);
+
+  /* ─── Volumetric shadow stack ────────────────────────────── */
+  --vol-rest:
+    0px 2px 4px alpha(black, 0.3), 0px 8px 24px alpha(black, 0.45),
+    0px 20px 50px alpha(black, 0.35);
+  --vol-hover:
+    0px 4px 8px alpha(black, 0.4), 0px 16px 40px alpha(black, 0.55),
+    0px 36px 80px alpha(black, 0.4), 0px 0px 50px alpha(@hb_violet, 0.18),
+    0px 0px 25px alpha(@hb_aqua, 0.12);
+  --vol-active:
+    0px 1px 3px alpha(black, 0.5), inset 0px 2px 8px alpha(black, 0.35);
+
+  /* ─── Depth noise (diagonal fiber-weave, very subtle) ───── */
+  --noise: repeating-linear-gradient(
+    45deg,
+    transparent 0px,
+    transparent 6px,
+    alpha(white, 0.012) 6px,
+    alpha(white, 0.012) 7px
   );
-  color: @bento_text;
+
+  /* ─── Typography ─────────────────────────────────────────── */
+  --font-holo: "Geist", "Outfit", "Plus Jakarta Sans", "DM Sans", sans-serif;
+
+  /* ─── Radii ──────────────────────────────────────────────── */
+  --r-bento: 22px;
+  --r-tile: 16px;
+  --r-btn: 10px;
+  --r-pill: 100px;
+  --r-thumb: 12px;
+  --r-xs: 4px;
 }
 
-/* 2. Header: Ion-Plated Glass */
+/* ============================================================
+   1. GLOBAL RESET
+   ============================================================ */
+
+* {
+  font-family: var(--font-holo);
+  -gtk-secondary-caret-color: @hb_aqua;
+}
+
+window,
+window > box,
+.background {
+  background-color: @hb_void;
+  background-image:
+    radial-gradient(
+      ellipse 100% 60% at 50% -5%,
+      alpha(@hb_violet, 0.32) 0%,
+      alpha(@hb_violet, 0.08) 45%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 45% 35% at 85% 15%,
+      alpha(@hb_aqua, 0.1) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 35% 25% at 8% 75%,
+      alpha(@hb_rose, 0.07) 0%,
+      transparent 55%
+    );
+  color: @hb_body;
+}
+
+gridview,
+scrolledwindow > viewport {
+  background: transparent;
+}
+
+/* ============================================================
+   2. HEADER BAR — Ion-Plated Hull
+   ============================================================ */
+
 headerbar {
-  background-color: alpha(@bento_void, 0.4);
-  border-bottom: 1px solid alpha(@bento_accent, 0.2);
-  padding: 14px;
-  /* Internal specular highlight */
-  box-shadow: inset 0 1px 0 0 alpha(white, 0.1);
+  background-color: alpha(@hb_plasma, 0.65);
+  -gtk-backdrop-filter: blur(28px) saturate(1.9);
+  background-image: var(--noise);
+  border: none;
+  border-bottom: 1px solid alpha(@hb_aqua, 0.18);
+  padding: 4px 16px;
+  min-height: 46px;
+  box-shadow:
+    var(--glass),
+    0px 1px 0px alpha(@hb_violet, 0.12),
+    0px 4px 24px alpha(black, 0.5),
+    inset 0px 0px 40px alpha(@hb_violet, 0.04);
 }
 
-headerbar label {
+headerbar label,
+headerbar .title {
+  color: @hb_bright;
   font-weight: 800;
+  font-size: 9.5pt;
+  letter-spacing: 3px;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  filter: drop-shadow(0 0 10px alpha(@bento_accent, 0.3));
 }
 
-/* 3. Sidebar: Neural Link Shards */
+headerbar button {
+  background-color: alpha(white, 0.04);
+  -gtk-backdrop-filter: blur(10px);
+  border: 1px solid alpha(white, 0.08);
+  border-radius: var(--r-btn);
+  color: alpha(@hb_body, 0.7);
+  padding: 4px 10px;
+  min-width: 30px;
+  min-height: 28px;
+  box-shadow: var(--glass);
+  transition: all 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+headerbar button:hover {
+  background-color: alpha(@hb_aqua, 0.09);
+  border-color: alpha(@hb_aqua, 0.38);
+  color: @hb_aqua;
+  box-shadow: var(--glass), var(--glow-aqua-s);
+  transform: translateY(-1px);
+}
+
+headerbar button:active {
+  transform: translateY(1px);
+  background-color: alpha(@hb_aqua, 0.16);
+  box-shadow: var(--vol-active);
+}
+
+headerbar button:disabled {
+  color: @hb_dim;
+  opacity: 0.35;
+  box-shadow: none;
+}
+
+/* ============================================================
+   3. BREADCRUMBS  (.breadcrumb-btn)
+   ============================================================ */
+
+button.breadcrumb-btn {
+  background-color: alpha(white, 0.03);
+  -gtk-backdrop-filter: blur(12px);
+  border: 1px solid alpha(white, 0.08);
+  border-radius: var(--r-btn);
+  padding: 3px 14px;
+  margin: 0px 2px;
+  min-height: 26px;
+  box-shadow: var(--glass);
+  transition: all 240ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+button.breadcrumb-btn label {
+  color: alpha(@hb_body, 0.5);
+  font-size: 8.5pt;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+button.breadcrumb-btn:hover {
+  background-color: alpha(@hb_aqua, 0.07);
+  border-color: alpha(@hb_aqua, 0.3);
+  box-shadow: var(--glass), var(--glow-aqua-s);
+  transform: translateY(-2px);
+}
+
+button.breadcrumb-btn:hover label {
+  color: @hb_aqua;
+}
+
+/* Last segment — prism-charged active shard */
+button.breadcrumb-btn:last-child {
+  background-color: alpha(@hb_aqua, 0.1);
+  border-color: alpha(@hb_aqua, 0.4);
+  box-shadow: var(--glass), var(--glow-prism);
+}
+
+button.breadcrumb-btn:last-child label {
+  color: @hb_aqua;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+}
+
+/* Header search / path entry */
+headerbar entry,
+headerbar searchentry {
+  background-color: alpha(black, 0.45);
+  -gtk-backdrop-filter: blur(14px);
+  border: 1px solid alpha(white, 0.1);
+  border-bottom: 1px solid alpha(@hb_aqua, 0.3);
+  border-radius: var(--r-pill);
+  color: @hb_bright;
+  font-size: 9pt;
+  padding: 4px 18px;
+  min-height: 30px;
+  box-shadow:
+    inset 0px 2px 8px alpha(black, 0.5),
+    inset 0px 1px 0px alpha(white, 0.05);
+  transition: all 200ms ease;
+}
+
+headerbar entry:focus,
+headerbar searchentry:focus {
+  border-color: alpha(@hb_aqua, 0.55);
+  box-shadow:
+    inset 0px 2px 8px alpha(black, 0.5),
+    var(--glow-aqua-s);
+}
+
+/* ============================================================
+   4. SIDEBAR  (.sidebar, .sidebar-row, .sidebar-label)
+   ============================================================ */
+
 scrolledwindow.sidebar {
-  background-color: alpha(black, 0.3);
+  background-color: alpha(@hb_plasma, 0.55);
+  -gtk-backdrop-filter: blur(22px) saturate(1.5);
+  border-right: 1px solid alpha(white, 0.05);
+}
+
+scrolledwindow.sidebar list,
+scrolledwindow.sidebar listbox {
+  background: transparent;
 }
 
 .sidebar-row {
-  margin: 8px 16px;
-  padding: 12px 20px;
-  min-height: 32px;
-
-  background-color: alpha(white, 0.03);
-  border: 1px solid alpha(white, 0.05);
-  border-radius: 12px;
-
-  color: alpha(@bento_text, 0.6);
-
-  /* High-end spring physics */
-  transition: all 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.sidebar-row:hover:not(:selected) {
-  background-color: alpha(@bento_accent, 0.05);
-  color: @bento_accent;
-  transform: scale(1.05) translateX(5px);
-  box-shadow: 0 10px 20px alpha(black, 0.4);
-}
-
-/* Selection: Powered Link */
-.sidebar-row:selected {
-  background-color: alpha(@bento_accent, 0.1);
-  color: white;
-  font-weight: 700;
-  border-color: @bento_accent;
-
-  /* Internal Glow */
+  background-color: alpha(white, 0.025);
+  background-image: var(--noise);
+  border: 1px solid alpha(white, 0.055);
+  border-radius: var(--r-tile);
+  margin: 5px 14px;
+  padding: 11px 18px;
+  min-height: 36px;
+  color: alpha(@hb_body, 0.5);
   box-shadow:
-    0 0 20px alpha(@bento_accent, 0.2),
-    inset 0 0 15px alpha(@bento_accent, 0.1);
+    inset 0px 1px 0px alpha(white, 0.08),
+    0px 2px 10px alpha(black, 0.25);
+  transition: all 380ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
 
-  /* Magnetic "Locked" state */
-  transform: translateX(12px) scale(1.02);
+.sidebar-row:hover {
+  background-color: alpha(@hb_aqua, 0.055);
+  border-color: alpha(@hb_aqua, 0.22);
+  color: @hb_aqua;
+  box-shadow:
+    inset 0px 1px 0px alpha(@hb_aqua, 0.12),
+    var(--glow-aqua-s),
+    0px 6px 18px alpha(black, 0.35);
+  transform: scale(1.02) translateX(5px);
+}
+
+.sidebar-row:selected {
+  background-color: alpha(@hb_aqua, 0.09);
+  background-image: linear-gradient(
+    135deg,
+    alpha(@hb_aqua, 0.07) 0%,
+    alpha(@hb_violet, 0.05) 100%
+  );
+  border-color: alpha(@hb_aqua, 0.42);
+  color: @hb_bright;
+  font-weight: 700;
+  box-shadow:
+    inset 0px 1px 0px alpha(@hb_aqua, 0.2),
+    inset 0px 0px 16px alpha(@hb_aqua, 0.06),
+    var(--glow-prism),
+    0px 10px 24px alpha(black, 0.45);
+  transform: translateX(10px) scale(1.015);
 }
 
 .sidebar-row image {
-  margin-right: 15px;
-  transition: transform 300ms ease;
+  color: inherit;
+  -gtk-icon-size: 16px;
 }
 
-.sidebar-row:selected image {
-  transform: rotate(-10deg) scale(1.2);
-  filter: drop-shadow(0 0 8px @bento_accent);
+.sidebar-label {
+  color: inherit;
+  font-size: 10pt;
+  font-weight: 600;
+  letter-spacing: 0.15px;
 }
 
-/* 4. Grid View: Volumetric Bento Cards */
+/* ============================================================
+   5. FILE GRID CARDS  (.flux-card)
+   ============================================================ */
+
 .flux-card {
-  background-color: @bento_glass;
-  border: 1px solid alpha(white, 0.08);
-  border-radius: 20px;
-  padding: 24px;
-  margin: 12px;
-
-  /* Volumetric Depth (Layered Shadow) */
-  box-shadow:
-    0 15px 35px alpha(black, 0.5),
-    0 0 0 1px alpha(white, 0.05),
-    inset 0 0 20px alpha(white, 0.02);
-
-  transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+  background-color: alpha(@hb_hull, 0.88);
+  background-image: var(--noise);
+  -gtk-backdrop-filter: blur(18px) saturate(1.5);
+  border: 1px solid alpha(white, 0.075);
+  border-radius: var(--r-bento);
+  margin: 10px;
+  padding: 16px 12px 12px;
+  box-shadow: var(--glass), var(--vol-rest);
+  transition:
+    background-color 380ms cubic-bezier(0.19, 1, 0.22, 1),
+    border-color 380ms ease,
+    box-shadow 380ms ease,
+    transform 380ms cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .flux-card:hover {
-  background-color: alpha(white, 0.05);
-  border-color: alpha(@bento_accent, 0.4);
+  background-color: alpha(@hb_plate, 0.9);
+  border-color: alpha(@hb_aqua, 0.28);
+  box-shadow: var(--glass), var(--vol-hover);
+  transform: translateY(-12px);
+}
 
-  /* 3D "Tilt-Zoom" */
-  transform: translateY(-15px) perspective(1000px) rotateX(5deg);
+.flux-card:selected {
+  background-color: alpha(@hb_aqua, 0.07);
+  border-color: alpha(@hb_aqua, 0.45);
   box-shadow:
-    0 40px 70px alpha(black, 0.7),
-    0 0 40px alpha(@bento_glow, 0.3);
+    var(--glass),
+    var(--glow-prism),
+    0px 24px 60px alpha(black, 0.6);
+  transform: translateY(-8px);
 }
 
-.flux-card label {
-  font-size: 11pt;
+/* ============================================================
+   6. FILE LABELS  (.flux-label, .thumbnail)
+   ============================================================ */
+
+.flux-label {
+  color: alpha(@hb_body, 0.72);
+  font-size: 9.5pt;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  margin-top: 8px;
+}
+
+.thumbnail {
+  border-radius: var(--r-thumb);
+  border: 1px solid alpha(white, 0.07);
+  box-shadow:
+    inset 0px 0px 0px 1px alpha(@hb_aqua, 0.05),
+    0px 2px 8px alpha(black, 0.3);
+}
+
+/* ============================================================
+   7. RENAME ENTRY  (.flux-rename-entry)
+   ============================================================ */
+
+entry.flux-rename-entry {
+  background-color: alpha(black, 0.55);
+  -gtk-backdrop-filter: blur(12px);
+  border: 1px solid alpha(@hb_aqua, 0.45);
+  border-bottom: 2px solid @hb_aqua;
+  border-radius: var(--r-btn);
+  color: @hb_bright;
+  font-size: 9pt;
+  padding: 2px 10px;
+  min-width: 120px;
+  box-shadow:
+    inset 0px 2px 6px alpha(black, 0.55),
+    var(--glow-aqua-h);
+}
+
+/* ============================================================
+   8. SORT INDICATOR  (.sort-container, .sort-status-label)
+   ============================================================ */
+
+.sort-container {
+  background-color: alpha(@hb_violet, 0.18);
+  -gtk-backdrop-filter: blur(10px);
+  border: 1px solid alpha(@hb_violet, 0.38);
+  border-radius: var(--r-pill);
+  padding: 1px 14px;
+  box-shadow: var(--glow-violet-s);
+}
+
+.sort-status-label {
+  color: #c4a0ff;
+  font-size: 8pt;
   font-weight: 700;
-  color: alpha(@bento_text, 0.8);
-  margin-top: 15px;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
 }
 
-/* 5. Destructive Action: The Purge Prism */
-.destructive-action {
-  background-color: #0d0005;
-  color: #ff2d55;
-  border: 1px solid alpha(#ff2d55, 0.4);
-  border-radius: 12px;
-  padding: 10px 24px;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+/* ============================================================
+   9. DESTRUCTIVE ACTION  (.destructive-action)
+   ============================================================ */
 
-  transition: all 300ms cubic-bezier(0.68, -0.6, 0.32, 1.6);
+.destructive-action {
+  background-color: alpha(@hb_rose, 0.07);
+  -gtk-backdrop-filter: blur(10px);
+  border: 1px solid alpha(@hb_rose, 0.3);
+  border-radius: var(--r-btn);
+  color: @hb_rose;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  padding: 4px 18px;
+  box-shadow: var(--glass), var(--glow-rose-h);
+  transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .destructive-action:hover {
-  background-color: #ff2d55;
+  background-color: @hb_rose;
+  border-color: @hb_rose;
   color: white;
-  box-shadow: 0 0 30px alpha(#ff2d55, 0.6);
-  /* Kinetic Shake Effect simulation */
-  transform: translateY(2px) rotate(1deg);
+  box-shadow:
+    var(--glow-rose-h),
+    0px 8px 28px alpha(@hb_rose, 0.45);
+  transform: translateY(-2px);
 }
 
-/* 6. Context Menu: Bento Modal */
+.destructive-action:active {
+  transform: translateY(1px);
+  box-shadow: var(--vol-active);
+}
+
+/* ============================================================
+   10. CONTEXT MENU / POPOVER — Bento Modal
+   ============================================================ */
+
+popover,
+popover.menu {
+  background: none;
+  padding: 0px;
+}
+
+popover contents,
 popover.menu contents {
-  background-color: alpha(#050608, 0.95);
-  border: 1px solid alpha(white, 0.15);
-  border-radius: 24px;
-  padding: 12px;
-  box-shadow: 0 40px 100px alpha(black, 0.9);
-  /* Prism rim glow */
-  outline: 1px solid alpha(@bento_accent, 0.1);
+  background-color: alpha(@hb_plasma, 0.8);
+  -gtk-backdrop-filter: blur(36px) saturate(2.2);
+  background-image: var(--noise);
+  border: 1px solid alpha(white, 0.1);
+  border-top: 1px solid alpha(@hb_aqua, 0.25);
+  border-radius: 26px;
+  padding: 8px;
+  box-shadow:
+    inset 0px 1px 0px alpha(white, 0.1),
+    var(--glow-prism),
+    0px 36px 80px alpha(black, 0.85);
 }
 
 popover.menu modelbutton {
-  border-radius: 14px;
-  margin: 3px;
-  min-height: 44px;
-}
-
-popover.menu modelbutton label {
-  font-size: 13pt; /* Keeping your sizing */
+  background: transparent;
+  border-radius: var(--r-tile);
+  color: alpha(@hb_body, 0.8);
+  padding: 9px 16px;
+  margin: 2px 0px;
+  font-size: 10pt;
   font-weight: 600;
+  transition: all 160ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 popover.menu modelbutton:hover {
-  background-color: alpha(@bento_accent, 0.15);
-  color: @bento_accent;
+  background-color: alpha(@hb_aqua, 0.09);
+  color: @hb_aqua;
+  box-shadow: inset 0px 1px 0px alpha(white, 0.07);
 }
 
-/* 7. Search & Inputs: Neon Trace */
+popover.menu modelbutton accelerator {
+  color: @hb_dim;
+  font-size: 8.5pt;
+}
+
+popover.menu > contents separator {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    alpha(@hb_aqua, 0.18) 25%,
+    alpha(@hb_violet, 0.12) 60%,
+    transparent 100%
+  );
+  min-height: 1px;
+  margin: 5px 12px;
+}
+
+/* ============================================================
+   11. ENTRIES (global)
+   ============================================================ */
+
 entry {
-  background-color: alpha(black, 0.5);
-  border: 1px solid alpha(white, 0.1);
-  border-radius: 16px;
-  padding: 12px 20px;
-  color: white;
-  transition: all 300ms ease;
+  background-color: alpha(black, 0.48);
+  -gtk-backdrop-filter: blur(12px);
+  border: 1px solid alpha(white, 0.09);
+  border-bottom: 1px solid alpha(@hb_aqua, 0.28);
+  border-radius: var(--r-pill);
+  color: @hb_bright;
+  font-size: 9.5pt;
+  padding: 6px 18px;
+  box-shadow:
+    inset 0px 2px 8px alpha(black, 0.45),
+    inset 0px 1px 0px alpha(white, 0.04);
+  transition: all 200ms ease;
+  caret-color: @hb_aqua;
 }
 
 entry:focus {
-  border-color: @bento_accent;
-  box-shadow: 0 0 25px alpha(@bento_accent, 0.2);
+  border-color: alpha(@hb_aqua, 0.5);
+  border-bottom-color: @hb_aqua;
+  box-shadow:
+    inset 0px 2px 8px alpha(black, 0.45),
+    var(--glow-aqua-s);
 }
 
-/* 8. Functional UI: Liquid Neon Scroll */
+/* ============================================================
+   12. SELECTION STATUS BAR  (.selection-status)
+   ============================================================ */
+
+.selection-status {
+  background-color: alpha(@hb_plasma, 0.7);
+  -gtk-backdrop-filter: blur(18px);
+  border: none;
+  border-top: 1px solid alpha(white, 0.05);
+  padding: 3px 18px;
+  min-height: 28px;
+}
+
+.selection-status label.caption {
+  color: @hb_dim;
+  font-size: 8.5pt;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+progressbar trough,
+.selection-status progressbar trough {
+  background-color: alpha(white, 0.04);
+  border: 1px solid alpha(white, 0.06);
+  border-radius: var(--r-pill);
+  min-height: 4px;
+  box-shadow: inset 0px 1px 4px alpha(black, 0.5);
+}
+
+progressbar progress,
+.selection-status progressbar progress {
+  background-image: linear-gradient(
+    90deg,
+    @hb_aqua 0%,
+    @hb_violet 55%,
+    @hb_rose 100%
+  );
+  border-radius: var(--r-pill);
+  border: none;
+  box-shadow: var(--glow-prism);
+  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================================
+   13. SETTINGS WINDOW
+   ============================================================ */
+
+window.settings-window {
+  background-color: @hb_void;
+  background-image: radial-gradient(
+    ellipse 90% 55% at 50% -5%,
+    alpha(@hb_violet, 0.25) 0%,
+    transparent 68%
+  );
+  color: @hb_body;
+}
+
+window.settings-window preferencespage,
+window.settings-window preferencesgroup,
+window.settings-window list,
+window.settings-window listbox,
+window.settings-window clamp,
+window.settings-window scrolledwindow {
+  background: transparent;
+  color: @hb_body;
+}
+
+window.settings-window preferencesgroup > box > label,
+window.settings-window preferencesgroup label.title {
+  color: @hb_dim;
+  font-size: 8.5pt;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+window.settings-window .settings-row,
+window.settings-window actionrow {
+  background-color: alpha(white, 0.025);
+  background-image: var(--noise);
+  -gtk-backdrop-filter: blur(12px);
+  border: 1px solid alpha(white, 0.06);
+  border-radius: var(--r-tile);
+  color: @hb_body;
+  margin-bottom: 4px;
+  padding: 4px 0px;
+  box-shadow:
+    inset 0px 1px 0px alpha(white, 0.07),
+    0px 2px 8px alpha(black, 0.3);
+  transition: all 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+window.settings-window .settings-row:hover,
+window.settings-window actionrow:hover {
+  background-color: alpha(@hb_aqua, 0.045);
+  border-color: alpha(@hb_aqua, 0.18);
+  box-shadow:
+    inset 0px 1px 0px alpha(white, 0.09),
+    var(--glow-aqua-s);
+  transform: translateX(3px);
+}
+
+window.settings-window .settings-row label.title,
+window.settings-window actionrow label.title {
+  color: @hb_bright;
+  font-size: 10pt;
+  font-weight: 600;
+}
+
+window.settings-window .settings-row label.subtitle,
+window.settings-window actionrow label.subtitle {
+  color: @hb_dim;
+  font-size: 9pt;
+}
+
+window.settings-window spinbutton,
+window.settings-window entry,
+window.settings-window dropdown button {
+  background-color: alpha(black, 0.42);
+  border: 1px solid alpha(white, 0.09);
+  border-bottom: 1px solid alpha(@hb_aqua, 0.28);
+  border-radius: var(--r-pill);
+  color: @hb_bright;
+  padding: 4px 16px;
+  min-height: 28px;
+  box-shadow: inset 0px 2px 5px alpha(black, 0.45);
+}
+
+window.settings-window spinbutton:focus,
+window.settings-window entry:focus,
+window.settings-window dropdown button:focus {
+  border-color: alpha(@hb_aqua, 0.55);
+  box-shadow:
+    inset 0px 2px 5px alpha(black, 0.45),
+    var(--glow-aqua-s);
+}
+
+window.settings-window switch {
+  background-color: alpha(white, 0.06);
+  border: 1px solid alpha(white, 0.09);
+  border-radius: var(--r-pill);
+  box-shadow: inset 0px 2px 4px alpha(black, 0.35);
+}
+
+window.settings-window switch:checked {
+  background-image: linear-gradient(90deg, @hb_violet, @hb_aqua);
+  border-color: alpha(@hb_aqua, 0.38);
+  box-shadow: var(--glow-aqua-s);
+}
+
+window.settings-window switch slider {
+  background-color: white;
+  border-radius: var(--r-pill);
+  box-shadow:
+    0px 2px 8px alpha(black, 0.45),
+    0px 0px 8px alpha(@hb_aqua, 0.25);
+}
+
+/* ============================================================
+   14. SCROLLBARS
+   ============================================================ */
+
+scrollbar {
+  background: transparent;
+  border: none;
+}
+
 scrollbar slider {
   background-color: alpha(white, 0.07);
-  border-radius: 30px;
+  border-radius: var(--r-pill);
   min-width: 5px;
-  margin: 5px;
+  min-height: 5px;
+  margin: 3px;
+  transition:
+    background 200ms ease,
+    box-shadow 200ms ease;
 }
 
 scrollbar slider:hover {
-  background-color: @bento_accent;
-  box-shadow: 0 0 10px @bento_accent;
+  background-color: alpha(@hb_aqua, 0.55);
+  box-shadow: var(--glow-aqua-s);
 }
 
-.sort-label {
-  background-color: alpha(@bento_glow, 0.2);
-  color: #d1b3ff;
-  border: 1px solid alpha(@bento_glow, 0.4);
-  border-radius: 30px;
-  font-size: 8pt;
-  padding: 4px 14px;
-  font-weight: 900;
+/* ============================================================
+   15. LINKED BOX
+   ============================================================ */
+
+box.linked {
+  background: transparent;
+  border: none;
+}
+
+box.linked button {
+  background: transparent;
+  border: none;
+}
+
+/* ============================================================
+   16. FLAT BUTTON
+   ============================================================ */
+
+button.flat {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--r-btn);
+  color: @hb_dim;
+  font-size: 9pt;
+  font-weight: 500;
+  padding: 4px 12px;
+  transition: all 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+button.flat:hover {
+  background-color: alpha(white, 0.04);
+  border-color: alpha(white, 0.08);
+  color: @hb_body;
+  box-shadow: inset 0px 1px 0px alpha(white, 0.07);
 }
