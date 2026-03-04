@@ -1,0 +1,565 @@
+/* ============================================================
+   Flux — Tokyo Night
+   Palette: https://github.com/folke/tokyonight.nvim (Storm)
+   ============================================================ */
+
+:root {
+  /* --- Core Background Ramp --- */
+  --tn-bg-base: #1f2335; /* main window bg           */
+  --tn-bg-deep: #1a1b26; /* sidebar, headerbar       */
+  --tn-bg-surface: #24283b; /* cards, inputs            */
+  --tn-bg-raised: #292e42; /* hover state on cards     */
+  --tn-bg-overlay: #2f3549; /* popover, tooltip bg      */
+
+  /* --- Foreground --- */
+  --tn-fg: #c0caf5; /* primary text             */
+  --tn-fg-dim: #a9b1d6; /* secondary / subtitle     */
+  --tn-fg-muted: #565f89; /* placeholders, separators */
+  --tn-fg-dark: #1a1b26; /* text on accent fills     */
+
+  /* --- Accent Palette --- */
+  --tn-blue: #7aa2f7;
+  --tn-cyan: #7dcfff;
+  --tn-green: #9ece6a;
+  --tn-yellow: #e0af68;
+  --tn-red: #f7768e;
+  --tn-purple: #bb9af7;
+  --tn-magenta: #bb9af7;
+
+  /* --- Structural --- */
+  --tn-border: #292e42;
+  --tn-border-dim: #1e2030;
+  --tn-shadow: rgba(13, 14, 20, 0.6);
+  --tn-glow-blue: rgba(122, 162, 247, 0.18);
+  --tn-glow-red: rgba(247, 118, 142, 0.18);
+
+  /* --- Typography --- */
+  --tn-font: "Inter", "Noto Sans", sans-serif;
+  --tn-font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  /* --- Radii --- */
+  --r-xs: 4px;
+  --r-s: 6px;
+  --r-m: 10px;
+  --r-l: 14px;
+  --r-xl: 18px;
+}
+
+/* ============================================================
+   1. GLOBAL RESET
+   ============================================================ */
+
+* {
+  font-family: var(--tn-font);
+  letter-spacing: 0px;
+}
+
+*:focus {
+  outline: none;
+}
+
+window,
+window > box,
+.background {
+  background-color: var(--tn-bg-base);
+  color: var(--tn-fg);
+}
+
+/* ============================================================
+   2. HEADER BAR
+   ============================================================ */
+
+headerbar {
+  background-color: var(--tn-bg-deep);
+  border-bottom: 1px solid var(--tn-border);
+  padding: 4px 10px;
+  min-height: 44px;
+  box-shadow: 0 1px 0 var(--tn-border-dim);
+}
+
+headerbar label,
+headerbar .title {
+  color: var(--tn-fg);
+  font-weight: 600;
+  font-size: 10pt;
+}
+
+/* Back / Forward buttons */
+headerbar button {
+  background: transparent;
+  border: none;
+  border-radius: var(--r-s);
+  color: var(--tn-fg-dim);
+  padding: 4px 8px;
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+  min-width: 28px;
+  min-height: 28px;
+}
+
+headerbar button:hover {
+  background-color: rgba(192, 202, 245, 0.08);
+  color: var(--tn-fg);
+}
+
+headerbar button:disabled {
+  color: var(--tn-fg-muted);
+  opacity: 0.4;
+}
+
+/* ============================================================
+   3. BREADCRUMBS  (.breadcrumb-btn)
+   ============================================================ */
+
+.breadcrumb-btn {
+  background-color: transparent;
+  border: none;
+  border-radius: var(--r-s);
+  padding: 3px 10px;
+  margin: 0 1px;
+  min-height: 26px;
+  transition: background 150ms ease;
+}
+
+.breadcrumb-btn label {
+  color: var(--tn-fg-dim);
+  font-family: var(--tn-font-mono);
+  font-size: 8.5pt;
+  font-weight: 500;
+}
+
+.breadcrumb-btn:hover {
+  background-color: rgba(122, 162, 247, 0.08);
+}
+
+.breadcrumb-btn:hover label {
+  color: var(--tn-blue);
+}
+
+/* Active (last) segment */
+.breadcrumb-btn:last-child {
+  background-color: rgba(122, 162, 247, 0.12);
+  border: 1px solid rgba(122, 162, 247, 0.25);
+}
+
+.breadcrumb-btn:last-child label {
+  color: var(--tn-blue);
+  font-weight: 700;
+}
+
+/* Path / Search entries in the header */
+headerbar entry,
+headerbar searchentry {
+  background-color: var(--tn-bg-surface);
+  border: 1px solid var(--tn-border);
+  border-radius: var(--r-m);
+  color: var(--tn-fg);
+  padding: 4px 12px;
+  min-height: 30px;
+  font-family: var(--tn-font-mono);
+  font-size: 9pt;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+headerbar entry:focus,
+headerbar searchentry:focus {
+  border-color: var(--tn-blue);
+  box-shadow: 0 0 0 2px rgba(122, 162, 247, 0.2);
+}
+
+/* ============================================================
+   4. SIDEBAR  (.sidebar, .sidebar-row, .sidebar-label)
+   ============================================================ */
+
+scrolledwindow.sidebar {
+  background-color: var(--tn-bg-deep);
+  border-right: 1px solid var(--tn-border);
+}
+
+/* The listbox itself must be transparent so the window bg bleeds */
+scrolledwindow.sidebar list,
+scrolledwindow.sidebar listbox {
+  background: transparent;
+}
+
+.sidebar-row {
+  background: transparent;
+  border: none;
+  border-radius: var(--r-m);
+  margin: 2px 8px;
+  padding: 9px 14px;
+  color: var(--tn-fg-dim);
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+  min-height: 36px;
+}
+
+.sidebar-row:hover {
+  background-color: rgba(192, 202, 245, 0.06);
+  color: var(--tn-fg);
+}
+
+.sidebar-row:selected,
+.sidebar-row:active {
+  background: linear-gradient(
+    90deg,
+    rgba(122, 162, 247, 0.16) 0%,
+    rgba(122, 162, 247, 0.06) 100%
+  );
+  color: var(--tn-blue);
+  box-shadow: inset 3px 0 0 var(--tn-blue);
+}
+
+.sidebar-row image {
+  color: inherit;
+  opacity: 0.8;
+  -gtk-icon-size: 16px;
+}
+
+.sidebar-label {
+  color: inherit;
+  font-size: 10pt;
+  font-weight: 500;
+}
+
+/* ============================================================
+   5. FILE GRID CARDS  (.flux-card)
+   ============================================================ */
+
+.flux-card {
+  background-color: transparent;
+  border-radius: var(--r-m);
+  padding: 12px 8px 8px;
+  margin: 4px;
+  transition:
+    background 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.flux-card:hover {
+  background-color: rgba(192, 202, 245, 0.06);
+}
+
+/* Selected state — set by GtkGridView */
+.flux-card:selected {
+  background-color: rgba(122, 162, 247, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(122, 162, 247, 0.35);
+}
+
+/* ============================================================
+   6. FILE LABEL  (.flux-label)
+   ============================================================ */
+
+.flux-label {
+  color: var(--tn-fg);
+  font-size: 9.5pt;
+  margin-top: 6px;
+}
+
+/* ============================================================
+   7. THUMBNAIL  (.thumbnail)
+   ============================================================ */
+
+.thumbnail {
+  border-radius: var(--r-s);
+}
+
+/* ============================================================
+   8. RENAME ENTRY  (.flux-rename-entry)
+   ============================================================ */
+
+.flux-rename-entry,
+entry.flux-rename-entry {
+  background-color: var(--tn-bg-surface);
+  border: 1px solid var(--tn-blue);
+  border-radius: var(--r-s);
+  color: var(--tn-fg);
+  font-size: 9pt;
+  padding: 2px 6px;
+  min-width: 100px;
+  box-shadow: 0 0 0 2px rgba(122, 162, 247, 0.2);
+}
+
+/* ============================================================
+   9. SORT INDICATOR  (.sort-container, .sort-status-label)
+   ============================================================ */
+
+.sort-container {
+  background: transparent;
+  padding: 0;
+}
+
+.sort-status-label {
+  color: var(--tn-purple);
+  font-family: var(--tn-font-mono);
+  font-size: 8.5pt;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ============================================================
+   10. DESTRUCTIVE ACTION  (.destructive-action)
+   ============================================================ */
+
+.destructive-action {
+  background-color: var(--tn-glow-red);
+  color: var(--tn-red);
+  border: 1px solid rgba(247, 118, 142, 0.3);
+  border-radius: var(--r-s);
+  font-weight: 600;
+  padding: 4px 12px;
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+
+.destructive-action:hover {
+  background-color: var(--tn-red);
+  color: var(--tn-fg-dark);
+  border-color: var(--tn-red);
+}
+
+/* ============================================================
+   11. CONTEXT MENU / POPOVER
+   ============================================================ */
+
+popover,
+popover.menu {
+  background: none;
+  padding: 0;
+}
+
+popover contents,
+popover.menu contents {
+  background-color: var(--tn-bg-overlay);
+  border: 1px solid var(--tn-border);
+  border-radius: var(--r-l);
+  padding: 6px;
+  box-shadow: 0 16px 40px var(--tn-shadow);
+}
+
+popover.menu modelbutton {
+  background: transparent;
+  border-radius: var(--r-s);
+  color: var(--tn-fg);
+  padding: 6px 12px;
+  font-size: 10pt;
+  transition:
+    background 120ms ease,
+    color 120ms ease;
+}
+
+popover.menu modelbutton:hover {
+  background-color: rgba(122, 162, 247, 0.14);
+  color: var(--tn-blue);
+}
+
+popover.menu modelbutton accelerator {
+  color: var(--tn-fg-muted);
+  font-size: 8.5pt;
+}
+
+/* Separator inside menus */
+popover.menu > contents separator {
+  background-color: var(--tn-border);
+  margin: 4px 6px;
+  min-height: 1px;
+}
+
+/* ============================================================
+   12. SELECTION STATUS BAR  (.selection-status, .caption)
+   ============================================================ */
+
+.selection-status {
+  background-color: var(--tn-bg-deep);
+  border-top: 1px solid var(--tn-border);
+  padding: 3px 16px;
+  min-height: 26px;
+}
+
+.selection-status label.caption {
+  color: var(--tn-fg-muted);
+  font-size: 8.5pt;
+  font-family: var(--tn-font-mono);
+}
+
+progressbar {
+  border-radius: var(--r-xs);
+  background-color: var(--tn-bg-surface);
+}
+
+progressbar progress {
+  background-color: var(--tn-blue);
+  border-radius: var(--r-xs);
+  min-height: 3px;
+}
+
+/* ============================================================
+   13. SETTINGS WINDOW  (.settings-window, .settings-row, etc.)
+   ============================================================ */
+
+window.settings-window {
+  background-color: var(--tn-bg-base);
+  color: var(--tn-fg);
+}
+
+/* All preference containers */
+window.settings-window preferencespage,
+window.settings-window preferencesgroup,
+window.settings-window list,
+window.settings-window listbox,
+window.settings-window scrolledwindow,
+window.settings-window clamp,
+window.settings-window box {
+  background-color: transparent;
+  color: var(--tn-fg);
+}
+
+/* Group header labels */
+window.settings-window preferencesgroup > box > label,
+window.settings-window preferencesgroup label.title {
+  color: var(--tn-fg-dim);
+  font-size: 8.5pt;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+/* Row cards */
+window.settings-window .settings-row,
+window.settings-window actionrow {
+  background-color: var(--tn-bg-surface);
+  border-radius: var(--r-m);
+  border: 1px solid var(--tn-border);
+  color: var(--tn-fg);
+  margin-bottom: 2px;
+  padding: 4px 0;
+  transition: background 150ms ease;
+}
+
+window.settings-window .settings-row:hover,
+window.settings-window actionrow:hover {
+  background-color: var(--tn-bg-raised);
+}
+
+/* Row title / subtitle */
+window.settings-window .settings-row label,
+window.settings-window actionrow label.title {
+  color: var(--tn-fg);
+  font-size: 10pt;
+}
+
+window.settings-window .settings-row .subtitle,
+window.settings-window actionrow label.subtitle {
+  color: var(--tn-fg-muted);
+  font-size: 9pt;
+}
+
+/* Inputs inside settings rows */
+window.settings-window spinbutton,
+window.settings-window entry,
+window.settings-window dropdown button {
+  background-color: var(--tn-bg-surface);
+  border: 1px solid var(--tn-border);
+  border-radius: var(--r-s);
+  color: var(--tn-fg);
+  padding: 4px 10px;
+  min-height: 28px;
+}
+
+window.settings-window spinbutton:focus,
+window.settings-window entry:focus,
+window.settings-window dropdown button:focus {
+  border-color: var(--tn-blue);
+  box-shadow: 0 0 0 2px rgba(122, 162, 247, 0.15);
+}
+
+window.settings-window switch {
+  background-color: var(--tn-bg-raised);
+  border: 1px solid var(--tn-border);
+  border-radius: 20px;
+}
+
+window.settings-window switch:checked {
+  background-color: var(--tn-blue);
+  border-color: var(--tn-blue);
+}
+
+window.settings-window switch slider {
+  background-color: var(--tn-fg);
+  border-radius: 50%;
+}
+
+/* Settings page tab labels */
+window.settings-window .appearance-page label,
+window.settings-window .behavior-page label,
+window.settings-window .shortcuts-page label {
+  color: var(--tn-fg);
+}
+
+/* ============================================================
+   14. LINKED BREADCRUMB BOX  (.linked)
+   ============================================================ */
+
+box.linked {
+  background: transparent;
+  border: none;
+}
+
+box.linked button {
+  border: none;
+  background: transparent;
+}
+
+/* ============================================================
+   15. SCROLLBARS
+   ============================================================ */
+
+scrollbar {
+  background: transparent;
+  border: none;
+}
+
+scrollbar slider {
+  background-color: rgba(86, 95, 137, 0.5);
+  border-radius: 20px;
+  min-width: 5px;
+  min-height: 5px;
+  margin: 2px;
+  transition: background 150ms ease;
+}
+
+scrollbar slider:hover {
+  background-color: rgba(122, 162, 247, 0.5);
+}
+
+scrollbar.horizontal slider {
+  min-height: 5px;
+}
+
+/* ============================================================
+   16. FLAT BUTTON (header "flat" class)
+   ============================================================ */
+
+button.flat {
+  background: transparent;
+  border: none;
+  border-radius: var(--r-m);
+  color: var(--tn-fg-dim);
+  padding: 4px 10px;
+  font-size: 9pt;
+  font-family: var(--tn-font-mono);
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+
+button.flat:hover {
+  background-color: rgba(122, 162, 247, 0.08);
+  color: var(--tn-fg);
+}

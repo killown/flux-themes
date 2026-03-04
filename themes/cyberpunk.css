@@ -1,0 +1,716 @@
+/* ============================================================
+   Flux — N E O / / C Y B E R
+   Night City color system + scan-line textures + neon physics
+   ============================================================ */
+
+@define-color cp_black    #04080c;
+@define-color cp_void     #070d12;
+@define-color cp_panel    #0b1219;
+@define-color cp_raised   #0f1a24;
+@define-color cp_yellow   #f5e642;
+@define-color cp_yellow_d #c8ba10;
+@define-color cp_blue     #00e5ff;
+@define-color cp_blue_d   #0099bb;
+@define-color cp_red      #ff1744;
+@define-color cp_magenta  #e040fb;
+@define-color cp_green    #39ff14;
+
+:root {
+  /* --- Neon Glow Layers --- */
+  --glow-yellow-soft:
+    0 0 8px alpha(@cp_yellow, 0.4), 0 0 20px alpha(@cp_yellow, 0.2);
+  --glow-yellow-hot:
+    0 0 6px alpha(@cp_yellow, 0.9), 0 0 18px alpha(@cp_yellow, 0.55),
+    0 0 40px alpha(@cp_yellow, 0.25);
+  --glow-blue-soft: 0 0 8px alpha(@cp_blue, 0.4), 0 0 20px alpha(@cp_blue, 0.2);
+  --glow-blue-hot:
+    0 0 6px alpha(@cp_blue, 0.9), 0 0 18px alpha(@cp_blue, 0.55),
+    0 0 40px alpha(@cp_blue, 0.25);
+  --glow-red-hot:
+    0 0 6px alpha(@cp_red, 0.9), 0 0 20px alpha(@cp_red, 0.5),
+    0 0 40px alpha(@cp_red, 0.2);
+  --glow-magenta-soft:
+    0 0 10px alpha(@cp_magenta, 0.35), 0 0 24px alpha(@cp_magenta, 0.15);
+
+  /* --- Scan-line pseudo-texture via repeating-linear-gradient --- */
+  --scanline: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    alpha(black, 0.08) 2px,
+    alpha(black, 0.08) 4px
+  );
+
+  /* --- Cut-corner mixin values (used via clip-path) --- */
+  --clip-card: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    0 100%
+  );
+  --clip-btn: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  --clip-active: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    0 100%
+  );
+
+  /* --- Typography --- */
+  --font-display: "Oxanium", "Orbitron", "Tektur", monospace;
+  --font-mono: "Geist Mono", "JetBrains Mono", "Fira Code", monospace;
+}
+
+/* ============================================================
+   1. GLOBAL
+   ============================================================ */
+
+* {
+  font-family: var(--font-display);
+  selection-background-color: alpha(@cp_blue, 0.28);
+  selection-color: white;
+}
+
+window,
+window > box,
+.background {
+  background-color: @cp_black;
+  color: white;
+}
+
+gridview,
+scrolledwindow > viewport {
+  background-color: transparent;
+}
+
+/* ============================================================
+   2. HEADER BAR
+   ============================================================ */
+
+headerbar {
+  background-color: @cp_void;
+  background-image: var(--scanline);
+  border: none;
+  border-bottom: 2px solid @cp_yellow;
+  padding: 6px 14px;
+  min-height: 46px;
+  box-shadow:
+    0 4px 0 @cp_yellow_d,
+    var(--glow-yellow-soft),
+    inset 0 -1px 0 alpha(@cp_yellow, 0.3);
+}
+
+headerbar label,
+headerbar .title {
+  color: @cp_yellow;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 10pt;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  text-shadow:
+    2px 2px 0 @cp_red,
+    -1px 0 0 alpha(@cp_red, 0.5),
+    0 0 12px alpha(@cp_yellow, 0.8);
+}
+
+headerbar button {
+  background: transparent;
+  border: 1px solid alpha(@cp_yellow, 0.2);
+  border-radius: 0;
+  clip-path: var(--clip-btn);
+  color: alpha(@cp_yellow, 0.8);
+  padding: 4px 10px;
+  min-width: 30px;
+  min-height: 28px;
+  transition: all 150ms ease-out;
+}
+
+headerbar button:hover {
+  background-color: alpha(@cp_yellow, 0.12);
+  border-color: @cp_yellow;
+  color: @cp_yellow;
+  box-shadow: var(--glow-yellow-soft);
+}
+
+headerbar button:active {
+  background-color: alpha(@cp_yellow, 0.25);
+  box-shadow: var(--glow-yellow-hot);
+}
+
+headerbar button:disabled {
+  color: alpha(white, 0.2);
+  border-color: alpha(white, 0.06);
+}
+
+/* ============================================================
+   3. BREADCRUMBS  (.breadcrumb-btn)
+   ============================================================ */
+
+button.breadcrumb-btn {
+  background-color: alpha(@cp_blue, 0.06);
+  border: 1px solid alpha(@cp_blue, 0.25);
+  border-radius: 0;
+  clip-path: var(--clip-btn);
+  padding: 3px 14px;
+  margin: 0 3px;
+  min-height: 26px;
+  transition: all 160ms ease-out;
+}
+
+button.breadcrumb-btn label {
+  color: @cp_blue;
+  font-size: 8pt;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  text-shadow: var(--glow-blue-soft);
+}
+
+button.breadcrumb-btn:hover {
+  background-color: alpha(@cp_blue, 0.15);
+  border-color: @cp_blue;
+  box-shadow: var(--glow-blue-soft);
+  transform: translateY(-2px);
+}
+
+/* Active / last segment — yellow hot accent */
+button.breadcrumb-btn:last-child {
+  background-color: @cp_yellow;
+  border-color: @cp_yellow;
+  clip-path: var(--clip-btn);
+  box-shadow: var(--glow-yellow-hot);
+}
+
+button.breadcrumb-btn:last-child label {
+  color: @cp_black;
+  font-weight: 900;
+  text-shadow: none;
+  letter-spacing: 1px;
+}
+
+/* Path / search entries in header */
+headerbar entry,
+headerbar searchentry {
+  background-color: alpha(@cp_blue, 0.06);
+  border: 1px solid alpha(@cp_blue, 0.3);
+  border-bottom: 2px solid @cp_blue;
+  border-radius: 0;
+  color: @cp_blue;
+  font-family: var(--font-mono);
+  font-size: 9pt;
+  padding: 4px 12px;
+  min-height: 28px;
+  box-shadow: var(--glow-blue-soft);
+  transition: all 150ms ease;
+}
+
+headerbar entry:focus,
+headerbar searchentry:focus {
+  border-color: @cp_yellow;
+  border-bottom-color: @cp_yellow;
+  color: @cp_yellow;
+  box-shadow: var(--glow-yellow-hot);
+  background-color: alpha(@cp_yellow, 0.06);
+}
+
+/* ============================================================
+   4. SIDEBAR  (.sidebar, .sidebar-row, .sidebar-label)
+   ============================================================ */
+
+scrolledwindow.sidebar {
+  background-color: @cp_void;
+  background-image: var(--scanline);
+  border-right: 1px solid alpha(@cp_blue, 0.15);
+}
+
+scrolledwindow.sidebar list,
+scrolledwindow.sidebar listbox {
+  background: transparent;
+}
+
+.sidebar-row {
+  background-color: alpha(white, 0.02);
+  border: none;
+  border-left: 2px solid alpha(@cp_blue, 0.2);
+  border-bottom: 1px solid alpha(white, 0.04);
+  border-radius: 0;
+  /* Angular cut on right edge */
+  clip-path: polygon(0 0, 100% 0, 97% 100%, 0 100%);
+  margin: 3px 8px;
+  padding: 10px 16px;
+  color: alpha(white, 0.65);
+  transition: all 200ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.sidebar-row:hover {
+  background-color: alpha(@cp_blue, 0.08);
+  border-left-color: @cp_blue;
+  color: @cp_blue;
+  box-shadow:
+    inset 0 0 12px alpha(@cp_blue, 0.08),
+    var(--glow-blue-soft);
+  transform: translateX(4px);
+  clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
+}
+
+.sidebar-row:selected {
+  background-color: @cp_yellow;
+  border-left: none;
+  /* Inverse angular cut — flipped to the left side */
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 4% 100%);
+  color: @cp_black;
+  font-weight: 900;
+  box-shadow:
+    -6px 0 20px alpha(@cp_yellow, 0.5),
+    var(--glow-yellow-hot);
+  transform: translateX(0);
+}
+
+.sidebar-label {
+  color: inherit;
+  font-size: 10pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sidebar-row image {
+  color: inherit;
+  -gtk-icon-size: 14px;
+}
+
+/* ============================================================
+   5. FILE GRID CARDS  (.flux-card)
+   ============================================================ */
+
+.flux-card {
+  background-color: @cp_panel;
+  background-image: var(--scanline);
+  border: 1px solid alpha(white, 0.07);
+  border-left: 3px solid alpha(@cp_blue, 0.35);
+  border-radius: 0;
+  clip-path: var(--clip-card);
+  margin: 8px;
+  padding: 14px 10px 10px;
+  transition:
+    background-color 200ms ease-out,
+    border-color 200ms ease-out,
+    box-shadow 200ms ease-out,
+    transform 200ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.flux-card:hover {
+  background-color: alpha(@cp_blue, 0.07);
+  border-color: @cp_blue;
+  border-left-color: @cp_blue;
+  box-shadow:
+    0 0 20px alpha(@cp_blue, 0.2),
+    inset 0 0 12px alpha(@cp_blue, 0.08);
+  transform: translateY(-5px) skewX(-1deg);
+}
+
+.flux-card:selected {
+  background-color: alpha(@cp_blue, 0.18);
+  border-color: @cp_blue;
+  box-shadow:
+    0 0 25px alpha(@cp_blue, 0.45),
+    inset 0 0 15px alpha(@cp_blue, 0.15);
+  transform: translateY(-3px);
+}
+
+/* ============================================================
+   6. FILE LABELS  (.flux-label, .thumbnail)
+   ============================================================ */
+
+.flux-label {
+  color: alpha(white, 0.9);
+  font-size: 9pt;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  text-shadow: 0 0 6px alpha(@cp_blue, 0.3);
+  margin-top: 6px;
+}
+
+.thumbnail {
+  border-radius: 0;
+  border: 1px solid alpha(@cp_blue, 0.2);
+}
+
+/* ============================================================
+   7. RENAME ENTRY  (.flux-rename-entry)
+   ============================================================ */
+
+entry.flux-rename-entry {
+  background-color: @cp_panel;
+  border: 1px solid @cp_yellow;
+  border-bottom: 2px solid @cp_yellow;
+  border-radius: 0;
+  color: @cp_yellow;
+  font-family: var(--font-mono);
+  font-size: 9pt;
+  padding: 2px 8px;
+  min-width: 110px;
+  box-shadow: var(--glow-yellow-hot);
+}
+
+/* ============================================================
+   8. SORT INDICATOR  (.sort-container, .sort-status-label)
+   ============================================================ */
+
+.sort-container {
+  background-color: @cp_panel;
+  border: 1px solid alpha(@cp_blue, 0.3);
+  border-bottom: 2px solid @cp_blue;
+  border-radius: 0;
+  clip-path: var(--clip-btn);
+  padding: 1px 12px;
+  box-shadow: var(--glow-blue-soft);
+}
+
+.sort-status-label {
+  color: @cp_blue;
+  font-size: 8pt;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-shadow: var(--glow-blue-soft);
+}
+
+/* ============================================================
+   9. DESTRUCTIVE ACTION  (.destructive-action)
+   ============================================================ */
+
+.destructive-action {
+  background-color: alpha(@cp_red, 0.08);
+  border: 1px solid alpha(@cp_red, 0.5);
+  border-bottom: 2px solid @cp_red;
+  border-radius: 0;
+  clip-path: var(--clip-btn);
+  color: @cp_red;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 4px 16px;
+  box-shadow: var(--glow-red-hot);
+  transition: all 150ms ease-out;
+}
+
+.destructive-action:hover {
+  background-color: @cp_red;
+  color: white;
+  box-shadow:
+    var(--glow-red-hot),
+    0 6px 18px alpha(@cp_red, 0.5);
+  transform: translateY(-1px);
+}
+
+.destructive-action:active {
+  transform: translateY(1px);
+  background-color: alpha(@cp_red, 0.8);
+}
+
+/* ============================================================
+   10. CONTEXT MENU / POPOVER
+   ============================================================ */
+
+popover,
+popover.menu {
+  background: none;
+  padding: 0;
+}
+
+popover contents,
+popover.menu contents {
+  background-color: alpha(@cp_void, 0.97);
+  background-image: var(--scanline);
+  border: 1px solid alpha(@cp_blue, 0.4);
+  border-top: 3px solid @cp_blue;
+  border-radius: 0;
+  padding: 6px;
+  box-shadow:
+    0 0 40px alpha(@cp_blue, 0.35),
+    0 20px 50px alpha(black, 0.8),
+    inset 0 1px 0 alpha(@cp_blue, 0.2);
+}
+
+popover.menu modelbutton {
+  background: transparent;
+  border-radius: 0;
+  border-left: 2px solid transparent;
+  color: alpha(white, 0.8);
+  padding: 7px 14px;
+  font-size: 9.5pt;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: all 120ms ease-out;
+}
+
+popover.menu modelbutton:hover {
+  background-color: alpha(@cp_blue, 0.12);
+  border-left-color: @cp_blue;
+  color: @cp_blue;
+  box-shadow:
+    inset 0 0 12px alpha(@cp_blue, 0.08),
+    var(--glow-blue-soft);
+}
+
+popover.menu modelbutton accelerator {
+  color: alpha(@cp_blue, 0.5);
+  font-size: 8pt;
+  font-style: normal;
+}
+
+popover.menu > contents separator {
+  background-color: alpha(@cp_blue, 0.2);
+  min-height: 1px;
+  margin: 4px 0;
+  box-shadow: 0 0 4px alpha(@cp_blue, 0.3);
+}
+
+/* ============================================================
+   11. ENTRIES (global)
+   ============================================================ */
+
+entry {
+  background-color: alpha(@cp_blue, 0.05);
+  border: 1px solid alpha(@cp_blue, 0.25);
+  border-bottom: 2px solid alpha(@cp_blue, 0.5);
+  border-radius: 0;
+  color: @cp_blue;
+  font-family: var(--font-mono);
+  font-size: 9pt;
+  padding: 6px 12px;
+  transition: all 150ms ease;
+}
+
+entry:focus {
+  border-color: @cp_yellow;
+  color: @cp_yellow;
+  background-color: alpha(@cp_yellow, 0.05);
+  box-shadow: var(--glow-yellow-hot);
+}
+
+/* ============================================================
+   12. SELECTION STATUS BAR  (.selection-status)
+   ============================================================ */
+
+.selection-status {
+  background-color: @cp_void;
+  background-image: var(--scanline);
+  border: none;
+  border-top: 1px solid alpha(@cp_blue, 0.2);
+  border-radius: 0;
+  padding: 2px 16px;
+  min-height: 26px;
+}
+
+.selection-status label.caption {
+  color: alpha(@cp_blue, 0.7);
+  font-size: 8pt;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-shadow: var(--glow-blue-soft);
+}
+
+progressbar trough,
+.selection-status progressbar trough {
+  background-color: alpha(@cp_blue, 0.1);
+  border: 1px solid alpha(@cp_blue, 0.2);
+  border-radius: 0;
+  min-height: 4px;
+}
+
+progressbar progress,
+.selection-status progressbar progress {
+  background-color: @cp_blue;
+  background-image: linear-gradient(
+    90deg,
+    @cp_blue,
+    @cp_magenta 60%,
+    @cp_yellow 100%
+  );
+  border-radius: 0;
+  border: none;
+  box-shadow: var(--glow-blue-hot);
+  transition: all 300ms ease;
+}
+
+/* ============================================================
+   13. SETTINGS WINDOW  (.settings-window, .settings-row, etc.)
+   ============================================================ */
+
+window.settings-window {
+  background-color: @cp_black;
+  background-image: var(--scanline);
+  color: white;
+}
+
+window.settings-window preferencespage,
+window.settings-window preferencesgroup,
+window.settings-window list,
+window.settings-window listbox,
+window.settings-window clamp,
+window.settings-window scrolledwindow {
+  background: transparent;
+  color: white;
+}
+
+window.settings-window preferencesgroup > box > label,
+window.settings-window preferencesgroup label.title {
+  color: @cp_yellow;
+  font-size: 8pt;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow:
+    1px 1px 0 @cp_red,
+    var(--glow-yellow-soft);
+  margin-bottom: 6px;
+}
+
+window.settings-window .settings-row,
+window.settings-window actionrow {
+  background-color: @cp_panel;
+  background-image: var(--scanline);
+  border: 1px solid alpha(white, 0.07);
+  border-left: 3px solid alpha(@cp_blue, 0.4);
+  border-radius: 0;
+  color: white;
+  margin-bottom: 3px;
+  padding: 4px 0;
+  transition: all 150ms ease-out;
+}
+
+window.settings-window .settings-row:hover,
+window.settings-window actionrow:hover {
+  background-color: alpha(@cp_blue, 0.07);
+  border-left-color: @cp_blue;
+  box-shadow: inset 0 0 10px alpha(@cp_blue, 0.06);
+}
+
+window.settings-window .settings-row label.title,
+window.settings-window actionrow label.title {
+  color: white;
+  font-size: 10pt;
+  font-weight: 700;
+}
+
+window.settings-window .settings-row label.subtitle,
+window.settings-window actionrow label.subtitle {
+  color: alpha(@cp_blue, 0.6);
+  font-size: 9pt;
+  font-style: italic;
+}
+
+window.settings-window spinbutton,
+window.settings-window entry,
+window.settings-window dropdown button {
+  background-color: alpha(@cp_blue, 0.06);
+  border: 1px solid alpha(@cp_blue, 0.3);
+  border-bottom: 2px solid @cp_blue;
+  border-radius: 0;
+  color: @cp_blue;
+  font-family: var(--font-mono);
+  padding: 4px 10px;
+  min-height: 28px;
+}
+
+window.settings-window spinbutton:focus,
+window.settings-window entry:focus,
+window.settings-window dropdown button:focus {
+  border-color: @cp_yellow;
+  color: @cp_yellow;
+  box-shadow: var(--glow-yellow-soft);
+}
+
+window.settings-window switch {
+  background-color: alpha(white, 0.07);
+  border: 1px solid alpha(@cp_blue, 0.3);
+  border-radius: 0;
+}
+
+window.settings-window switch:checked {
+  background-color: @cp_yellow;
+  border-color: @cp_yellow;
+  box-shadow: var(--glow-yellow-soft);
+}
+
+window.settings-window switch slider {
+  background-color: white;
+  border-radius: 0;
+  box-shadow: 0 0 6px alpha(@cp_yellow, 0.4);
+}
+
+/* ============================================================
+   14. SCROLLBARS
+   ============================================================ */
+
+scrollbar {
+  background: transparent;
+  border: none;
+}
+
+scrollbar slider {
+  background-color: alpha(@cp_yellow, 0.25);
+  border-radius: 0;
+  min-width: 5px;
+  min-height: 5px;
+  margin: 1px;
+  transition:
+    background 150ms ease,
+    box-shadow 150ms ease;
+}
+
+scrollbar slider:hover {
+  background-color: @cp_yellow;
+  box-shadow: var(--glow-yellow-soft);
+}
+
+/* ============================================================
+   15. LINKED BOX (breadcrumb container)
+   ============================================================ */
+
+box.linked {
+  background: transparent;
+  border: none;
+}
+
+box.linked button {
+  background: transparent;
+  border: none;
+}
+
+/* ============================================================
+   16. FLAT BUTTON
+   ============================================================ */
+
+button.flat {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0;
+  color: alpha(@cp_blue, 0.7);
+  font-size: 8.5pt;
+  font-style: italic;
+  letter-spacing: 0.5px;
+  padding: 4px 12px;
+  transition: all 150ms ease-out;
+}
+
+button.flat:hover {
+  background-color: alpha(@cp_blue, 0.08);
+  border-color: alpha(@cp_blue, 0.3);
+  color: @cp_blue;
+  box-shadow: var(--glow-blue-soft);
+}

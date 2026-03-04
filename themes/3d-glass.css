@@ -1,0 +1,745 @@
+/* ============================================================
+   Flux — Hyperion Glass
+   True-depth glassmorphism with physical light simulation
+   ============================================================ */
+
+:root {
+  /* --- Glass System --- */
+  --glass-bg-0: alpha(@window_fg_color, 0.04); /* resting surface     */
+  --glass-bg-1: alpha(@window_fg_color, 0.07); /* elevated surface    */
+  --glass-bg-2: alpha(@window_fg_color, 0.11); /* hover surface       */
+  --glass-bg-3: alpha(@window_fg_color, 0.18); /* pressed / active    */
+
+  /* --- Light Simulation --- */
+  /* Top-left highlight (refracted light entering glass from upper-left) */
+  --light-edge-top: alpha(white, 0.22);
+  --light-edge-left: alpha(white, 0.12);
+  --light-edge-right: alpha(white, 0.04);
+  --light-edge-bottom: alpha(black, 0.25);
+
+  /* Inset shadow = depth illusion inside the glass */
+  --depth-inset:
+    inset 0 1px 0 var(--light-edge-top), inset 1px 0 0 var(--light-edge-left),
+    inset -1px 0 0 var(--light-edge-right),
+    inset 0 -1px 0 var(--light-edge-bottom);
+
+  /* --- Border System --- */
+  --glass-border: alpha(@window_fg_color, 0.14);
+  --glass-border-lit: alpha(white, 0.22); /* top/left lit edges  */
+  --glass-border-dark: alpha(black, 0.4); /* bottom shadow edge  */
+
+  /* --- Glow --- */
+  --hue-glow: alpha(@accent_color, 0.18);
+  --hue-glow-strong: alpha(@accent_color, 0.35);
+
+  /* --- Drop Shadow Stack --- */
+  /* Three layers: ambient occlusion + penumbra + key shadow */
+  --shadow-resting:
+    0 1px 2px alpha(black, 0.15), 0 4px 12px alpha(black, 0.25),
+    0 8px 24px alpha(black, 0.18);
+
+  --shadow-hover:
+    0 2px 4px alpha(black, 0.2), 0 8px 20px alpha(black, 0.38),
+    0 16px 40px alpha(black, 0.28), 0 0 24px var(--hue-glow);
+
+  --shadow-active:
+    0 1px 3px alpha(black, 0.3), inset 0 2px 8px alpha(black, 0.3);
+
+  /* --- Fonts --- */
+  --font-main:
+    "Oxanium", "Tektur", "Geist Mono", "Google Sans Code",
+    "MesloLGS Nerd Font Mono", "Inter", "Segoe UI", monospace;
+
+  /* --- Radii --- */
+  --r-pill: 100px;
+  --r-xl: 18px;
+  --r-l: 14px;
+  --r-m: 10px;
+  --r-s: 6px;
+  --r-xs: 4px;
+}
+
+/* ============================================================
+   1. GLOBAL
+   ============================================================ */
+
+* {
+  font-family: var(--font-main);
+  -gtk-secondary-caret-color: @accent_color;
+}
+
+window,
+window > box,
+.background {
+  background-color: @window_bg_color;
+  color: @window_fg_color;
+}
+
+gridview,
+scrolledwindow > viewport {
+  background: transparent;
+}
+
+/* ============================================================
+   2. HEADER BAR
+   ============================================================ */
+
+headerbar {
+  background-color: alpha(@headerbar_bg_color, 0.55);
+  /* Backdrop blur: supported in GNOME 47+ compositors */
+  -gtk-backdrop-filter: blur(24px) saturate(1.8);
+  border-bottom: 1px solid var(--glass-border-lit);
+  box-shadow:
+    0 1px 0 var(--glass-border-dark),
+    0 4px 20px alpha(black, 0.35),
+    inset 0 1px 0 var(--light-edge-top);
+  padding: 2px 10px;
+  min-height: 42px;
+}
+
+headerbar label,
+headerbar .title {
+  font-weight: 800;
+  font-size: 9.5pt;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: @window_fg_color;
+  text-shadow: 0 1px 3px alpha(black, 0.5);
+}
+
+headerbar button {
+  background: var(--glass-bg-0);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-s);
+  color: alpha(@window_fg_color, 0.75);
+  padding: 4px 8px;
+  min-width: 28px;
+  min-height: 28px;
+  box-shadow: var(--depth-inset), var(--shadow-resting);
+  transition: all 150ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+headerbar button:hover {
+  background: var(--glass-bg-2);
+  border-color: var(--glass-border-lit);
+  color: @window_fg_color;
+  box-shadow: var(--depth-inset), var(--shadow-hover);
+  transform: translateY(-1px);
+}
+
+headerbar button:active {
+  background: var(--glass-bg-3);
+  box-shadow: var(--shadow-active);
+  transform: translateY(1px);
+}
+
+headerbar button:disabled {
+  opacity: 0.35;
+  box-shadow: none;
+  transform: none;
+}
+
+/* ============================================================
+   3. BREADCRUMBS  (.breadcrumb-btn)
+   ============================================================ */
+
+button.breadcrumb-btn {
+  background-color: var(--glass-bg-1);
+  /* Two-tone border: lit top, dark bottom = the 3D "tab" effect */
+  border-top: 1px solid var(--glass-border-lit);
+  border-left: 1px solid var(--glass-border-lit);
+  border-right: 1px solid var(--glass-border);
+  border-bottom: 2px solid var(--glass-border-dark);
+  border-radius: var(--r-s);
+  padding: 3px 12px;
+  margin: 0 2px;
+  min-height: 26px;
+  box-shadow:
+    var(--depth-inset),
+    0 3px 8px alpha(black, 0.22);
+  transition: all 180ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+button.breadcrumb-btn label {
+  color: alpha(@window_fg_color, 0.7);
+  font-size: 8.5pt;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 2px alpha(black, 0.6);
+}
+
+button.breadcrumb-btn:hover {
+  background-color: var(--glass-bg-2);
+  border-color: alpha(@accent_color, 0.5);
+  box-shadow: var(--depth-inset), var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+button.breadcrumb-btn:hover label {
+  color: @window_fg_color;
+}
+
+/* Last / active segment — raised glass with accent glow */
+button.breadcrumb-btn:last-child {
+  background-color: alpha(@accent_color, 0.2);
+  border-top: 1px solid alpha(@accent_color, 0.6);
+  border-left: 1px solid alpha(@accent_color, 0.4);
+  border-right: 1px solid alpha(@accent_color, 0.2);
+  border-bottom: 2px solid alpha(@accent_color, 0.6);
+  box-shadow:
+    var(--depth-inset),
+    0 0 12px var(--hue-glow),
+    0 4px 12px alpha(black, 0.3);
+}
+
+button.breadcrumb-btn:last-child label {
+  color: @accent_color;
+  font-weight: 900;
+  text-shadow:
+    0 0 8px var(--hue-glow-strong),
+    0 1px 2px alpha(black, 0.5);
+}
+
+/* Path / search entry */
+headerbar entry,
+headerbar searchentry {
+  background-color: alpha(black, 0.35);
+  -gtk-backdrop-filter: blur(8px);
+  border-top: 1px solid var(--glass-border);
+  border-left: 1px solid var(--glass-border);
+  border-right: 1px solid var(--glass-border-dark);
+  border-bottom: 1px solid var(--glass-border-dark);
+  border-radius: var(--r-m);
+  color: @window_fg_color;
+  padding: 4px 12px;
+  min-height: 30px;
+  font-size: 9pt;
+  box-shadow:
+    inset 0 2px 6px alpha(black, 0.4),
+    inset 0 1px 0 var(--light-edge-top);
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+headerbar entry:focus,
+headerbar searchentry:focus {
+  border-color: alpha(@accent_color, 0.7);
+  box-shadow:
+    inset 0 2px 6px alpha(black, 0.4),
+    0 0 0 2px alpha(@accent_color, 0.2),
+    0 0 16px var(--hue-glow);
+}
+
+/* ============================================================
+   4. SIDEBAR  (.sidebar, .sidebar-row, .sidebar-label)
+   ============================================================ */
+
+scrolledwindow.sidebar {
+  background-color: transparent;
+  border-right: 1px solid var(--glass-border);
+}
+
+scrolledwindow.sidebar list,
+scrolledwindow.sidebar listbox {
+  background: transparent;
+}
+
+.sidebar-row {
+  background-color: var(--glass-bg-0);
+  border-top: 1px solid var(--glass-border-lit);
+  border-left: 1px solid var(--glass-border-lit);
+  border-right: 1px solid var(--glass-border);
+  border-bottom: 2px solid var(--glass-border-dark);
+  border-radius: var(--r-l);
+  margin: 3px 10px;
+  padding: 9px 16px;
+  color: alpha(@window_fg_color, 0.65);
+  box-shadow: var(--depth-inset), var(--shadow-resting);
+  transition: all 250ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.sidebar-row:hover {
+  background-color: var(--glass-bg-2);
+  border-top-color: var(--glass-border-lit);
+  border-left-color: var(--glass-border-lit);
+  border-bottom-color: alpha(black, 0.5);
+  color: @window_fg_color;
+  box-shadow: var(--depth-inset), var(--shadow-hover);
+  transform: translateY(-2px) scale(1.015);
+}
+
+.sidebar-row:selected {
+  background-color: alpha(@accent_color, 0.22);
+  border-top: 1px solid alpha(@accent_color, 0.55);
+  border-left: 2px solid alpha(@accent_color, 0.8);
+  border-right: 1px solid alpha(@accent_color, 0.2);
+  border-bottom: 2px solid alpha(@accent_color, 0.5);
+  color: @accent_color;
+  font-weight: 800;
+  box-shadow:
+    inset 0 1px 0 alpha(@accent_color, 0.3),
+    inset 0 -1px 0 alpha(black, 0.3),
+    0 0 16px var(--hue-glow),
+    0 4px 12px alpha(black, 0.3);
+  transform: translateY(0) scale(0.99);
+}
+
+.sidebar-row image {
+  color: inherit;
+  -gtk-icon-size: 16px;
+}
+
+.sidebar-label {
+  color: inherit;
+  font-size: 10pt;
+  font-weight: 600;
+  text-shadow: 0 1px 2px alpha(black, 0.5);
+}
+
+/* ============================================================
+   5. FILE GRID CARDS  (.flux-card)
+   ============================================================ */
+
+.flux-card {
+  background-color: var(--glass-bg-1);
+  /* Physical glass highlight: bright top-left corner, dim bottom-right */
+  border-top: 1px solid var(--glass-border-lit);
+  border-left: 1px solid var(--glass-border-lit);
+  border-right: 1px solid var(--glass-border);
+  border-bottom: 2px solid var(--glass-border-dark);
+  border-radius: var(--r-l);
+  margin: 8px;
+  padding: 14px 10px 10px;
+  box-shadow:
+    /* Inner highlight sheet — simulates glass refraction */
+    inset 0 1px 0 var(--light-edge-top),
+    inset 1px 0 0 var(--light-edge-left),
+    inset -1px 0 0 var(--light-edge-right),
+    inset 0 -1px 0 var(--light-edge-bottom),
+    /* Outer drop shadow stack */ var(--shadow-resting);
+  transition:
+    background-color 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.flux-card:hover {
+  background-color: var(--glass-bg-2);
+  border-top-color: alpha(white, 0.3);
+  border-left-color: alpha(white, 0.18);
+  border-bottom-color: alpha(black, 0.55);
+  box-shadow:
+    inset 0 1px 0 alpha(white, 0.28),
+    inset 1px 0 0 alpha(white, 0.14),
+    inset -1px 0 0 alpha(white, 0.05),
+    inset 0 -1px 0 alpha(black, 0.3),
+    var(--shadow-hover);
+  transform: translateY(-5px);
+}
+
+.flux-card:selected {
+  background-color: alpha(@accent_color, 0.18);
+  border-top-color: alpha(@accent_color, 0.6);
+  border-left-color: alpha(@accent_color, 0.45);
+  border-right-color: alpha(@accent_color, 0.2);
+  border-bottom-color: alpha(@accent_color, 0.5);
+  box-shadow:
+    inset 0 1px 0 alpha(@accent_color, 0.4),
+    0 0 18px var(--hue-glow-strong),
+    0 6px 18px alpha(black, 0.4);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   6. FILE LABELS  (.flux-label, .thumbnail)
+   ============================================================ */
+
+.flux-label {
+  color: @window_fg_color;
+  font-size: 9.5pt;
+  font-weight: 500;
+  margin-top: 6px;
+  text-shadow: 0 1px 3px alpha(black, 0.7);
+}
+
+.thumbnail {
+  border-radius: var(--r-s);
+  /* Subtle inner frame for thumbnails */
+  box-shadow: inset 0 0 0 1px alpha(black, 0.25);
+}
+
+/* ============================================================
+   7. RENAME ENTRY  (.flux-rename-entry)
+   ============================================================ */
+
+entry.flux-rename-entry {
+  background-color: alpha(black, 0.45);
+  -gtk-backdrop-filter: blur(8px);
+  border-top: 1px solid var(--glass-border-lit);
+  border-left: 1px solid var(--glass-border-lit);
+  border-right: 1px solid var(--glass-border);
+  border-bottom: 2px solid @accent_color;
+  border-radius: var(--r-s);
+  color: @window_fg_color;
+  font-size: 9pt;
+  padding: 2px 8px;
+  min-width: 110px;
+  box-shadow:
+    inset 0 2px 5px alpha(black, 0.4),
+    0 0 0 2px alpha(@accent_color, 0.2),
+    0 0 12px var(--hue-glow);
+}
+
+/* ============================================================
+   8. SORT INDICATOR  (.sort-container, .sort-status-label)
+   ============================================================ */
+
+.sort-container {
+  background: var(--glass-bg-0);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-pill);
+  padding: 1px 10px;
+  box-shadow:
+    var(--depth-inset),
+    0 2px 6px alpha(black, 0.2);
+}
+
+.sort-status-label {
+  color: alpha(@accent_color, 0.9);
+  font-size: 8pt;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-shadow: 0 0 8px var(--hue-glow);
+}
+
+/* ============================================================
+   9. DESTRUCTIVE ACTION  (.destructive-action)
+   ============================================================ */
+
+.destructive-action {
+  background-color: alpha(red, 0.12);
+  border-top: 1px solid alpha(red, 0.35);
+  border-left: 1px solid alpha(red, 0.25);
+  border-right: 1px solid alpha(red, 0.15);
+  border-bottom: 2px solid alpha(red, 0.5);
+  border-radius: var(--r-s);
+  color: #ff6b6b;
+  font-weight: 700;
+  padding: 4px 14px;
+  box-shadow:
+    var(--depth-inset),
+    0 0 10px alpha(red, 0.15),
+    0 4px 10px alpha(black, 0.3);
+  transition: all 150ms ease;
+}
+
+.destructive-action:hover {
+  background-color: alpha(red, 0.75);
+  color: white;
+  border-color: red;
+  box-shadow:
+    0 0 20px alpha(red, 0.45),
+    0 6px 16px alpha(black, 0.4);
+  transform: translateY(-1px);
+}
+
+.destructive-action:active {
+  transform: translateY(1px);
+  box-shadow: var(--shadow-active);
+}
+
+/* ============================================================
+   10. CONTEXT MENU / POPOVER
+   ============================================================ */
+
+popover,
+popover.menu {
+  background: none;
+  padding: 0;
+}
+
+popover contents,
+popover.menu contents {
+  background-color: alpha(@window_bg_color, 0.65);
+  -gtk-backdrop-filter: blur(32px) saturate(2);
+  border-top: 1px solid var(--glass-border-lit);
+  border-left: 1px solid var(--glass-border-lit);
+  border-right: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border-dark);
+  border-radius: var(--r-xl);
+  padding: 6px;
+  box-shadow:
+    inset 0 1px 0 var(--light-edge-top),
+    0 24px 60px alpha(black, 0.7),
+    0 8px 24px alpha(black, 0.4),
+    0 0 30px var(--hue-glow);
+}
+
+popover.menu modelbutton {
+  background: transparent;
+  border-radius: var(--r-s);
+  color: @window_fg_color;
+  padding: 7px 14px;
+  font-size: 10pt;
+  font-weight: 600;
+  transition: all 120ms ease;
+}
+
+popover.menu modelbutton:hover {
+  background-color: alpha(@accent_color, 0.22);
+  color: @accent_color;
+  box-shadow: inset 0 1px 0 alpha(@accent_color, 0.3);
+}
+
+popover.menu modelbutton accelerator {
+  color: alpha(@window_fg_color, 0.4);
+  font-size: 8.5pt;
+}
+
+popover.menu > contents separator {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--glass-border-lit) 20%,
+    var(--glass-border-lit) 80%,
+    transparent
+  );
+  min-height: 1px;
+  margin: 4px 8px;
+}
+
+/* ============================================================
+   11. ENTRIES (global)
+   ============================================================ */
+
+entry {
+  background-color: alpha(black, 0.4);
+  -gtk-backdrop-filter: blur(8px);
+  border-top: 1px solid var(--glass-border);
+  border-left: 1px solid var(--glass-border);
+  border-right: 1px solid var(--glass-border-dark);
+  border-bottom: 1px solid var(--glass-border-dark);
+  border-radius: var(--r-s);
+  color: @window_fg_color;
+  padding: 6px 12px;
+  box-shadow:
+    inset 0 2px 6px alpha(black, 0.35),
+    inset 0 1px 0 alpha(white, 0.06);
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+entry:focus {
+  border-color: alpha(@accent_color, 0.7);
+  box-shadow:
+    inset 0 2px 6px alpha(black, 0.35),
+    0 0 0 2px alpha(@accent_color, 0.18),
+    0 0 16px var(--hue-glow);
+}
+
+/* ============================================================
+   12. SELECTION STATUS BAR  (.selection-status)
+   ============================================================ */
+
+.selection-status {
+  background-color: var(--glass-bg-0);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-pill);
+  padding: 1px 14px;
+  margin: 4px 12px;
+  min-height: 26px;
+  box-shadow:
+    var(--depth-inset),
+    0 2px 6px alpha(black, 0.2);
+}
+
+.selection-status label.caption {
+  color: alpha(@window_fg_color, 0.6);
+  font-size: 8.5pt;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  text-shadow: 0 1px 2px alpha(black, 0.5);
+}
+
+/* Progress bar embedded in status bar */
+.selection-status progressbar trough,
+progressbar trough {
+  background-color: alpha(@window_fg_color, 0.06);
+  border-radius: var(--r-pill);
+  border: 1px solid var(--glass-border);
+  min-height: 4px;
+  box-shadow: inset 0 1px 2px alpha(black, 0.3);
+}
+
+.selection-status progressbar progress,
+progressbar progress {
+  background-color: @accent_color;
+  background-image: linear-gradient(
+    90deg,
+    alpha(@accent_color, 0.8),
+    @accent_color,
+    alpha(white, 0.15) 100%
+  );
+  border-radius: var(--r-pill);
+  border: none;
+  box-shadow: 0 0 8px var(--hue-glow-strong);
+  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================================
+   13. SETTINGS WINDOW  (.settings-window, .settings-row, etc.)
+   ============================================================ */
+
+window.settings-window {
+  background-color: @window_bg_color;
+  color: @window_fg_color;
+}
+
+window.settings-window preferencespage,
+window.settings-window preferencesgroup,
+window.settings-window list,
+window.settings-window listbox,
+window.settings-window clamp,
+window.settings-window scrolledwindow {
+  background: transparent;
+  color: @window_fg_color;
+}
+
+window.settings-window preferencesgroup > box > label,
+window.settings-window preferencesgroup label.title {
+  color: alpha(@window_fg_color, 0.55);
+  font-size: 8.5pt;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-shadow: 0 1px 3px alpha(black, 0.5);
+  margin-bottom: 6px;
+}
+
+window.settings-window .settings-row,
+window.settings-window actionrow {
+  background-color: var(--glass-bg-1);
+  border-top: 1px solid var(--glass-border-lit);
+  border-left: 1px solid var(--glass-border-lit);
+  border-right: 1px solid var(--glass-border);
+  border-bottom: 2px solid var(--glass-border-dark);
+  border-radius: var(--r-m);
+  color: @window_fg_color;
+  margin-bottom: 3px;
+  padding: 4px 0;
+  box-shadow: var(--depth-inset), var(--shadow-resting);
+  transition: all 150ms ease;
+}
+
+window.settings-window .settings-row:hover,
+window.settings-window actionrow:hover {
+  background-color: var(--glass-bg-2);
+  box-shadow: var(--depth-inset), var(--shadow-hover);
+  transform: translateY(-1px);
+}
+
+window.settings-window .settings-row label.title,
+window.settings-window actionrow label.title {
+  color: @window_fg_color;
+  font-size: 10pt;
+  text-shadow: 0 1px 2px alpha(black, 0.5);
+}
+
+window.settings-window .settings-row label.subtitle,
+window.settings-window actionrow label.subtitle {
+  color: alpha(@window_fg_color, 0.5);
+  font-size: 9pt;
+}
+
+window.settings-window spinbutton,
+window.settings-window entry,
+window.settings-window dropdown button {
+  background-color: alpha(black, 0.35);
+  border-top: 1px solid var(--glass-border-lit);
+  border-left: 1px solid var(--glass-border-lit);
+  border-right: 1px solid var(--glass-border);
+  border-bottom: 2px solid var(--glass-border-dark);
+  border-radius: var(--r-s);
+  color: @window_fg_color;
+  padding: 4px 10px;
+  min-height: 28px;
+  box-shadow:
+    inset 0 2px 4px alpha(black, 0.3),
+    inset 0 1px 0 alpha(white, 0.06);
+}
+
+window.settings-window spinbutton:focus,
+window.settings-window entry:focus,
+window.settings-window dropdown button:focus {
+  border-color: alpha(@accent_color, 0.7);
+  box-shadow:
+    inset 0 2px 4px alpha(black, 0.3),
+    0 0 0 2px alpha(@accent_color, 0.18),
+    0 0 12px var(--hue-glow);
+}
+
+window.settings-window switch {
+  background-color: alpha(@window_fg_color, 0.1);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-pill);
+  box-shadow:
+    inset 0 2px 4px alpha(black, 0.3),
+    var(--depth-inset);
+}
+
+window.settings-window switch:checked {
+  background-color: alpha(@accent_color, 0.75);
+  border-color: alpha(@accent_color, 0.6);
+  box-shadow:
+    inset 0 2px 4px alpha(black, 0.2),
+    0 0 10px var(--hue-glow);
+}
+
+window.settings-window switch slider {
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px alpha(black, 0.4);
+}
+
+/* ============================================================
+   14. SCROLLBARS
+   ============================================================ */
+
+scrollbar {
+  background: transparent;
+  border: none;
+}
+
+scrollbar slider {
+  background-color: alpha(@window_fg_color, 0.12);
+  border: 1px solid alpha(@window_fg_color, 0.06);
+  border-radius: var(--r-pill);
+  min-width: 6px;
+  min-height: 6px;
+  margin: 2px;
+  transition:
+    background 150ms ease,
+    box-shadow 150ms ease;
+}
+
+scrollbar slider:hover {
+  background-color: alpha(@accent_color, 0.5);
+  box-shadow: 0 0 8px var(--hue-glow);
+}
+
+/* ============================================================
+   15. LINKED BOX (breadcrumb container)
+   ============================================================ */
+
+box.linked {
+  background: transparent;
+  border: none;
+}
+
+box.linked button {
+  border: none;
+  background: transparent;
+}
