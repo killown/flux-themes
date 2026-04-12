@@ -1,0 +1,752 @@
+/* ============================================================
+   Flux — T O K Y O / / N I G H T
+   Neon Cyberpunk Interface — Transparent Blur Edition
+   Organic asymmetry + bioluminescent nerve signals
+   ============================================================ */
+
+@define-color shell_void    #16161e;
+@define-color shell_core    #1a1b26;
+@define-color shell_plate   #24283b;
+@define-color shell_chitin  #292e42;
+@define-color shell_fiber   #414868;
+@define-color shell_scar    #565f89;
+@define-color shell_nerve   #7aa2f7;
+@define-color shell_nerve_d #3d59a1;
+@define-color shell_synapse #89ddff;
+@define-color shell_ichor   #bb9af7;
+@define-color shell_threat  #f7768e;
+@define-color shell_warn    #e0af68;
+
+:root {
+  /* --- Bioluminescence glow layers --- */
+  --nerve-glow-hot:
+    0px 0px 4px alpha(@shell_nerve, 0.9), 0px 0px 14px alpha(@shell_nerve, 0.5),
+    0px 0px 32px alpha(@shell_nerve, 0.2);
+  --synapse-glow:
+    0px 0px 6px alpha(@shell_synapse, 0.5),
+    0px 0px 20px alpha(@shell_synapse, 0.2);
+  --threat-glow:
+    0px 0px 6px alpha(@shell_threat, 0.7),
+    0px 0px 20px alpha(@shell_threat, 0.3);
+  --ichor-glow:
+    0px 0px 8px alpha(@shell_ichor, 0.4), 0px 0px 22px alpha(@shell_ichor, 0.15);
+
+  /* --- Carapace shadow: hard offset like armour plates stacked --- */
+  --plate-shadow: 4px 6px 0px alpha(black, 0.45);
+  --plate-shadow-hover: 2px 3px 0px alpha(black, 0.6);
+
+  /* --- Organic radii: asymmetric per-corner, alternating sharp/rounded --- */
+  --r-bio-a: 2px 14px 2px 14px; /* ◜ ◝  — top-right and bottom-left round */
+  --r-bio-b: 14px 2px 14px 2px; /* ◜ ◞  — top-left and bottom-right round */
+  --r-bio-c: 2px 10px 2px 10px; /* tighter version of A                   */
+  --r-bio-d: 10px 2px 10px 2px; /* tighter version of B                   */
+  --r-chip: 3px; /* sharp technical components              */
+
+  /* --- Texture: fiber-weave via repeating diagonal gradient --- */
+  --weave: repeating-linear-gradient(
+    135deg,
+    transparent 0px,
+    transparent 3px,
+    alpha(black, 0.05) 3px,
+    alpha(black, 0.05) 4px
+  );
+
+  /* --- Fonts --- */
+  --font-exo: "Tektur", "Geist Mono", "Orbitron", "Share Tech Mono", monospace;
+  --font-mono: "Geist Mono", "JetBrains Mono", monospace;
+}
+
+/* ============================================================
+   1. GLOBAL
+   ============================================================ */
+
+* {
+  font-family: var(--font-exo);
+}
+
+window,
+window > box,
+.background {
+  background-color: alpha(@shell_core, 0.65);
+  background-image: var(--weave);
+  color: alpha(white, 0.85);
+}
+
+gridview,
+scrolledwindow > viewport {
+  background: transparent;
+}
+
+/* ============================================================
+   2. HEADER BAR
+   ============================================================ */
+
+headerbar {
+  background-color: alpha(@shell_void, 0.5);
+  background-image: var(--weave);
+  border: none;
+  /* Asymmetric bottom border: thin left, thick right pulse — biomech EKG */
+  border-bottom: 1px solid alpha(@shell_fiber, 0.4);
+  padding: 6px 14px;
+  min-height: 46px;
+  box-shadow:
+    0px 1px 0px alpha(@shell_nerve_d, 0.8),
+    0px 4px 20px alpha(black, 0.5),
+    inset 0px -2px 0px alpha(@shell_nerve, 0.08);
+}
+
+headerbar label,
+headerbar .title {
+  color: @shell_nerve;
+  font-weight: 900;
+  font-size: 9.5pt;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 10px alpha(@shell_nerve, 0.6),
+    0 0 28px alpha(@shell_nerve, 0.2),
+    0 1px 0 alpha(black, 0.8);
+}
+
+headerbar button {
+  background-color: alpha(@shell_chitin, 0.4);
+  background-image: var(--weave);
+  border: 1px solid alpha(@shell_fiber, 0.6);
+  border-radius: var(--r-bio-c);
+  color: alpha(white, 0.7);
+  padding: 4px 10px;
+  min-width: 30px;
+  min-height: 28px;
+  box-shadow: var(--plate-shadow);
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease,
+    box-shadow 200ms ease,
+    transform 200ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+headerbar button:hover {
+  background-color: alpha(@shell_nerve, 0.15);
+  border-color: @shell_nerve;
+  color: @shell_nerve;
+  box-shadow:
+    0px 0px 8px alpha(@shell_nerve, 0.3),
+    2px 3px 0px alpha(black, 0.4);
+  transform: translateY(-1px);
+}
+
+headerbar button:active {
+  transform: translateY(2px) translateX(2px);
+  box-shadow: var(--plate-shadow-hover);
+  background-color: alpha(@shell_nerve, 0.25);
+}
+
+headerbar button:disabled {
+  color: alpha(white, 0.2);
+  border-color: alpha(@shell_fiber, 0.3);
+  box-shadow: none;
+}
+
+/* ============================================================
+   3. BREADCRUMBS  (.breadcrumb-btn)
+   ============================================================ */
+
+button.breadcrumb-btn {
+  background-color: alpha(@shell_fiber, 0.3);
+  background-image: var(--weave);
+  border: 1px solid alpha(@shell_fiber, 0.6);
+  border-radius: var(--r-bio-c);
+  padding: 3px 12px;
+  margin: 0 3px;
+  min-height: 26px;
+  box-shadow: var(--plate-shadow);
+  transition:
+    background-color 220ms ease,
+    border-color 220ms ease,
+    color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+button.breadcrumb-btn label {
+  color: alpha(white, 0.7);
+  font-size: 8.5pt;
+  font-weight: 700;
+  text-shadow: 0 1px 3px alpha(black, 0.7);
+}
+
+button.breadcrumb-btn:hover {
+  background-color: alpha(@shell_nerve, 0.14);
+  border-color: @shell_nerve;
+  box-shadow:
+    0px 0px 8px alpha(@shell_nerve, 0.3),
+    2px 3px 0px alpha(black, 0.4);
+  transform: translateY(-2px);
+}
+
+button.breadcrumb-btn:hover label {
+  color: @shell_nerve;
+  text-shadow: 0px 0px 8px alpha(@shell_nerve, 0.3);
+}
+
+/* Active / last — carapace plate lights up */
+button.breadcrumb-btn:last-child {
+  background-color: alpha(@shell_nerve, 0.9);
+  background-image: none;
+  border-color: alpha(white, 0.3);
+  border-radius: var(--r-bio-b);
+  box-shadow: var(--nerve-glow-hot), var(--plate-shadow);
+}
+
+button.breadcrumb-btn:last-child label {
+  color: @shell_core;
+  font-weight: 900;
+  text-shadow: none;
+}
+
+/* Path / search entries */
+headerbar entry,
+headerbar searchentry {
+  background-color: alpha(@shell_void, 0.4);
+  background-image: var(--weave);
+  border: 1px solid alpha(@shell_fiber, 0.5);
+  border-bottom: 2px solid alpha(@shell_nerve_d, 0.8);
+  border-radius: var(--r-bio-a);
+  color: @shell_nerve;
+  font-family: var(--font-mono);
+  font-size: 9pt;
+  padding: 4px 12px;
+  min-height: 28px;
+  box-shadow: inset 0px 2px 6px alpha(black, 0.5);
+  transition: all 200ms ease;
+}
+
+headerbar entry:focus,
+headerbar searchentry:focus {
+  border-color: @shell_nerve;
+  box-shadow:
+    inset 0px 2px 6px alpha(black, 0.5),
+    var(--nerve-glow-hot);
+}
+
+/* ============================================================
+   4. SIDEBAR  (.sidebar, .sidebar-row, .sidebar-label)
+   ============================================================ */
+
+scrolledwindow.sidebar {
+  background-color: alpha(@shell_void, 0.35);
+  background-image: var(--weave);
+  border-right: 1px solid alpha(@shell_fiber, 0.4);
+}
+
+scrolledwindow.sidebar list,
+scrolledwindow.sidebar listbox {
+  background: transparent;
+}
+
+.sidebar-row {
+  background-color: alpha(@shell_plate, 0.35);
+  background-image: var(--weave);
+  border: 1px solid alpha(@shell_fiber, 0.4);
+  border-radius: var(--r-bio-a);
+  margin: 4px 10px;
+  padding: 10px 16px;
+  min-height: 38px;
+  color: alpha(white, 0.7);
+  box-shadow: var(--plate-shadow);
+  transition:
+    background-color 320ms ease,
+    border-color 320ms ease,
+    color 320ms ease,
+    box-shadow 320ms ease,
+    transform 320ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.sidebar-row:hover {
+  background-color: alpha(@shell_nerve, 0.15);
+  border-color: @shell_nerve;
+  /* Flip to alternate asymmetric radius on hover — exoskeleton shifting */
+  border-radius: var(--r-bio-b);
+  color: white;
+  box-shadow:
+    0px 0px 8px alpha(@shell_nerve, 0.3),
+    var(--plate-shadow);
+  transform: translateX(5px);
+}
+
+.sidebar-row:selected {
+  background-color: alpha(@shell_nerve, 0.85);
+  background-image: none;
+  border-radius: var(--r-bio-b);
+  border-color: alpha(white, 0.4);
+  color: @shell_core;
+  font-weight: 900;
+  box-shadow:
+    var(--nerve-glow-hot),
+    2px 3px 0px alpha(black, 0.6);
+  transform: scale(1.03) translateX(2px);
+}
+
+.sidebar-row image {
+  color: inherit;
+  -gtk-icon-size: 15px;
+}
+
+.sidebar-label {
+  color: inherit;
+  font-size: 10pt;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   5. FILE GRID CARDS  (.flux-card)
+   ============================================================ */
+
+.flux-card {
+  background-color: alpha(@shell_plate, 0.4);
+  background-image: var(--weave);
+  border: 1px solid alpha(@shell_fiber, 0.5);
+  border-left: 3px solid alpha(@shell_scar, 0.8);
+  border-radius: var(--r-bio-a);
+  margin: 8px;
+  padding: 14px 10px 10px;
+  /* Hard plate shadow — segments stacked on the surface below */
+  box-shadow: var(--plate-shadow);
+  transition:
+    background-color 280ms ease,
+    border-color 280ms ease,
+    box-shadow 280ms ease,
+    transform 280ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.flux-card:hover {
+  background-color: alpha(@shell_chitin, 0.55);
+  border-color: @shell_nerve;
+  border-left-color: @shell_nerve;
+  /* Shadow collapses as card "presses into" the surface */
+  box-shadow:
+    var(--plate-shadow-hover),
+    0 0 18px alpha(@shell_nerve, 0.18),
+    inset 0px 0px 10px alpha(@shell_nerve, 0.06);
+  transform: translateY(3px) translateX(3px);
+}
+
+.flux-card:selected {
+  background-color: alpha(@shell_nerve, 0.15);
+  border-color: @shell_nerve;
+  border-left-color: @shell_synapse;
+  box-shadow:
+    0 0 20px alpha(@shell_nerve, 0.35),
+    inset 0px 0px 10px alpha(@shell_nerve, 0.08);
+  transform: translateY(1px) translateX(1px);
+}
+
+/* ============================================================
+   6. FILE LABELS  (.flux-label, .thumbnail)
+   ============================================================ */
+
+.flux-label {
+  color: alpha(white, 0.7);
+  font-size: 9pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-shadow: 0 1px 3px alpha(black, 0.7);
+  margin-top: 6px;
+}
+
+.thumbnail {
+  border-radius: var(--r-chip);
+  border: 1px solid alpha(@shell_fiber, 0.6);
+}
+
+/* ============================================================
+   7. RENAME ENTRY  (.flux-rename-entry)
+   ============================================================ */
+
+entry.flux-rename-entry {
+  background-color: alpha(@shell_void, 0.5);
+  border: 1px solid alpha(@shell_nerve, 0.7);
+  border-bottom: 2px solid @shell_nerve;
+  border-radius: var(--r-bio-a);
+  color: @shell_nerve;
+  font-family: var(--font-mono);
+  font-size: 9pt;
+  padding: 2px 8px;
+  min-width: 110px;
+  box-shadow:
+    inset 0px 2px 4px alpha(black, 0.5),
+    var(--nerve-glow-hot);
+}
+
+/* ============================================================
+   8. SORT INDICATOR  (.sort-container, .sort-status-label)
+   ============================================================ */
+
+.sort-container {
+  background-color: alpha(@shell_chitin, 0.4);
+  background-image: var(--weave);
+  border: 1px solid alpha(@shell_fiber, 0.6);
+  border-radius: var(--r-bio-c);
+  padding: 1px 12px;
+  box-shadow: var(--plate-shadow);
+}
+
+.sort-status-label {
+  color: @shell_nerve;
+  font-size: 8pt;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-shadow: 0px 0px 8px alpha(@shell_nerve, 0.3);
+}
+
+/* ============================================================
+   9. DESTRUCTIVE ACTION  (.destructive-action)
+   ============================================================ */
+
+.destructive-action {
+  background-color: alpha(@shell_threat, 0.1);
+  background-image: var(--weave);
+  border: 1px solid alpha(@shell_threat, 0.4);
+  border-bottom: 2px solid alpha(@shell_threat, 0.7);
+  border-radius: var(--r-bio-a);
+  color: @shell_threat;
+  font-weight: 900;
+  text-transform: uppercase;
+  padding: 4px 16px;
+  box-shadow: var(--threat-glow), var(--plate-shadow);
+  transition:
+    background-color 250ms ease,
+    border-color 250ms ease,
+    color 250ms ease,
+    box-shadow 250ms ease,
+    transform 250ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.destructive-action:hover {
+  background-color: alpha(@shell_threat, 0.85);
+  background-image: none;
+  color: white;
+  border-color: @shell_threat;
+  box-shadow: var(--threat-glow), var(--plate-shadow-hover);
+  transform: translateY(3px) translateX(3px);
+}
+
+.destructive-action:active {
+  transform: translateY(4px) translateX(4px);
+  box-shadow: 0 0 4px alpha(@shell_threat, 0.3);
+}
+
+/* ============================================================
+   10. CONTEXT MENU / POPOVER
+   ============================================================ */
+
+popover,
+popover.menu {
+  background: none;
+  padding: 0;
+}
+
+popover contents,
+popover.menu contents {
+  background-color: alpha(@shell_plate, 0.6);
+  background-image: var(--weave);
+  border: 1px solid alpha(@shell_fiber, 0.6);
+  border-top: 3px solid alpha(@shell_nerve, 0.9);
+  /* Organic asymmetric corners on the popover hull */
+  border-radius: 14px 2px 14px 2px;
+  padding: 8px;
+  box-shadow:
+    0px 0px 8px alpha(@shell_nerve, 0.3),
+    12px 14px 0 alpha(black, 0.5),
+    20px 24px 40px alpha(black, 0.6);
+}
+
+popover.menu modelbutton {
+  background: transparent;
+  border-left: 3px solid transparent;
+  border-radius: 0px var(--r-chip) 0px var(--r-chip);
+  color: alpha(white, 0.85);
+  padding: 7px 14px;
+  font-size: 9.5pt;
+  font-weight: 700;
+  transition: all 150ms ease-out;
+}
+
+popover.menu modelbutton:hover {
+  background-color: alpha(@shell_nerve, 0.15);
+  border-left-color: @shell_nerve;
+  color: @shell_nerve;
+  text-shadow: 0px 0px 8px alpha(@shell_nerve, 0.3);
+}
+
+popover.menu modelbutton accelerator {
+  color: alpha(@shell_nerve, 0.6);
+  font-size: 8pt;
+}
+
+popover.menu > contents separator {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    alpha(@shell_nerve_d, 0.5) 25%,
+    alpha(@shell_nerve_d, 0.5) 75%,
+    transparent
+  );
+  min-height: 1px;
+  margin: 4px 8px;
+  box-shadow: 0 0 4px alpha(@shell_nerve, 0.25);
+}
+
+/* ============================================================
+   11. ENTRIES (global)
+   ============================================================ */
+
+entry {
+  background-color: alpha(@shell_void, 0.5);
+  background-image: var(--weave);
+  border: 1px solid alpha(@shell_fiber, 0.6);
+  border-radius: var(--r-bio-a);
+  color: @shell_nerve;
+  font-family: var(--font-mono);
+  font-size: 9pt;
+  padding: 6px 12px;
+  box-shadow: inset 0px 2px 5px alpha(black, 0.5);
+  transition: all 200ms ease;
+}
+
+entry:focus {
+  border-color: @shell_nerve;
+  box-shadow:
+    inset 0px 2px 5px alpha(black, 0.5),
+    0px 0px 8px alpha(@shell_nerve, 0.3);
+}
+
+/* ============================================================
+   12. SELECTION STATUS BAR  (.selection-status)
+   ============================================================ */
+
+.selection-status {
+  background-color: alpha(@shell_void, 0.5);
+  background-image: var(--weave);
+  border: none;
+  border-top: 1px solid alpha(@shell_fiber, 0.5);
+  border-radius: 0;
+  padding: 3px 16px;
+  min-height: 26px;
+}
+
+.selection-status label.caption {
+  color: alpha(@shell_nerve, 0.8);
+  font-size: 8pt;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+progressbar trough,
+.selection-status progressbar trough {
+  background-color: alpha(@shell_chitin, 0.5);
+  border: 1px solid alpha(@shell_fiber, 0.6);
+  border-radius: var(--r-chip);
+  min-height: 4px;
+  box-shadow: inset 0px 1px 2px alpha(black, 0.5);
+}
+
+progressbar progress,
+.selection-status progressbar progress {
+  background-color: alpha(@shell_nerve, 0.9);
+  background-image: linear-gradient(
+    90deg,
+    alpha(@shell_nerve_d, 0.9),
+    alpha(@shell_nerve, 0.9) 50%,
+    alpha(@shell_synapse, 0.9) 100%
+  );
+  border-radius: var(--r-chip);
+  border: none;
+  box-shadow: var(--nerve-glow-hot);
+  transition: all 300ms ease;
+}
+
+/* ============================================================
+   13. SETTINGS WINDOW
+   ============================================================ */
+
+window.settings-window {
+  background-color: alpha(@shell_core, 0.65);
+  background-image: var(--weave);
+  color: alpha(white, 0.85);
+}
+
+window.settings-window preferencespage,
+window.settings-window preferencesgroup,
+window.settings-window list,
+window.settings-window listbox,
+window.settings-window clamp,
+window.settings-window scrolledwindow {
+  background: transparent;
+  color: alpha(white, 0.85);
+}
+
+window.settings-window preferencesgroup > box > label,
+window.settings-window preferencesgroup label.title {
+  color: @shell_nerve;
+  font-size: 8pt;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-shadow: 0px 0px 8px alpha(@shell_nerve, 0.3);
+  margin-bottom: 6px;
+}
+
+window.settings-window .settings-row,
+window.settings-window actionrow {
+  background-color: alpha(@shell_plate, 0.4);
+  background-image: var(--weave);
+  border: 1px solid alpha(@shell_fiber, 0.5);
+  border-left: 3px solid alpha(@shell_scar, 0.8);
+  border-radius: var(--r-bio-a);
+  color: alpha(white, 0.85);
+  margin-bottom: 3px;
+  padding: 4px 0;
+  box-shadow: var(--plate-shadow);
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease,
+    box-shadow 200ms ease,
+    transform 200ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+window.settings-window .settings-row:hover,
+window.settings-window actionrow:hover {
+  background-color: alpha(@shell_nerve, 0.1);
+  border-left-color: @shell_nerve;
+  box-shadow:
+    0px 0px 8px alpha(@shell_nerve, 0.3),
+    var(--plate-shadow-hover);
+  transform: translateX(2px);
+}
+
+window.settings-window .settings-row label.title,
+window.settings-window actionrow label.title {
+  color: alpha(white, 0.95);
+  font-size: 10pt;
+  font-weight: 700;
+  margin-left: 3px;
+}
+
+window.settings-window .settings-row label.subtitle,
+window.settings-window actionrow label.subtitle {
+  color: alpha(@shell_nerve, 0.7);
+  font-size: 9pt;
+  font-style: italic;
+  margin-left: 3px;
+}
+
+window.settings-window spinbutton,
+window.settings-window entry,
+window.settings-window dropdown button {
+  background-color: alpha(@shell_void, 0.4);
+  background-image: var(--weave);
+  border: 1px solid alpha(@shell_fiber, 0.6);
+  border-bottom: 2px solid alpha(@shell_nerve_d, 0.8);
+  border-radius: var(--r-bio-c);
+  color: @shell_nerve;
+  font-family: var(--font-mono);
+  padding: 4px 10px;
+  min-height: 28px;
+  box-shadow: inset 0px 2px 4px alpha(black, 0.5);
+  transition: all 200ms ease;
+}
+
+window.settings-window spinbutton:focus,
+window.settings-window entry:focus,
+window.settings-window dropdown button:focus {
+  border-color: @shell_nerve;
+  box-shadow:
+    inset 0px 2px 4px alpha(black, 0.5),
+    0px 0px 8px alpha(@shell_nerve, 0.3);
+}
+
+window.settings-window switch {
+  background-color: alpha(@shell_chitin, 0.6);
+  border: 1px solid alpha(@shell_fiber, 0.7);
+  border-radius: 2px 10px 2px 10px;
+  box-shadow: inset 0px 2px 4px alpha(black, 0.4);
+}
+
+window.settings-window switch:checked {
+  background-color: alpha(@shell_nerve, 0.85);
+  border-color: alpha(white, 0.3);
+  box-shadow: var(--nerve-glow-hot);
+}
+
+window.settings-window switch slider {
+  background-color: white;
+  border-radius: 2px 8px 2px 8px;
+  box-shadow: 0 2px 5px alpha(black, 0.5);
+}
+
+/* ============================================================
+   14. SCROLLBARS
+   ============================================================ */
+
+scrollbar {
+  background: transparent;
+  border: none;
+}
+
+scrollbar slider {
+  background-color: alpha(@shell_scar, 0.7);
+  border-radius: 0;
+  min-width: 5px;
+  min-height: 5px;
+  margin: 1px;
+  transition:
+    background 150ms ease,
+    box-shadow 150ms ease;
+}
+
+scrollbar slider:hover {
+  background-color: alpha(@shell_nerve, 0.9);
+  box-shadow: 0px 0px 8px alpha(@shell_nerve, 0.3);
+}
+
+/* ============================================================
+   15. LINKED BOX
+   ============================================================ */
+
+box.linked {
+  background: transparent;
+  border: none;
+}
+
+box.linked button {
+  background: transparent;
+  border: none;
+}
+
+/* ============================================================
+   16. FLAT BUTTON
+   ============================================================ */
+
+button.flat {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--r-bio-c);
+  color: alpha(white, 0.6);
+  font-size: 8.5pt;
+  padding: 4px 12px;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease,
+    box-shadow 200ms ease,
+    transform 200ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+button.flat:hover {
+  background-color: alpha(@shell_nerve, 0.12);
+  border-color: alpha(@shell_fiber, 0.6);
+  color: @shell_nerve;
+  box-shadow: 0px 0px 8px alpha(@shell_nerve, 0.3);
+}
