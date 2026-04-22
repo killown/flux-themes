@@ -70,14 +70,14 @@
 
   /* ─── Volumetric shadow stack ────────────────────────────── */
   --vol-rest:
-    0px 2px 4px alpha(black, 0.3), 0px 8px 24px alpha(black, 0.45),
-    0px 20px 50px alpha(black, 0.35);
+    0px 2px 4px 0px alpha(black, 0.3), 0px 8px 24px 0px alpha(black, 0.45),
+    0px 20px 50px 0px alpha(black, 0.35);
   --vol-hover:
-    0px 4px 8px alpha(black, 0.4), 0px 16px 40px alpha(black, 0.55),
-    0px 36px 80px alpha(black, 0.4), 0px 0px 50px alpha(@hb_violet, 0.18),
-    0px 0px 25px alpha(@hb_aqua, 0.12);
+    0px 4px 8px 0px alpha(black, 0.4), 0px 16px 40px 0px alpha(black, 0.55),
+    0px 24px 60px 0px alpha(black, 0.4),
+    0px 0px 30px 2px alpha(@hb_violet, 0.18);
   --vol-active:
-    0px 1px 3px alpha(black, 0.5), inset 0px 2px 8px alpha(black, 0.35);
+    0px 1px 3px 0px alpha(black, 0.5), inset 0px 2px 8px 0px alpha(black, 0.35);
 
   /* ─── Depth noise (diagonal fiber-weave, very subtle) ───── */
   --noise: repeating-linear-gradient(
@@ -106,7 +106,6 @@
 
 * {
   font-family: var(--font-holo);
-  -gtk-secondary-caret-color: @hb_aqua;
 }
 
 window,
@@ -144,7 +143,6 @@ scrolledwindow > viewport {
 
 headerbar {
   background-color: alpha(@hb_plasma, 0.65);
-  -gtk-backdrop-filter: blur(28px) saturate(1.9);
   background-image: var(--noise);
   border: none;
   border-bottom: 1px solid alpha(@hb_aqua, 0.18);
@@ -168,9 +166,7 @@ headerbar .title {
 
 headerbar button {
   background-color: alpha(white, 0.04);
-  -gtk-backdrop-filter: blur(10px);
   border: 1px solid alpha(white, 0.08);
-  border-radius: var(--r-btn);
   color: alpha(@hb_body, 0.7);
   padding: 4px 10px;
   min-width: 30px;
@@ -205,9 +201,7 @@ headerbar button:disabled {
 
 button.breadcrumb-btn {
   background-color: alpha(white, 0.03);
-  -gtk-backdrop-filter: blur(12px);
   border: 1px solid alpha(white, 0.08);
-  border-radius: var(--r-btn);
   padding: 3px 14px;
   margin: 0px 2px;
   min-height: 26px;
@@ -250,10 +244,8 @@ button.breadcrumb-btn:last-child label {
 headerbar entry,
 headerbar searchentry {
   background-color: alpha(black, 0.45);
-  -gtk-backdrop-filter: blur(14px);
   border: 1px solid alpha(white, 0.1);
   border-bottom: 1px solid alpha(@hb_aqua, 0.3);
-  border-radius: var(--r-pill);
   color: @hb_bright;
   font-size: 9pt;
   padding: 4px 18px;
@@ -278,7 +270,6 @@ headerbar searchentry:focus {
 
 scrolledwindow.sidebar {
   background-color: alpha(@hb_plasma, 0.55);
-  -gtk-backdrop-filter: blur(22px) saturate(1.5);
   border-right: 1px solid alpha(white, 0.05);
 }
 
@@ -291,7 +282,6 @@ scrolledwindow.sidebar listbox {
   background-color: alpha(white, 0.025);
   background-image: var(--noise);
   border: 1px solid alpha(white, 0.055);
-  border-radius: var(--r-tile);
   margin: 5px 14px;
   padding: 11px 18px;
   min-height: 36px;
@@ -350,9 +340,7 @@ scrolledwindow.sidebar listbox {
 .flux-card {
   background-color: alpha(@hb_hull, 0.88);
   background-image: var(--noise);
-  -gtk-backdrop-filter: blur(18px) saturate(1.5);
   border: 1px solid alpha(white, 0.075);
-  border-radius: var(--r-bento);
   margin: 10px;
   padding: 16px 12px 12px;
   box-shadow: var(--glass), var(--vol-rest);
@@ -393,7 +381,6 @@ scrolledwindow.sidebar listbox {
 }
 
 .thumbnail {
-  border-radius: var(--r-thumb);
   border: 1px solid alpha(white, 0.07);
   box-shadow:
     inset 0px 0px 0px 1px alpha(@hb_aqua, 0.05),
@@ -406,10 +393,8 @@ scrolledwindow.sidebar listbox {
 
 entry.flux-rename-entry {
   background-color: alpha(black, 0.55);
-  -gtk-backdrop-filter: blur(12px);
   border: 1px solid alpha(@hb_aqua, 0.45);
   border-bottom: 2px solid @hb_aqua;
-  border-radius: var(--r-btn);
   color: @hb_bright;
   font-size: 9pt;
   padding: 2px 10px;
@@ -425,9 +410,7 @@ entry.flux-rename-entry {
 
 .sort-container {
   background-color: alpha(@hb_violet, 0.18);
-  -gtk-backdrop-filter: blur(10px);
   border: 1px solid alpha(@hb_violet, 0.38);
-  border-radius: var(--r-pill);
   padding: 1px 14px;
   box-shadow: var(--glow-violet-s);
 }
@@ -446,9 +429,7 @@ entry.flux-rename-entry {
 
 .destructive-action {
   background-color: alpha(@hb_rose, 0.07);
-  -gtk-backdrop-filter: blur(10px);
   border: 1px solid alpha(@hb_rose, 0.3);
-  border-radius: var(--r-btn);
   color: @hb_rose;
   font-weight: 800;
   letter-spacing: 1.8px;
@@ -486,11 +467,9 @@ popover.menu {
 popover contents,
 popover.menu contents {
   background-color: alpha(@hb_plasma, 0.8);
-  -gtk-backdrop-filter: blur(36px) saturate(2.2);
   background-image: var(--noise);
   border: 1px solid alpha(white, 0.1);
   border-top: 1px solid alpha(@hb_aqua, 0.25);
-  border-radius: 26px;
   padding: 8px;
   box-shadow:
     inset 0px 1px 0px alpha(white, 0.1),
@@ -500,7 +479,6 @@ popover.menu contents {
 
 popover.menu modelbutton {
   background: transparent;
-  border-radius: var(--r-tile);
   color: alpha(@hb_body, 0.8);
   padding: 9px 16px;
   margin: 2px 0px;
@@ -538,10 +516,8 @@ popover.menu > contents separator {
 
 entry {
   background-color: alpha(black, 0.48);
-  -gtk-backdrop-filter: blur(12px);
   border: 1px solid alpha(white, 0.09);
   border-bottom: 1px solid alpha(@hb_aqua, 0.28);
-  border-radius: var(--r-pill);
   color: @hb_bright;
   font-size: 9.5pt;
   padding: 6px 18px;
@@ -566,7 +542,6 @@ entry:focus {
 
 .selection-status {
   background-color: alpha(@hb_plasma, 0.7);
-  -gtk-backdrop-filter: blur(18px);
   border: none;
   border-top: 1px solid alpha(white, 0.05);
   padding: 3px 18px;
@@ -584,7 +559,6 @@ progressbar trough,
 .selection-status progressbar trough {
   background-color: alpha(white, 0.04);
   border: 1px solid alpha(white, 0.06);
-  border-radius: var(--r-pill);
   min-height: 4px;
   box-shadow: inset 0px 1px 4px alpha(black, 0.5);
 }
@@ -597,7 +571,6 @@ progressbar progress,
     @hb_violet 55%,
     @hb_rose 100%
   );
-  border-radius: var(--r-pill);
   border: none;
   box-shadow: var(--glow-prism);
   transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -641,9 +614,7 @@ window.settings-window .settings-row,
 window.settings-window actionrow {
   background-color: alpha(white, 0.025);
   background-image: var(--noise);
-  -gtk-backdrop-filter: blur(12px);
   border: 1px solid alpha(white, 0.06);
-  border-radius: var(--r-tile);
   color: @hb_body;
   margin-bottom: 4px;
   padding: 4px 0px;
@@ -682,7 +653,6 @@ window.settings-window dropdown button {
   background-color: alpha(black, 0.42);
   border: 1px solid alpha(white, 0.09);
   border-bottom: 1px solid alpha(@hb_aqua, 0.28);
-  border-radius: var(--r-pill);
   color: @hb_bright;
   padding: 4px 16px;
   min-height: 28px;
@@ -701,7 +671,6 @@ window.settings-window dropdown button:focus {
 window.settings-window switch {
   background-color: alpha(white, 0.06);
   border: 1px solid alpha(white, 0.09);
-  border-radius: var(--r-pill);
   box-shadow: inset 0px 2px 4px alpha(black, 0.35);
 }
 
@@ -713,7 +682,6 @@ window.settings-window switch:checked {
 
 window.settings-window switch slider {
   background-color: white;
-  border-radius: var(--r-pill);
   box-shadow:
     0px 2px 8px alpha(black, 0.45),
     0px 0px 8px alpha(@hb_aqua, 0.25);
@@ -730,7 +698,6 @@ scrollbar {
 
 scrollbar slider {
   background-color: alpha(white, 0.07);
-  border-radius: var(--r-pill);
   min-width: 5px;
   min-height: 5px;
   margin: 3px;
@@ -765,7 +732,6 @@ box.linked button {
 button.flat {
   background: transparent;
   border: 1px solid transparent;
-  border-radius: var(--r-btn);
   color: @hb_dim;
   font-size: 9pt;
   font-weight: 500;
