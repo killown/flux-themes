@@ -1,12 +1,13 @@
-/* --- Flux: macOS Dark (Clone of OS Dark, built on minimal.css structure) --- */
+/* --- Flux: macOS Light (Clone of macOS Dark, built on minimal.css structure) --- */
 
 :root {
-  --mac-bg: #1e1e1e;
-  --mac-sidebar: rgba(40, 40, 40, 0.7);
+  --mac-bg: #f5f5f7;
+  --mac-sidebar: rgba(242, 242, 247, 0.8);
   --mac-accent: #007aff;
-  --mac-border: rgba(255, 255, 255, 0.1);
-  --mac-text: #ffffff;
-  --mac-secondary: #a1a1a1;
+  --mac-border: rgba(0, 0, 0, 0.1);
+  --mac-text: #1c1c1e;
+  --mac-secondary: #8e8e93;
+  --mac-shadow: rgba(0, 0, 0, 0.12);
   --font-main: "SF Pro Display", "Inter", "Helvetica Neue", sans-serif;
   --font-mono: "SF Mono", "JetBrains Mono", monospace;
   letter-spacing: 0.2px !important;
@@ -26,12 +27,13 @@ scrolledwindow > viewport {
 
 /* ---------- HEADER ---------- */
 headerbar {
-  background-color: alpha(var(--mac-bg), 0.9);
+  background-color: alpha(white, 0.85);
   border-bottom: 1px solid var(--mac-border);
   padding: 4px 12px;
   min-height: 38px;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.05);
   font-family: var(--font-main);
+  backdrop-filter: blur(20px);
 }
 
 headerbar label {
@@ -51,7 +53,7 @@ headerbar button {
 }
 
 headerbar button:hover {
-  background-color: alpha(var(--mac-text), 0.08);
+  background-color: alpha(black, 0.06);
 }
 
 /* ---------- SIDEBAR (macOS style) ---------- */
@@ -74,18 +76,18 @@ scrolledwindow.sidebar listbox {
   transition:
     background-color 200ms ease,
     transform 200ms cubic-bezier(0.1, 0.7, 0.1, 1);
-  color: alpha(var(--mac-text), 0.85);
+  color: alpha(var(--mac-text), 0.7);
 }
 
 .sidebar-row label {
-  color: alpha(var(--mac-text), 0.85);
+  color: alpha(var(--mac-text), 0.7);
   font-family: var(--font-main);
   font-size: 10.5pt;
   letter-spacing: 0.6px !important;
 }
 
 .sidebar-row:hover:not(:selected) {
-  background-color: alpha(white, 0.06);
+  background-color: alpha(black, 0.05);
   color: var(--mac-text);
   transform: translateX(4px);
 }
@@ -93,7 +95,7 @@ scrolledwindow.sidebar listbox {
 .sidebar-row:selected {
   background-color: var(--mac-accent);
   color: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 12px alpha(var(--mac-accent), 0.3);
   transform: translateX(6px);
 }
 
@@ -104,7 +106,7 @@ scrolledwindow.sidebar listbox {
 
 .sidebar-row image {
   margin-right: 8px;
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .sidebar-row:selected image {
@@ -149,13 +151,13 @@ gridview child {
 }
 
 .flux-card:hover {
-  background-color: alpha(var(--mac-text), 0.06);
+  background-color: alpha(black, 0.04);
   transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 16px var(--mac-shadow);
 }
 
 .flux-card:selected {
-  background-color: alpha(var(--mac-accent), 0.25);
+  background-color: alpha(var(--mac-accent), 0.15);
   border-color: alpha(var(--mac-accent), 0.4);
 }
 
@@ -193,7 +195,7 @@ gridview > child:selected .flux-label {
 }
 
 .flux-rename-entry {
-  background-color: alpha(var(--mac-text), 0.06);
+  background-color: alpha(black, 0.04);
   border: 1px solid var(--mac-accent);
   border-radius: 8px;
   color: var(--mac-text);
@@ -203,7 +205,7 @@ gridview > child:selected .flux-label {
 
 /* ---------- BREADCRUMBS (no truncation) ---------- */
 button.breadcrumb-btn {
-  background-color: alpha(var(--mac-text), 0.05);
+  background-color: alpha(black, 0.04);
   border: none;
   padding: 4px 12px;
   margin-right: 4px;
@@ -212,7 +214,7 @@ button.breadcrumb-btn {
 }
 
 button.breadcrumb-btn label {
-  color: alpha(var(--mac-text), 0.8);
+  color: alpha(var(--mac-text), 0.7);
   font-family: var(--font-mono);
   letter-spacing: 0.8px !important;
   max-width: none;
@@ -220,7 +222,7 @@ button.breadcrumb-btn label {
 }
 
 button.breadcrumb-btn:hover {
-  background-color: alpha(var(--mac-text), 0.1);
+  background-color: alpha(black, 0.08);
 }
 
 button.breadcrumb-btn:hover label {
@@ -228,8 +230,8 @@ button.breadcrumb-btn:hover label {
 }
 
 button.breadcrumb-btn:last-child {
-  background-color: alpha(var(--mac-text), 0.8);
-  box-shadow: 0 0 0 1px alpha(var(--mac-accent), 0.4);
+  background-color: alpha(var(--mac-accent), 0.12);
+  box-shadow: 0 0 0 1px alpha(var(--mac-accent), 0.3);
 }
 
 button.breadcrumb-btn:last-child label {
@@ -239,7 +241,7 @@ button.breadcrumb-btn:last-child label {
 
 /* ---------- SORT INDICATOR ---------- */
 .sort-container {
-  background-color: alpha(var(--mac-text), 0.05);
+  background-color: alpha(black, 0.04);
   border-radius: 6px;
   padding: 2px 12px;
 }
@@ -253,9 +255,9 @@ button.breadcrumb-btn:last-child label {
 
 /* ---------- POPOVER / CONTEXT MENU ---------- */
 popover.menu contents {
-  background-color: alpha(#2c2c2c, 0.98);
+  background-color: rgba(255, 255, 255, 0.98);
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 8px 24px var(--mac-shadow);
 }
 
 popover.menu modelbutton label {
@@ -269,19 +271,19 @@ popover.menu modelbutton:hover {
 }
 
 popover.menu > contents separator {
-  background-color: alpha(var(--mac-text), 0.1);
+  background-color: var(--mac-border);
   min-height: 1px;
   margin: 4px 8px;
 }
 
 /* ---------- ENTRIES ---------- */
 entry {
-  background-color: alpha(var(--mac-text), 0.06);
+  background-color: alpha(black, 0.04);
   border: 1px solid var(--mac-border);
   border-radius: 22px;
   padding: 4px 12px;
   color: var(--mac-text);
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
   letter-spacing: 0.5px !important;
 }
 
@@ -292,10 +294,11 @@ entry:focus {
 
 /* ---------- STATUS BAR ---------- */
 .selection-status {
-  background-color: alpha(var(--mac-bg), 0.8);
+  background-color: alpha(white, 0.85);
   border-top: 1px solid var(--mac-border);
   padding: 4px 16px;
   min-height: 28px;
+  backdrop-filter: blur(10px);
 }
 
 .selection-status label.caption {
@@ -305,7 +308,7 @@ entry:focus {
 }
 
 progressbar {
-  background-color: alpha(var(--mac-text), 0.05);
+  background-color: alpha(black, 0.05);
   border-radius: 4px;
 }
 
@@ -373,7 +376,7 @@ progressbar progress {
 }
 
 .card {
-  background: alpha(var(--mac-text), 0.03);
+  background: alpha(black, 0.03);
   border-radius: 12px;
   border: 1px solid var(--mac-border);
 }
@@ -385,7 +388,7 @@ progressbar progress {
 }
 
 .boxed-list {
-  background: alpha(var(--mac-text), 0.03);
+  background: alpha(black, 0.03);
   border-radius: 12px;
   border: 1px solid var(--mac-border);
 }
@@ -393,7 +396,7 @@ progressbar progress {
 /* ---------- CHECKS & RADIOS ---------- */
 check,
 radio {
-  background-color: alpha(var(--mac-text), 0.08);
+  background-color: alpha(black, 0.06);
   border: 1px solid var(--mac-border);
   border-radius: 4px;
   min-height: 16px;
@@ -418,16 +421,17 @@ radio:disabled {
 
 /* ---------- TOOLTIPS ---------- */
 tooltip.background {
-  background-color: alpha(#2c2c2c, 0.95);
+  background-color: rgba(255, 255, 255, 0.95);
   border: 1px solid var(--mac-border);
   border-radius: 8px;
   color: var(--mac-text);
   padding: 6px 12px;
+  box-shadow: 0 4px 12px var(--mac-shadow);
 }
 
 /* ---------- SPINBUTTON ---------- */
 spinbutton {
-  background-color: alpha(var(--mac-text), 0.06);
+  background-color: alpha(black, 0.04);
   border: 1px solid var(--mac-border);
   border-radius: 8px;
   color: var(--mac-text);
@@ -452,7 +456,7 @@ spinbutton > button:hover {
 /* ---------- DROPDOWN / COMBOBOX ---------- */
 dropdown,
 combobox {
-  background-color: alpha(var(--mac-text), 0.06);
+  background-color: alpha(black, 0.04);
   border: 1px solid var(--mac-border);
   border-radius: 8px;
   color: var(--mac-text);
@@ -492,7 +496,7 @@ notebook > header > tabs > tab:checked {
 
 /* ---------- SCALE ---------- */
 scale trough {
-  background: alpha(var(--mac-text), 0.1);
+  background: alpha(black, 0.1);
   border-radius: 10px;
   min-height: 4px;
 }
@@ -502,11 +506,12 @@ scale highlight {
 }
 
 scale slider {
-  background: var(--mac-text);
+  background: white;
   border: 2px solid var(--mac-accent);
   border-radius: 50%;
   min-width: 16px;
   min-height: 16px;
+  box-shadow: 0 2px 4px var(--mac-shadow);
 }
 
 /* ---------- LEVELBAR ---------- */
@@ -559,12 +564,12 @@ scrollbar {
 }
 
 scrollbar slider {
-  background-color: alpha(var(--mac-text), 0.2);
+  background-color: alpha(black, 0.15);
   border-radius: 10px;
 }
 
 scrollbar slider:hover {
-  background-color: alpha(var(--mac-text), 0.4);
+  background-color: alpha(black, 0.3);
 }
 
 /* ---------- SETTINGS WINDOW ---------- */
@@ -591,7 +596,7 @@ adwactionrow label {
 }
 
 dropdown {
-  background-color: alpha(var(--mac-text), 0.06);
+  background-color: alpha(black, 0.04);
   color: var(--mac-text);
   border-radius: 8px;
   padding: 4px 8px;

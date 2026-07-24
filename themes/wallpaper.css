@@ -1,4 +1,4 @@
-/* --- Flux: macOS Dark (Clone of OS Dark, built on minimal.css structure) --- */
+/* --- macOS Dark with Wallpaper – Full Fix (header forced transparent) --- */
 
 :root {
   --mac-bg: #1e1e1e;
@@ -12,9 +12,13 @@
   letter-spacing: 0.2px !important;
 }
 
-/* ---------- GLOBAL ---------- */
+/* ---- Global Wallpaper ---- */
 window,
 .background {
+  background-image: url("file:///path/to/image/fav.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   background-color: var(--mac-bg);
   color: var(--mac-text);
 }
@@ -24,9 +28,11 @@ scrolledwindow > viewport {
   background-color: transparent;
 }
 
-/* ---------- HEADER ---------- */
+/* ---- Header Bar – forced transparent with blur ---- */
 headerbar {
-  background-color: alpha(var(--mac-bg), 0.9);
+  background: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
   border-bottom: 1px solid var(--mac-border);
   padding: 4px 12px;
   min-height: 38px;
@@ -51,12 +57,14 @@ headerbar button {
 }
 
 headerbar button:hover {
-  background-color: alpha(var(--mac-text), 0.08);
+  background-color: rgba(255, 255, 255, 0.12);
 }
 
-/* ---------- SIDEBAR (macOS style) ---------- */
+/* ---- Sidebar – translucent with blur ---- */
 scrolledwindow.sidebar {
-  background-color: var(--mac-sidebar);
+  background-color: rgba(40, 40, 40, 0.5) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-right: 1px solid var(--mac-border);
 }
 
@@ -73,8 +81,10 @@ scrolledwindow.sidebar listbox {
   border: none;
   transition:
     background-color 200ms ease,
-    transform 200ms cubic-bezier(0.1, 0.7, 0.1, 1);
+    transform 200ms cubic-bezier(0.1, 0.7, 0.1, 1),
+    box-shadow 200ms ease;
   color: alpha(var(--mac-text), 0.85);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.0);
 }
 
 .sidebar-row label {
@@ -85,15 +95,16 @@ scrolledwindow.sidebar listbox {
 }
 
 .sidebar-row:hover:not(:selected) {
-  background-color: alpha(white, 0.06);
+  background-color: rgba(255, 255, 255, 0.08);
   color: var(--mac-text);
   transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar-row:selected {
   background-color: var(--mac-accent);
   color: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.4);
   transform: translateX(6px);
 }
 
@@ -122,7 +133,7 @@ scrolledwindow.sidebar listbox {
   transform: scale(0.96);
 }
 
-/* ---------- GRID VIEW ---------- */
+/* ---- File Grid / Cards ---- */
 gridview,
 listview {
   background-color: transparent;
@@ -134,10 +145,11 @@ gridview child {
   margin: 0;
 }
 
-/* ---------- FILE CARDS ---------- */
 .flux-card {
-  background-color: transparent;
-  border: 1px solid transparent;
+  background-color: rgba(30, 30, 30, 0.3);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 18px;
   padding: 12px;
   margin: 6px;
@@ -149,14 +161,14 @@ gridview child {
 }
 
 .flux-card:hover {
-  background-color: alpha(var(--mac-text), 0.06);
+  background-color: rgba(255, 255, 255, 0.08);
   transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
 }
 
 .flux-card:selected {
-  background-color: alpha(var(--mac-accent), 0.25);
-  border-color: alpha(var(--mac-accent), 0.4);
+  background-color: rgba(0, 122, 255, 0.25);
+  border-color: rgba(0, 122, 255, 0.4);
 }
 
 .flux-card--restricted {
@@ -193,7 +205,7 @@ gridview > child:selected .flux-label {
 }
 
 .flux-rename-entry {
-  background-color: alpha(var(--mac-text), 0.06);
+  background-color: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--mac-accent);
   border-radius: 8px;
   color: var(--mac-text);
@@ -201,9 +213,9 @@ gridview > child:selected .flux-label {
   font-family: var(--font-mono);
 }
 
-/* ---------- BREADCRUMBS (no truncation) ---------- */
+/* ---- Breadcrumbs ---- */
 button.breadcrumb-btn {
-  background-color: alpha(var(--mac-text), 0.05);
+  background-color: rgba(255, 255, 255, 0.06);
   border: none;
   padding: 4px 12px;
   margin-right: 4px;
@@ -220,7 +232,7 @@ button.breadcrumb-btn label {
 }
 
 button.breadcrumb-btn:hover {
-  background-color: alpha(var(--mac-text), 0.1);
+  background-color: rgba(255, 255, 255, 0.12);
 }
 
 button.breadcrumb-btn:hover label {
@@ -228,7 +240,7 @@ button.breadcrumb-btn:hover label {
 }
 
 button.breadcrumb-btn:last-child {
-  background-color: alpha(var(--mac-text), 0.8);
+  background-color: rgba(0, 122, 255, 0.2);
   box-shadow: 0 0 0 1px alpha(var(--mac-accent), 0.4);
 }
 
@@ -237,9 +249,9 @@ button.breadcrumb-btn:last-child label {
   font-weight: bold;
 }
 
-/* ---------- SORT INDICATOR ---------- */
+/* ---- Sort Indicator ---- */
 .sort-container {
-  background-color: alpha(var(--mac-text), 0.05);
+  background-color: rgba(255, 255, 255, 0.05);
   border-radius: 6px;
   padding: 2px 12px;
 }
@@ -251,11 +263,20 @@ button.breadcrumb-btn:last-child label {
   letter-spacing: 0.5px !important;
 }
 
-/* ---------- POPOVER / CONTEXT MENU ---------- */
+/* ---- Popover / Context Menu – Solid to prevent wallpaper bleed ---- */
+popover.menu {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+
 popover.menu contents {
-  background-color: alpha(#2c2c2c, 0.98);
+  background-color: #2c2c2c;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9);
 }
 
 popover.menu modelbutton label {
@@ -274,9 +295,9 @@ popover.menu > contents separator {
   margin: 4px 8px;
 }
 
-/* ---------- ENTRIES ---------- */
+/* ---- Entries ---- */
 entry {
-  background-color: alpha(var(--mac-text), 0.06);
+  background-color: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--mac-border);
   border-radius: 22px;
   padding: 4px 12px;
@@ -287,12 +308,14 @@ entry {
 
 entry:focus {
   border-color: var(--mac-accent);
-  box-shadow: 0 0 0 3px alpha(var(--mac-accent), 0.2);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
 }
 
-/* ---------- STATUS BAR ---------- */
+/* ---- Status Bar ---- */
 .selection-status {
-  background-color: alpha(var(--mac-bg), 0.8);
+  background-color: rgba(30, 30, 30, 0.6) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-top: 1px solid var(--mac-border);
   padding: 4px 16px;
   min-height: 28px;
@@ -305,7 +328,7 @@ entry:focus {
 }
 
 progressbar {
-  background-color: alpha(var(--mac-text), 0.05);
+  background-color: rgba(255, 255, 255, 0.05);
   border-radius: 4px;
 }
 
@@ -315,7 +338,7 @@ progressbar progress {
   min-height: 4px;
 }
 
-/* ---------- BUTTON TYPES ---------- */
+/* ---- Buttons ---- */
 .suggested-action {
   background-color: var(--mac-accent);
   color: white;
@@ -342,7 +365,7 @@ progressbar progress {
   background-color: alpha(#ff3b30, 0.2);
 }
 
-/* ---------- PROPERTY ROW ---------- */
+/* ---- Misc Containers ---- */
 .property {
   background: transparent;
   border-bottom: 1px solid var(--mac-border);
@@ -355,7 +378,6 @@ progressbar progress {
   color: var(--mac-text);
 }
 
-/* ---------- MISC ---------- */
 .monospace {
   font-family: var(--font-mono);
 }
@@ -373,7 +395,7 @@ progressbar progress {
 }
 
 .card {
-  background: alpha(var(--mac-text), 0.03);
+  background: rgba(255, 255, 255, 0.03);
   border-radius: 12px;
   border: 1px solid var(--mac-border);
 }
@@ -385,15 +407,15 @@ progressbar progress {
 }
 
 .boxed-list {
-  background: alpha(var(--mac-text), 0.03);
+  background: rgba(255, 255, 255, 0.03);
   border-radius: 12px;
   border: 1px solid var(--mac-border);
 }
 
-/* ---------- CHECKS & RADIOS ---------- */
+/* ---- Checks & Radios ---- */
 check,
 radio {
-  background-color: alpha(var(--mac-text), 0.08);
+  background-color: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--mac-border);
   border-radius: 4px;
   min-height: 16px;
@@ -416,18 +438,20 @@ radio:disabled {
   opacity: 0.4;
 }
 
-/* ---------- TOOLTIPS ---------- */
+/* ---- Tooltips ---- */
 tooltip.background {
-  background-color: alpha(#2c2c2c, 0.95);
+  background-color: rgba(44, 44, 44, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--mac-border);
   border-radius: 8px;
   color: var(--mac-text);
   padding: 6px 12px;
 }
 
-/* ---------- SPINBUTTON ---------- */
+/* ---- Spinbuttons ---- */
 spinbutton {
-  background-color: alpha(var(--mac-text), 0.06);
+  background-color: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--mac-border);
   border-radius: 8px;
   color: var(--mac-text);
@@ -449,10 +473,10 @@ spinbutton > button:hover {
   color: var(--mac-accent);
 }
 
-/* ---------- DROPDOWN / COMBOBOX ---------- */
+/* ---- Dropdown / Combobox ---- */
 dropdown,
 combobox {
-  background-color: alpha(var(--mac-text), 0.06);
+  background-color: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--mac-border);
   border-radius: 8px;
   color: var(--mac-text);
@@ -471,7 +495,7 @@ combobox:focus-within {
   border-color: var(--mac-accent);
 }
 
-/* ---------- NOTEBOOK ---------- */
+/* ---- Notebook ---- */
 notebook > header {
   background: transparent;
   border: none;
@@ -490,9 +514,9 @@ notebook > header > tabs > tab:checked {
   border-bottom-color: var(--mac-accent);
 }
 
-/* ---------- SCALE ---------- */
+/* ---- Scale ---- */
 scale trough {
-  background: alpha(var(--mac-text), 0.1);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   min-height: 4px;
 }
@@ -509,7 +533,7 @@ scale slider {
   min-height: 16px;
 }
 
-/* ---------- LEVELBAR ---------- */
+/* ---- Levelbar ---- */
 levelbar block {
   border-radius: 4px;
 }
@@ -526,7 +550,7 @@ levelbar block.full {
   background: #34c759;
 }
 
-/* ---------- LISTS & ROWS ---------- */
+/* ---- Lists & Rows ---- */
 list,
 listview {
   background: transparent;
@@ -539,7 +563,7 @@ row {
 }
 
 row:selected {
-  background: alpha(var(--mac-accent), 0.08);
+  background: rgba(0, 122, 255, 0.08);
   color: var(--mac-accent);
 }
 
@@ -549,25 +573,25 @@ row:selected {
 }
 
 .view:selected {
-  background: alpha(var(--mac-accent), 0.08);
+  background: rgba(0, 122, 255, 0.08);
   color: var(--mac-accent);
 }
 
-/* ---------- SCROLLBARS ---------- */
+/* ---- Scrollbars ---- */
 scrollbar {
   background: transparent;
 }
 
 scrollbar slider {
-  background-color: alpha(var(--mac-text), 0.2);
+  background-color: rgba(255, 255, 255, 0.15);
   border-radius: 10px;
 }
 
 scrollbar slider:hover {
-  background-color: alpha(var(--mac-text), 0.4);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
-/* ---------- SETTINGS WINDOW ---------- */
+/* ---- Settings Window (optional) ---- */
 window.settings-window headerbar label,
 adwpreferenceswindow headerbar label {
   letter-spacing: 2px !important;
@@ -591,7 +615,7 @@ adwactionrow label {
 }
 
 dropdown {
-  background-color: alpha(var(--mac-text), 0.06);
+  background-color: rgba(255, 255, 255, 0.06);
   color: var(--mac-text);
   border-radius: 8px;
   padding: 4px 8px;

@@ -1,5 +1,5 @@
 /* ============================================================
-   Flux — N E O / / C Y B E R
+   Flux — N E O / / C Y B E R  (Complete + Breadcrumb Fix)
    Night City color system + scan-line textures + neon physics
    ============================================================ */
 
@@ -16,7 +16,6 @@
 @define-color cp_green    #39ff14;
 
 :root {
-  /* --- Neon Glow Layers --- */
   --glow-yellow-soft:
     0 0 8px alpha(@cp_yellow, 0.4), 0 0 20px alpha(@cp_yellow, 0.2);
   --glow-yellow-hot:
@@ -32,7 +31,6 @@
   --glow-magenta-soft:
     0 0 10px alpha(@cp_magenta, 0.35), 0 0 24px alpha(@cp_magenta, 0.15);
 
-  /* --- Scan-line pseudo-texture via repeating-linear-gradient --- */
   --scanline: repeating-linear-gradient(
     0deg,
     transparent,
@@ -41,7 +39,6 @@
     alpha(black, 0.08) 4px
   );
 
-  /* --- Cut-corner mixin values (used via clip-path) --- */
   --clip-card: polygon(
     0 0,
     100% 0,
@@ -58,14 +55,9 @@
     0 100%
   );
 
-  /* --- Typography --- */
   --font-display: "Oxanium", "Orbitron", "Tektur", monospace;
   --font-mono: "Geist Mono", "JetBrains Mono", "Fira Code", monospace;
 }
-
-/* ============================================================
-   1. GLOBAL
-   ============================================================ */
 
 * {
   font-family: var(--font-display);
@@ -85,10 +77,7 @@ scrolledwindow > viewport {
   background-color: transparent;
 }
 
-/* ============================================================
-   2. HEADER BAR
-   ============================================================ */
-
+/* ---------- HEADER ---------- */
 headerbar {
   background-color: @cp_void;
   background-image: var(--scanline);
@@ -145,29 +134,32 @@ headerbar button:disabled {
   border-color: alpha(white, 0.06);
 }
 
-/* ============================================================
-   3. BREADCRUMBS  (.breadcrumb-btn)
-   ============================================================ */
-
+/* ---------- BREADCRUMBS (FIXED) ---------- */
 button.breadcrumb-btn {
   background-color: alpha(@cp_blue, 0.06);
   border: 1px solid alpha(@cp_blue, 0.25);
   border-radius: 0;
   clip-path: var(--clip-btn);
-  padding: 3px 14px;
-  margin: 0 3px;
+  padding: 3px 10px;   /* menos padding lateral */
+  margin: 0 2px;
   min-height: 26px;
+  min-width: 0;
+  max-width: none;
+  width: auto;
   transition: all 160ms ease-out;
 }
 
 button.breadcrumb-btn label {
   color: @cp_blue;
-  font-size: 8pt;
+  font-size: 6.5pt;         /* MENOR */
   font-weight: 700;
-  font-style: italic;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
+  font-style: normal;       /* remove itálico */
+  letter-spacing: 0.2px;    /* reduzido */
+  text-transform: none;     /* opcional: remove maiúsculas para ganhar espaço */
   text-shadow: var(--glow-blue-soft);
+  ellipsize: none;
+  max-width: none;
+  width: auto;
 }
 
 button.breadcrumb-btn:hover {
@@ -177,7 +169,6 @@ button.breadcrumb-btn:hover {
   transform: translateY(-2px);
 }
 
-/* Active / last segment — yellow hot accent */
 button.breadcrumb-btn:last-child {
   background-color: @cp_yellow;
   border-color: @cp_yellow;
@@ -189,7 +180,10 @@ button.breadcrumb-btn:last-child label {
   color: @cp_black;
   font-weight: 900;
   text-shadow: none;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
+  font-size: 6.5pt;         /* mesmo tamanho */
+  font-style: normal;
+  text-transform: none;
 }
 
 /* Path / search entries in header */
@@ -217,10 +211,7 @@ headerbar searchentry:focus {
   background-color: alpha(@cp_yellow, 0.06);
 }
 
-/* ============================================================
-   4. SIDEBAR  (.sidebar, .sidebar-row, .sidebar-label)
-   ============================================================ */
-
+/* ---------- SIDEBAR ---------- */
 scrolledwindow.sidebar {
   background-color: @cp_void;
   background-image: var(--scanline);
@@ -238,7 +229,6 @@ scrolledwindow.sidebar listbox {
   border-left: 2px solid alpha(@cp_blue, 0.2);
   border-bottom: 1px solid alpha(white, 0.04);
   border-radius: 0;
-  /* Angular cut on right edge */
   clip-path: polygon(0 0, 100% 0, 97% 100%, 0 100%);
   margin: 3px 8px;
   padding: 10px 16px;
@@ -260,7 +250,6 @@ scrolledwindow.sidebar listbox {
 .sidebar-row:selected {
   background-color: @cp_yellow;
   border-left: none;
-  /* Inverse angular cut — flipped to the left side */
   clip-path: polygon(0 0, 100% 0, 100% 100%, 4% 100%);
   color: @cp_black;
   font-weight: 900;
@@ -283,10 +272,12 @@ scrolledwindow.sidebar listbox {
   -gtk-icon-size: 14px;
 }
 
-/* ============================================================
-   5. FILE GRID CARDS  (.flux-card)
-   ============================================================ */
+.sidebar-dragging {
+  opacity: 0.4;
+  transform: scale(0.96);
+}
 
+/* ---------- FILE CARDS ---------- */
 .flux-card {
   background-color: @cp_panel;
   background-image: var(--scanline);
@@ -322,10 +313,23 @@ scrolledwindow.sidebar listbox {
   transform: translateY(-3px);
 }
 
-/* ============================================================
-   6. FILE LABELS  (.flux-label, .thumbnail)
-   ============================================================ */
+.flux-card--restricted {
+  opacity: 0.6;
+  border-color: alpha(@cp_red, 0.3);
+  border-left-color: @cp_red;
+}
 
+.flux-card--restricted .flux-label {
+  color: @cp_red;
+}
+
+.flux-lock-badge {
+  -gtk-icon-size: 14px;
+  color: @cp_red;
+  margin-right: 2px;
+}
+
+/* ---------- LABELS ---------- */
 .flux-label {
   color: alpha(white, 0.9);
   font-size: 9pt;
@@ -341,10 +345,7 @@ scrolledwindow.sidebar listbox {
   border: 1px solid alpha(@cp_blue, 0.2);
 }
 
-/* ============================================================
-   7. RENAME ENTRY  (.flux-rename-entry)
-   ============================================================ */
-
+/* ---------- RENAME ENTRY ---------- */
 entry.flux-rename-entry {
   background-color: @cp_panel;
   border: 1px solid @cp_yellow;
@@ -358,10 +359,7 @@ entry.flux-rename-entry {
   box-shadow: var(--glow-yellow-hot);
 }
 
-/* ============================================================
-   8. SORT INDICATOR  (.sort-container, .sort-status-label)
-   ============================================================ */
-
+/* ---------- SORT INDICATOR ---------- */
 .sort-container {
   background-color: @cp_panel;
   border: 1px solid alpha(@cp_blue, 0.3);
@@ -382,10 +380,7 @@ entry.flux-rename-entry {
   text-shadow: var(--glow-blue-soft);
 }
 
-/* ============================================================
-   9. DESTRUCTIVE ACTION  (.destructive-action)
-   ============================================================ */
-
+/* ---------- DESTRUCTIVE ---------- */
 .destructive-action {
   background-color: alpha(@cp_red, 0.08);
   border: 1px solid alpha(@cp_red, 0.5);
@@ -416,10 +411,27 @@ entry.flux-rename-entry {
   background-color: alpha(@cp_red, 0.8);
 }
 
-/* ============================================================
-   10. CONTEXT MENU / POPOVER
-   ============================================================ */
+/* ---------- SUGGESTED ---------- */
+.suggested-action {
+  background-color: @cp_blue;
+  border: 1px solid @cp_blue;
+  border-radius: 0;
+  clip-path: var(--clip-btn);
+  color: @cp_black;
+  font-weight: 900;
+  font-style: italic;
+  padding: 6px 18px;
+  box-shadow: var(--glow-blue-hot);
+  transition: all 150ms ease-out;
+}
 
+.suggested-action:hover {
+  background-color: alpha(@cp_blue, 0.8);
+  box-shadow: var(--glow-blue-hot), 0 4px 12px alpha(@cp_blue, 0.5);
+  transform: translateY(-1px);
+}
+
+/* ---------- POPOVER ---------- */
 popover,
 popover.menu {
   background: none;
@@ -476,10 +488,7 @@ popover.menu > contents separator {
   box-shadow: 0 0 4px alpha(@cp_blue, 0.3);
 }
 
-/* ============================================================
-   11. ENTRIES (global)
-   ============================================================ */
-
+/* ---------- ENTRIES ---------- */
 entry {
   background-color: alpha(@cp_blue, 0.05);
   border: 1px solid alpha(@cp_blue, 0.25);
@@ -499,10 +508,7 @@ entry:focus {
   box-shadow: var(--glow-yellow-hot);
 }
 
-/* ============================================================
-   12. SELECTION STATUS BAR  (.selection-status)
-   ============================================================ */
-
+/* ---------- STATUS BAR ---------- */
 .selection-status {
   background-color: @cp_void;
   background-image: var(--scanline);
@@ -546,10 +552,7 @@ progressbar progress,
   transition: all 300ms ease;
 }
 
-/* ============================================================
-   13. SETTINGS WINDOW  (.settings-window, .settings-row, etc.)
-   ============================================================ */
-
+/* ---------- SETTINGS ---------- */
 window.settings-window {
   background-color: @cp_black;
   background-image: var(--scanline);
@@ -653,10 +656,7 @@ window.settings-window switch slider {
   box-shadow: 0 0 6px alpha(@cp_yellow, 0.4);
 }
 
-/* ============================================================
-   14. SCROLLBARS
-   ============================================================ */
-
+/* ---------- SCROLLBARS ---------- */
 scrollbar {
   background: transparent;
   border: none;
@@ -678,24 +678,7 @@ scrollbar slider:hover {
   box-shadow: var(--glow-yellow-soft);
 }
 
-/* ============================================================
-   15. LINKED BOX (breadcrumb container)
-   ============================================================ */
-
-box.linked {
-  background: transparent;
-  border: none;
-}
-
-box.linked button {
-  background: transparent;
-  border: none;
-}
-
-/* ============================================================
-   16. FLAT BUTTON
-   ============================================================ */
-
+/* ---------- FLAT BUTTON ---------- */
 button.flat {
   background: transparent;
   border: 1px solid transparent;
@@ -713,4 +696,220 @@ button.flat:hover {
   border-color: alpha(@cp_blue, 0.3);
   color: @cp_blue;
   box-shadow: var(--glow-blue-soft);
+}
+
+/* ---------- PROPERTY ---------- */
+.property {
+  background: transparent;
+  border-bottom: 1px solid alpha(white, 0.06);
+  padding: 6px 0;
+  color: alpha(@cp_blue, 0.6);
+  font-size: 9pt;
+}
+.property label {
+  color: white;
+}
+
+.monospace {
+  font-family: var(--font-mono);
+}
+
+.error {
+  border: 1px solid @cp_red;
+  background-color: alpha(@cp_red, 0.08);
+  color: @cp_red;
+}
+.warning {
+  border: 1px solid #f5a623;
+  background-color: alpha(#f5a623, 0.08);
+  color: #f5a623;
+}
+
+.card {
+  background: @cp_panel;
+  border: 1px solid alpha(white, 0.07);
+  border-radius: 0;
+  padding: 8px;
+}
+.frame {
+  border: 1px solid alpha(white, 0.07);
+  border-radius: 0;
+  background: transparent;
+}
+.boxed-list {
+  background: @cp_panel;
+  border: 1px solid alpha(white, 0.07);
+  border-radius: 0;
+  padding: 4px;
+}
+
+check,
+radio {
+  background-color: alpha(@cp_blue, 0.08);
+  border: 1px solid alpha(@cp_blue, 0.3);
+  border-radius: 0;
+  min-height: 16px;
+  min-width: 16px;
+  transition: all 150ms ease;
+}
+check:checked,
+radio:checked {
+  background-color: @cp_blue;
+  border-color: @cp_blue;
+  box-shadow: var(--glow-blue-soft);
+}
+check:hover,
+radio:hover {
+  border-color: @cp_yellow;
+}
+check:disabled,
+radio:disabled {
+  opacity: 0.3;
+}
+
+tooltip.background {
+  background-color: @cp_void;
+  border: 1px solid @cp_blue;
+  border-radius: 0;
+  color: white;
+  padding: 6px 12px;
+  box-shadow: var(--glow-blue-soft);
+}
+
+spinbutton {
+  background-color: alpha(@cp_blue, 0.06);
+  border: 1px solid alpha(@cp_blue, 0.3);
+  border-bottom: 2px solid @cp_blue;
+  border-radius: 0;
+  color: @cp_blue;
+  font-family: var(--font-mono);
+  padding: 0 4px;
+  min-height: 28px;
+}
+spinbutton:focus-within {
+  border-color: @cp_yellow;
+  color: @cp_yellow;
+  box-shadow: var(--glow-yellow-soft);
+}
+spinbutton > button {
+  background: transparent;
+  border: none;
+  color: alpha(@cp_blue, 0.5);
+}
+spinbutton > button:hover {
+  color: @cp_yellow;
+}
+
+dropdown,
+combobox {
+  background-color: alpha(@cp_blue, 0.06);
+  border: 1px solid alpha(@cp_blue, 0.3);
+  border-bottom: 2px solid @cp_blue;
+  border-radius: 0;
+  color: @cp_blue;
+  font-family: var(--font-mono);
+  min-height: 28px;
+}
+dropdown button,
+combobox button {
+  background: transparent;
+  border: none;
+  color: @cp_blue;
+}
+dropdown:focus-within,
+combobox:focus-within {
+  border-color: @cp_yellow;
+  color: @cp_yellow;
+  box-shadow: var(--glow-yellow-soft);
+}
+
+notebook > header {
+  background: transparent;
+  border: none;
+}
+notebook > header > tabs > tab {
+  background: transparent;
+  color: alpha(white, 0.5);
+  padding: 4px 12px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-style: italic;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+notebook > header > tabs > tab:checked {
+  color: @cp_yellow;
+  border-bottom-color: @cp_yellow;
+  box-shadow: var(--glow-yellow-soft);
+}
+
+scale trough {
+  background: alpha(@cp_blue, 0.15);
+  border-radius: 0;
+  min-height: 4px;
+}
+scale highlight {
+  background: @cp_blue;
+}
+scale slider {
+  background: white;
+  border: 2px solid @cp_blue;
+  border-radius: 0;
+  min-width: 16px;
+  min-height: 16px;
+  box-shadow: var(--glow-blue-soft);
+}
+
+levelbar block {
+  border-radius: 0;
+}
+levelbar block.low {
+  background: @cp_red;
+}
+levelbar block.high {
+  background: @cp_blue;
+}
+levelbar block.full {
+  background: @cp_green;
+}
+
+list,
+listview {
+  background: transparent;
+  color: white;
+}
+row {
+  background: transparent;
+  color: white;
+}
+row:selected {
+  background: alpha(@cp_blue, 0.12);
+  color: @cp_yellow;
+}
+.view {
+  background: transparent;
+  color: white;
+}
+.view:selected {
+  background: alpha(@cp_blue, 0.12);
+  color: @cp_yellow;
+}
+
+.title-1 {
+  font-size: 24pt;
+  font-weight: 900;
+  font-style: italic;
+}
+.title-2 {
+  font-size: 18pt;
+  font-weight: 800;
+  font-style: italic;
+}
+.title-3 {
+  font-size: 14pt;
+  font-weight: 700;
+}
+.title-4 {
+  font-size: 11pt;
+  font-weight: 700;
 }

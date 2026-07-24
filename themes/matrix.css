@@ -1,6 +1,6 @@
 /* ============================================================
-   Flux — D I G I T A L  R A I N
-   Matrix Interface v2 — Phosphor Terminal System
+   Flux - D I G I T A L  R A I N
+   Matrix Interface - Phosphor Terminal System
    Green-on-black monochrome + CRT scan artifacts
    ============================================================ */
 
@@ -20,56 +20,25 @@
 @define-color mx_amber   #ffb300;
 
 :root {
-  /* --- Phosphor glow layers (all unitless-zero-safe) --- */
-  --mx-glow-soft:
-    0px 0px 6px alpha(@mx_green, 0.45), 0px 0px 16px alpha(@mx_green, 0.18);
-  --mx-glow-hot:
-    0px 0px 4px alpha(@mx_green, 1), 0px 0px 12px alpha(@mx_green, 0.65),
-    0px 0px 28px alpha(@mx_green, 0.3);
-  --mx-glow-dim:
-    0px 0px 8px alpha(@mx_green, 0.2), 0px 0px 20px alpha(@mx_green, 0.08);
-  --mx-glow-red:
-    0px 0px 6px alpha(@mx_red, 0.8), 0px 0px 20px alpha(@mx_red, 0.35);
-  --mx-glow-amber:
-    0px 0px 6px alpha(@mx_amber, 0.7), 0px 0px 18px alpha(@mx_amber, 0.3);
-
-  /* --- CRT scan-line texture --- */
+  --font-matrix:
+    "Geist Mono", "JetBrains Mono", "Fira Code", "MS Gothic", "Noto Sans Mono",
+    monospace;
   --scanline: repeating-linear-gradient(
     0deg,
     transparent,
     transparent 2px,
-    alpha(black, 0.12) 2px,
-    alpha(black, 0.12) 4px
+    rgba(0, 0, 0, 0.12) 2px,
+    rgba(0, 0, 0, 0.12) 4px
   );
-
-  /* --- Phosphor vignette: dark edges, bright center --- */
   --vignette: radial-gradient(
     ellipse at center,
     transparent 60%,
-    alpha(black, 0.45) 100%
+    rgba(0, 0, 0, 0.45) 100%
   );
-
-  /* --- Hard offset: terminal block-cursor feel --- */
-  --block-shadow: 4px 4px 0px @mx_ghost;
-  --block-shadow-hover: 2px 2px 0px @mx_dim;
-
-  /* --- Typography --- */
-  --font-matrix:
-    "Geist Mono", "JetBrains Mono", "Fira Code", "MS Gothic", "Noto Sans Mono",
-    monospace;
-
-  /* --- Radii: everything sharp --- */
-  --r-zero: 0px;
-  --r-chip: 2px;
 }
-
-/* ============================================================
-   1. GLOBAL
-   ============================================================ */
 
 * {
   font-family: var(--font-matrix);
-  -gtk-secondary-caret-color: @mx_green;
   letter-spacing: 0.8px;
 }
 
@@ -86,10 +55,7 @@ scrolledwindow > viewport {
   background: transparent;
 }
 
-/* ============================================================
-   2. HEADER BAR — Command Terminal
-   ============================================================ */
-
+/* ---------- HEADER BAR ---------- */
 headerbar {
   background-color: @mx_void;
   background-image: var(--scanline);
@@ -97,10 +63,6 @@ headerbar {
   border-bottom: 1px solid @mx_green_x;
   padding: 4px 12px;
   min-height: 44px;
-  box-shadow:
-    0px 1px 0px @mx_green_d,
-    0px 0px 20px alpha(@mx_green, 0.08),
-    inset 0px -1px 0px alpha(@mx_green, 0.12);
 }
 
 headerbar label,
@@ -110,34 +72,27 @@ headerbar .title {
   font-size: 9.5pt;
   letter-spacing: 4px;
   text-transform: uppercase;
-  /* Chromatic: slight green glow + ghost white offset */
-  text-shadow:
-    0px 0px 10px @mx_green,
-    0px 0px 25px alpha(@mx_green, 0.4),
-    1px 0px 0px alpha(@mx_white, 0.08);
+  text-shadow: 0px 0px 8px @mx_green;
 }
 
 headerbar button {
   background: transparent;
   border: 1px solid transparent;
-  border-radius: var(--r-zero);
-  color: alpha(@mx_green, 0.7);
+  border-radius: 0px;
+  color: rgba(0, 255, 65, 0.7);
   padding: 4px 10px;
   min-width: 30px;
   min-height: 28px;
-  transition: all 120ms steps(3, end);
 }
 
 headerbar button:hover {
-  background-color: alpha(@mx_green, 0.08);
+  background-color: rgba(0, 255, 65, 0.08);
   border-color: @mx_green_x;
   color: @mx_green;
-  box-shadow: var(--mx-glow-soft);
 }
 
 headerbar button:active {
-  background-color: alpha(@mx_green, 0.18);
-  box-shadow: var(--mx-glow-hot);
+  background-color: rgba(0, 255, 65, 0.18);
 }
 
 headerbar button:disabled {
@@ -145,89 +100,66 @@ headerbar button:disabled {
   opacity: 0.5;
 }
 
-/* ============================================================
-   3. BREADCRUMBS  (.breadcrumb-btn)
-   ============================================================ */
-
+/* ---------- BREADCRUMBS ---------- */
 button.breadcrumb-btn {
   background-color: @mx_panel;
   background-image: var(--scanline);
   border: 1px solid @mx_fiber;
-  border-radius: var(--r-zero);
+  border-radius: 0px;
   padding: 3px 12px;
   margin: 0px 2px;
   min-height: 24px;
-  box-shadow: var(--block-shadow);
-  /* Mechanical snap transition */
-  transition: all 100ms steps(2, end);
 }
 
 button.breadcrumb-btn label {
-  color: alpha(@mx_green, 0.65);
+  color: rgba(0, 255, 65, 0.65);
   font-size: 8.5pt;
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: lowercase;
-  text-shadow: var(--mx-glow-dim);
 }
 
 button.breadcrumb-btn:hover {
-  background-color: alpha(@mx_green, 0.07);
+  background-color: rgba(0, 255, 65, 0.07);
   border-color: @mx_green_x;
-  box-shadow: var(--mx-glow-soft), var(--block-shadow-hover);
 }
 
 button.breadcrumb-btn:hover label {
   color: @mx_green;
-  text-shadow: var(--mx-glow-soft);
 }
 
-/* Active / last segment — full phosphor activation */
 button.breadcrumb-btn:last-child {
   background-color: @mx_green;
-  background-image: none;
   border-color: @mx_white;
-  border-width: 1px;
-  box-shadow: var(--mx-glow-hot), var(--block-shadow);
 }
 
 button.breadcrumb-btn:last-child label {
   color: @mx_black;
   font-weight: 900;
   letter-spacing: 1.5px;
-  text-shadow: none;
 }
 
-/* Path / search entries in header */
 headerbar entry,
 headerbar searchentry {
   background-color: @mx_void;
   background-image: var(--scanline);
   border: 1px solid @mx_fiber;
   border-bottom: 2px solid @mx_green_x;
-  border-radius: var(--r-zero);
+  border-radius: 0px;
   color: @mx_green;
   font-size: 9pt;
   letter-spacing: 1px;
   padding: 4px 10px;
   min-height: 28px;
-  box-shadow: inset 0px 2px 5px alpha(black, 0.6);
-  transition: all 120ms steps(3, end);
 }
 
 headerbar entry:focus,
 headerbar searchentry:focus {
   border-color: @mx_green;
   border-bottom-color: @mx_green;
-  box-shadow:
-    inset 0px 2px 5px alpha(black, 0.6),
-    var(--mx-glow-hot);
 }
 
-/* ============================================================
-   4. SIDEBAR  (.sidebar, .sidebar-row, .sidebar-label)
-   ============================================================ */
-
+/* ---------- SIDEBAR ---------- */
 scrolledwindow.sidebar {
   background-color: @mx_void;
   background-image: var(--scanline);
@@ -243,30 +175,25 @@ scrolledwindow.sidebar listbox {
   background-color: transparent;
   border: none;
   border-left: 3px solid transparent;
-  border-bottom: 1px solid alpha(@mx_fiber, 0.5);
-  border-radius: var(--r-zero);
+  border-bottom: 1px solid rgba(13, 36, 16, 0.5);
+  border-radius: 0px;
   margin: 0px;
   padding: 10px 16px;
   min-height: 36px;
-  color: alpha(@mx_green, 0.6);
-  transition: all 120ms steps(3, end);
+  color: rgba(0, 255, 65, 0.6);
 }
 
 .sidebar-row:hover {
-  background-color: alpha(@mx_green, 0.04);
+  background-color: rgba(0, 255, 65, 0.04);
   border-left-color: @mx_green_x;
   color: @mx_green;
-  text-shadow: var(--mx-glow-dim);
 }
 
 .sidebar-row:selected {
-  background-color: alpha(@mx_green, 0.09);
+  background-color: rgba(0, 255, 65, 0.09);
   border-left: 3px solid @mx_green;
   color: @mx_white;
   font-weight: 700;
-  text-shadow: var(--mx-glow-soft);
-  /* Right-side phantom glow: data stream ingestion */
-  box-shadow: inset -1px 0px 12px alpha(@mx_green, 0.06);
 }
 
 .sidebar-label {
@@ -282,97 +209,81 @@ scrolledwindow.sidebar listbox {
   -gtk-icon-size: 14px;
 }
 
-/* ============================================================
-   5. FILE GRID CARDS  (.flux-card)
-   ============================================================ */
+.sidebar-dragging {
+  opacity: 0.5;
+}
 
+/* ---------- FILE CARDS ---------- */
 .flux-card {
   background-color: @mx_panel;
   background-image: var(--scanline);
   border: 1px solid @mx_fiber;
   border-left: 3px solid @mx_ghost;
-  border-radius: var(--r-zero);
+  border-radius: 0px;
   margin: 6px;
   padding: 12px 10px 10px;
-  box-shadow: var(--block-shadow);
-  transition:
-    border-color 180ms steps(3, end),
-    box-shadow 180ms steps(3, end),
-    transform 150ms ease-out;
 }
 
 .flux-card:hover {
-  background-color: alpha(@mx_green, 0.04);
+  background-color: rgba(0, 255, 65, 0.04);
   border-color: @mx_green_x;
   border-left-color: @mx_green;
-  box-shadow:
-    var(--mx-glow-soft),
-    var(--block-shadow-hover),
-    inset 0px 0px 8px alpha(@mx_green, 0.04);
-  transform: translateY(-3px);
 }
 
 .flux-card:selected {
-  background-color: alpha(@mx_green, 0.1);
+  background-color: rgba(0, 255, 65, 0.1);
   border-color: @mx_green;
   border-left-color: @mx_white;
-  box-shadow:
-    var(--mx-glow-hot),
-    inset 0px 0px 10px alpha(@mx_green, 0.08);
-  transform: translateY(-1px);
 }
 
-/* ============================================================
-   6. FILE LABELS  (.flux-label, .thumbnail)
-   ============================================================ */
+.flux-card--restricted {
+  opacity: 0.7;
+  border-color: @mx_red;
+  border-left-color: @mx_red;
+}
+
+.flux-card--restricted .flux-label {
+  color: @mx_red;
+}
+
+.flux-lock-badge {
+  -gtk-icon-size: 14px;
+  color: @mx_red;
+  margin-right: 3px;
+}
 
 .flux-label {
-  color: alpha(@mx_green, 0.8);
+  color: rgba(0, 255, 65, 0.8);
   font-size: 9pt;
   font-weight: 600;
   letter-spacing: 0.8px;
   text-transform: lowercase;
-  text-shadow: var(--mx-glow-dim);
   margin-top: 5px;
 }
 
 .thumbnail {
-  border-radius: var(--r-zero);
+  border-radius: 0px;
   border: 1px solid @mx_fiber;
-  /* Green phosphor tint on thumbnails */
-  box-shadow: inset 0px 0px 0px 1px alpha(@mx_green, 0.1);
 }
 
-/* ============================================================
-   7. RENAME ENTRY  (.flux-rename-entry)
-   ============================================================ */
-
-entry.flux-rename-entry {
+.flux-rename-entry {
   background-color: @mx_void;
   border: 1px solid @mx_green;
   border-bottom: 2px solid @mx_green;
-  border-radius: var(--r-zero);
+  border-radius: 0px;
   color: @mx_green;
   font-size: 9pt;
   letter-spacing: 1px;
   padding: 2px 8px;
   min-width: 110px;
-  box-shadow:
-    inset 0px 2px 4px alpha(black, 0.7),
-    var(--mx-glow-hot);
 }
 
-/* ============================================================
-   8. SORT INDICATOR  (.sort-container, .sort-status-label)
-   ============================================================ */
-
+/* ---------- SORT ---------- */
 .sort-container {
   background-color: @mx_green;
-  background-image: none;
   border: none;
-  border-radius: var(--r-zero);
+  border-radius: 0px;
   padding: 1px 10px;
-  box-shadow: var(--mx-glow-hot);
 }
 
 .sort-status-label {
@@ -381,26 +292,20 @@ entry.flux-rename-entry {
   font-weight: 900;
   letter-spacing: 2px;
   text-transform: uppercase;
-  text-shadow: none;
 }
 
-/* ============================================================
-   9. DESTRUCTIVE ACTION  (.destructive-action)
-   ============================================================ */
-
+/* ---------- DESTRUCTIVE ---------- */
 .destructive-action {
   background-color: @mx_void;
   background-image: var(--scanline);
-  border: 1px solid alpha(@mx_red, 0.5);
+  border: 1px solid rgba(255, 26, 26, 0.5);
   border-bottom: 2px solid @mx_red;
-  border-radius: var(--r-zero);
+  border-radius: 0px;
   color: @mx_red;
   font-weight: 900;
   letter-spacing: 3px;
   text-transform: uppercase;
   padding: 4px 16px;
-  box-shadow: var(--mx-glow-red);
-  transition: all 120ms steps(3, end);
 }
 
 .destructive-action:hover {
@@ -408,20 +313,13 @@ entry.flux-rename-entry {
   background-image: none;
   color: @mx_black;
   border-color: @mx_red;
-  box-shadow:
-    var(--mx-glow-red),
-    4px 4px 0px alpha(@mx_red, 0.4);
 }
 
 .destructive-action:active {
-  box-shadow: var(--mx-glow-red);
-  transform: translateY(1px) translateX(1px);
+  background-color: rgba(255, 26, 26, 0.3);
 }
 
-/* ============================================================
-   10. CONTEXT MENU / POPOVER — System Interrupt
-   ============================================================ */
-
+/* ---------- POPOVER ---------- */
 popover,
 popover.menu {
   background: none;
@@ -434,25 +332,20 @@ popover.menu contents {
   background-image: var(--scanline);
   border: 1px solid @mx_green_x;
   border-top: 2px solid @mx_green;
-  border-radius: var(--r-zero);
+  border-radius: 0px;
   padding: 6px;
-  box-shadow:
-    var(--mx-glow-soft),
-    8px 8px 0px @mx_ghost,
-    12px 12px 0px alpha(@mx_ghost, 0.5);
 }
 
 popover.menu modelbutton {
   background: transparent;
-  border-radius: var(--r-zero);
+  border-radius: 0px;
   border-left: 3px solid transparent;
-  color: alpha(@mx_green, 0.8);
+  color: rgba(0, 255, 65, 0.8);
   padding: 7px 14px;
   font-size: 9.5pt;
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: lowercase;
-  transition: all 80ms steps(2, end);
 }
 
 popover.menu modelbutton:hover {
@@ -471,65 +364,51 @@ popover.menu > contents separator {
   background-color: @mx_fiber;
   min-height: 1px;
   margin: 3px 0px;
-  box-shadow: 0px 0px 4px alpha(@mx_green, 0.2);
 }
 
-/* ============================================================
-   11. ENTRIES (global)
-   ============================================================ */
-
+/* ---------- ENTRIES ---------- */
 entry {
   background-color: @mx_void;
   background-image: var(--scanline);
   border: 1px solid @mx_fiber;
   border-bottom: 1px solid @mx_green_x;
-  border-radius: var(--r-zero);
+  border-radius: 0px;
   color: @mx_green;
   font-size: 9pt;
   letter-spacing: 1.2px;
   padding: 6px 10px;
-  box-shadow: inset 0px 2px 6px alpha(black, 0.6);
-  transition: all 120ms steps(3, end);
   caret-color: @mx_green;
 }
 
 entry:focus {
   border-color: @mx_green;
-  box-shadow:
-    inset 0px 2px 6px alpha(black, 0.6),
-    var(--mx-glow-soft);
 }
 
-/* ============================================================
-   12. SELECTION STATUS BAR  (.selection-status)
-   ============================================================ */
-
+/* ---------- STATUS BAR ---------- */
 .selection-status {
   background-color: @mx_void;
   background-image: var(--scanline);
   border: none;
   border-top: 1px solid @mx_fiber;
-  border-radius: var(--r-zero);
+  border-radius: 0px;
   padding: 2px 16px;
   min-height: 26px;
 }
 
 .selection-status label.caption {
-  color: alpha(@mx_green, 0.55);
+  color: rgba(0, 255, 65, 0.55);
   font-size: 8pt;
   font-weight: 600;
   letter-spacing: 1px;
   text-transform: lowercase;
-  text-shadow: var(--mx-glow-dim);
 }
 
 progressbar trough,
 .selection-status progressbar trough {
   background-color: @mx_ghost;
   border: 1px solid @mx_fiber;
-  border-radius: var(--r-zero);
+  border-radius: 0px;
   min-height: 4px;
-  box-shadow: inset 0px 1px 2px alpha(black, 0.6);
 }
 
 progressbar progress,
@@ -541,16 +420,11 @@ progressbar progress,
     @mx_green 60%,
     @mx_white 100%
   );
-  border-radius: var(--r-zero);
+  border-radius: 0px;
   border: none;
-  box-shadow: var(--mx-glow-hot);
-  transition: all 200ms steps(8, end);
 }
 
-/* ============================================================
-   13. SETTINGS WINDOW
-   ============================================================ */
-
+/* ---------- SETTINGS ---------- */
 window.settings-window {
   background-color: @mx_black;
   background-image: var(--scanline), var(--vignette);
@@ -574,7 +448,6 @@ window.settings-window preferencesgroup label.title {
   font-weight: 900;
   letter-spacing: 3px;
   text-transform: uppercase;
-  text-shadow: var(--mx-glow-soft);
   margin-bottom: 6px;
 }
 
@@ -584,19 +457,16 @@ window.settings-window actionrow {
   background-image: var(--scanline);
   border: 1px solid @mx_fiber;
   border-left: 3px solid @mx_ghost;
-  border-radius: var(--r-zero);
+  border-radius: 0px;
   color: @mx_green;
   margin-bottom: 2px;
   padding: 4px 0px;
-  box-shadow: var(--block-shadow);
-  transition: all 100ms steps(2, end);
 }
 
 window.settings-window .settings-row:hover,
 window.settings-window actionrow:hover {
-  background-color: alpha(@mx_green, 0.05);
+  background-color: rgba(0, 255, 65, 0.05);
   border-left-color: @mx_green;
-  box-shadow: var(--mx-glow-dim), var(--block-shadow-hover);
 }
 
 window.settings-window .settings-row label.title,
@@ -609,7 +479,7 @@ window.settings-window actionrow label.title {
 
 window.settings-window .settings-row label.subtitle,
 window.settings-window actionrow label.subtitle {
-  color: alpha(@mx_green, 0.5);
+  color: rgba(0, 255, 65, 0.5);
   font-size: 9pt;
   font-style: italic;
   letter-spacing: 0.3px;
@@ -622,46 +492,36 @@ window.settings-window dropdown button {
   background-image: var(--scanline);
   border: 1px solid @mx_fiber;
   border-bottom: 2px solid @mx_green_x;
-  border-radius: var(--r-zero);
+  border-radius: 0px;
   color: @mx_green;
   letter-spacing: 0.8px;
   padding: 4px 10px;
   min-height: 28px;
-  box-shadow: inset 0px 2px 4px alpha(black, 0.6);
 }
 
 window.settings-window spinbutton:focus,
 window.settings-window entry:focus,
 window.settings-window dropdown button:focus {
   border-color: @mx_green;
-  box-shadow:
-    inset 0px 2px 4px alpha(black, 0.6),
-    var(--mx-glow-soft);
 }
 
 window.settings-window switch {
   background-color: @mx_ghost;
   border: 1px solid @mx_fiber;
-  border-radius: var(--r-zero);
-  box-shadow: inset 0px 2px 4px alpha(black, 0.5);
+  border-radius: 0px;
 }
 
 window.settings-window switch:checked {
   background-color: @mx_green;
   border-color: @mx_green;
-  box-shadow: var(--mx-glow-hot);
 }
 
 window.settings-window switch slider {
   background-color: @mx_white;
-  border-radius: var(--r-chip);
-  box-shadow: 0px 0px 6px alpha(@mx_green, 0.5);
+  border-radius: 0px;
 }
 
-/* ============================================================
-   14. SCROLLBARS — Phosphor Slider
-   ============================================================ */
-
+/* ---------- SCROLLBARS ---------- */
 scrollbar {
   background: transparent;
   border: none;
@@ -670,53 +530,206 @@ scrollbar {
 scrollbar slider {
   background-color: @mx_fiber;
   border: 1px solid transparent;
-  border-radius: var(--r-zero);
+  border-radius: 0px;
   min-width: 5px;
   min-height: 5px;
   margin: 1px;
-  transition:
-    background 100ms steps(2, end),
-    box-shadow 100ms steps(2, end);
 }
 
 scrollbar slider:hover {
   background-color: @mx_green;
-  box-shadow: var(--mx-glow-hot);
 }
 
-/* ============================================================
-   15. LINKED BOX
-   ============================================================ */
-
-box.linked {
-  background: transparent;
-  border: none;
-}
-
-box.linked button {
-  background: transparent;
-  border: none;
-}
-
-/* ============================================================
-   16. FLAT BUTTON
-   ============================================================ */
-
+/* ---------- FLAT BUTTON ---------- */
 button.flat {
   background: transparent;
   border: 1px solid transparent;
-  border-radius: var(--r-zero);
-  color: alpha(@mx_green, 0.55);
+  border-radius: 0px;
+  color: rgba(0, 255, 65, 0.55);
   font-size: 8.5pt;
   letter-spacing: 1px;
   text-transform: lowercase;
   padding: 4px 12px;
-  transition: all 100ms steps(2, end);
 }
 
 button.flat:hover {
-  background-color: alpha(@mx_green, 0.07);
+  background-color: rgba(0, 255, 65, 0.07);
   border-color: @mx_fiber;
   color: @mx_green;
-  box-shadow: var(--mx-glow-dim);
+}
+
+/* ---------- OTHER OVERRIDES ---------- */
+.view {
+  background-color: transparent;
+  color: @mx_green;
+}
+.view:selected {
+  background-color: rgba(0, 255, 65, 0.08);
+  color: @mx_white;
+}
+list,
+listview {
+  background: transparent;
+  color: @mx_green;
+}
+row {
+  background: transparent;
+  color: @mx_green;
+}
+row:selected {
+  background-color: rgba(0, 255, 65, 0.07);
+  color: @mx_white;
+}
+.property {
+  background: transparent;
+  border-bottom: 1px solid @mx_fiber;
+  padding: 6px 0px;
+  color: @mx_dim;
+  font-size: 9pt;
+}
+.property label {
+  color: @mx_green;
+}
+.monospace {
+  font-family: var(--font-matrix);
+}
+.error {
+  border: 1px solid @mx_red;
+  background-color: @mx_red;
+  color: @mx_black;
+}
+.warning {
+  border: 1px solid @mx_amber;
+  background-color: @mx_amber;
+  color: @mx_black;
+}
+.card {
+  background-color: @mx_panel;
+  border: 1px solid @mx_fiber;
+  border-radius: 0px;
+  padding: 8px;
+}
+.frame {
+  border: 1px solid @mx_fiber;
+  border-radius: 0px;
+  background: transparent;
+}
+.boxed-list {
+  background-color: @mx_panel;
+  border: 1px solid @mx_fiber;
+  border-radius: 0px;
+  padding: 4px;
+}
+check,
+radio {
+  background-color: @mx_ghost;
+  border: 1px solid @mx_fiber;
+  border-radius: 0px;
+  min-height: 16px;
+  min-width: 16px;
+}
+check:checked,
+radio:checked {
+  background-color: @mx_green;
+  border-color: @mx_green;
+}
+check:hover,
+radio:hover {
+  border-color: @mx_green;
+}
+check:disabled,
+radio:disabled {
+  opacity: 0.3;
+}
+tooltip.background {
+  background-color: @mx_void;
+  border: 1px solid @mx_green_x;
+  border-top: 2px solid @mx_green;
+  border-radius: 0px;
+  color: @mx_green;
+  padding: 6px 12px;
+}
+spinbutton {
+  background-color: @mx_void;
+  background-image: var(--scanline);
+  border: 1px solid @mx_fiber;
+  border-radius: 0px;
+  color: @mx_green;
+  padding: 0px 4px;
+  min-height: 28px;
+}
+spinbutton:focus {
+  border-color: @mx_green;
+}
+spinbutton > button {
+  background: transparent;
+  border: none;
+  color: @mx_dim;
+}
+spinbutton > button:hover {
+  color: @mx_green;
+}
+dropdown,
+combobox {
+  background-color: @mx_void;
+  background-image: var(--scanline);
+  border: 1px solid @mx_fiber;
+  border-bottom: 2px solid @mx_green_x;
+  border-radius: 0px;
+  color: @mx_green;
+  font-family: var(--font-matrix);
+  min-height: 28px;
+}
+dropdown button,
+combobox button {
+  background: transparent;
+  border: none;
+  color: @mx_green;
+}
+dropdown:focus,
+combobox:focus {
+  border-color: @mx_green;
+}
+notebook > header {
+  background: transparent;
+  border: none;
+}
+notebook > header > tabs > tab {
+  background: transparent;
+  color: @mx_dim;
+  padding: 4px 12px;
+  border: none;
+  border-bottom: 2px solid transparent;
+}
+notebook > header > tabs > tab:checked {
+  color: @mx_green;
+  border-bottom-color: @mx_green;
+}
+scale trough {
+  background: @mx_ghost;
+  border: 1px solid @mx_fiber;
+  border-radius: 0px;
+  min-height: 4px;
+}
+scale highlight {
+  background: @mx_green;
+}
+scale slider {
+  background: @mx_white;
+  border: 2px solid @mx_green;
+  border-radius: 0px;
+  min-width: 16px;
+  min-height: 16px;
+}
+levelbar block {
+  border-radius: 0px;
+}
+levelbar block.low {
+  background: @mx_red;
+}
+levelbar block.high {
+  background: @mx_green_x;
+}
+levelbar block.full {
+  background: @mx_green;
 }

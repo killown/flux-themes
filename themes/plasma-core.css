@@ -4,8 +4,9 @@
 @define-color core_accent #00f2ff;
 @define-color core_heat #ff0055;
 @define-color core_text #ffffff;
+@define-color core_surface #08080a;
+@define-color core_raised #0c0c0f;
 
-/* 1. Global Setup - Forced Spacing Reset */
 * {
   font-family: "Geist Mono", "Orbitron", sans-serif;
   -gtk-secondary-caret-color: @core_accent;
@@ -22,7 +23,19 @@ window {
   color: @core_text;
 }
 
-/* 2. Headerbar: Neon Filament */
+gridview,
+scrolledwindow > viewport {
+  background-color: transparent;
+}
+
+/* ---------- NO GRID-WIDE HOVER ---------- */
+gridview:hover,
+scrolledwindow > viewport:hover {
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* ---------- HEADER ---------- */
 headerbar {
   background-color: transparent;
   padding: 14px;
@@ -34,44 +47,123 @@ headerbar label {
   font-weight: 900;
   text-transform: uppercase;
   color: white;
-  text-shadow:
-    0 0 10px @core_accent,
-    0 0 20px alpha(@core_accent, 0.5);
-  /* Exception for header branding */
+  text-shadow: 0 0 10px @core_accent, 0 0 20px alpha(@core_accent, 0.5);
   letter-spacing: 4px !important;
 }
 
-.breadcrumb-btn {
-  color: @core_accent;
+headerbar button {
   background-color: transparent;
   border: 1px solid transparent;
+  border-radius: 0px;
+  color: alpha(@core_text, 0.7);
+  padding: 6px 12px;
+  min-width: 30px;
+  min-height: 28px;
   transition: all 200ms ease;
 }
 
-.breadcrumb-btn:hover {
-  color: white;
-  text-shadow: 0 0 8px @core_accent;
+headerbar button:hover {
+  color: @core_accent;
+  text-shadow: 0 0 10px @core_accent;
+  background-color: alpha(@core_accent, 0.1);
+  box-shadow: 0 0 20px alpha(@core_accent, 0.2);
 }
 
-/* 3. Sidebar: Energy Slots */
+headerbar button:disabled {
+  color: alpha(@core_text, 0.2);
+}
+
+/* ---------- BREADCRUMBS ---------- */
+button.breadcrumb-btn {
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 0px;
+  color: alpha(@core_accent, 0.6);
+  padding: 4px 12px;
+  margin: 0 2px;
+  min-height: 26px;
+  min-width: 0;
+  max-width: none;
+  width: auto;
+  transition: all 200ms ease;
+}
+
+button.breadcrumb-btn label {
+  font-family: "Geist Mono", monospace;
+  font-size: 8.5pt;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  ellipsize: none;
+  max-width: none;
+  width: auto;
+  color: inherit;
+}
+
+button.breadcrumb-btn:hover {
+  color: @core_text;
+  background-color: alpha(@core_accent, 0.08);
+  text-shadow: 0 0 10px @core_accent;
+  box-shadow: 0 0 20px alpha(@core_accent, 0.15);
+}
+
+button.breadcrumb-btn:last-child {
+  color: @core_text;
+  background-color: alpha(@core_accent, 0.15);
+  border-bottom: 1px solid @core_accent;
+  box-shadow: 0 2px 10px alpha(@core_accent, 0.3);
+}
+
+headerbar entry,
+headerbar searchentry {
+  background-color: @core_surface;
+  border: 1px solid alpha(@core_accent, 0.3);
+  border-radius: 0px;
+  color: @core_accent;
+  font-family: "Geist Mono", monospace;
+  font-size: 9pt;
+  padding: 4px 12px;
+  min-height: 28px;
+  caret-color: @core_accent;
+  box-shadow: inset 0 0 10px alpha(black, 0.6);
+}
+
+headerbar entry:focus,
+headerbar searchentry:focus {
+  border-color: @core_accent;
+  box-shadow: 0 0 20px alpha(@core_accent, 0.3);
+}
+
+/* ---------- SIDEBAR ---------- */
 scrolledwindow.sidebar {
   background-color: transparent;
   border-right: 1px solid alpha(@core_accent, 0.1);
+}
+
+scrolledwindow.sidebar list,
+scrolledwindow.sidebar listbox {
+  background: transparent;
 }
 
 .sidebar-row {
   margin: 6px 16px;
   padding: 10px 20px;
   min-height: 44px;
-  border-radius: 4px;
+  border-radius: 0px;
   color: alpha(@core_text, 0.4);
+  border: none;
+  border-left: 2px solid transparent;
   transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-row label {
+  letter-spacing: 0.5px;
 }
 
 .sidebar-row:hover:not(:selected) {
   color: white;
   text-shadow: 0 0 8px white;
   background-color: alpha(white, 0.05);
+  border-left-color: alpha(@core_accent, 0.3);
 }
 
 .sidebar-row:selected {
@@ -79,21 +171,30 @@ scrolledwindow.sidebar {
   color: white;
   font-weight: 800;
   border-left: 4px solid @core_accent;
-  box-shadow:
-    -10px 0 30px alpha(@core_accent, 0.3),
-    inset 0 0 15px alpha(@core_accent, 0.2);
+  box-shadow: -10px 0 30px alpha(@core_accent, 0.3), inset 0 0 15px alpha(@core_accent, 0.2);
   transform: translateX(8px);
+}
+
+.sidebar-row image {
+  color: inherit;
+  -gtk-icon-size: 16px;
+  margin-right: 12px;
 }
 
 .sidebar-label {
   font-weight: 700;
 }
 
-/* 4. Grid View: Light-Tracer Cards */
+.sidebar-dragging {
+  opacity: 0.4;
+  transform: scale(0.96);
+}
+
+/* ---------- GRID CARDS (ONLY CARD HOVERS) ---------- */
 .flux-card {
-  background-color: #08080a;
+  background-color: @core_surface;
   border: 1px solid alpha(white, 0.05);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 22px;
   margin: 12px;
   box-shadow: 0 0 15px alpha(black, 0.8);
@@ -101,14 +202,35 @@ scrolledwindow.sidebar {
 }
 
 .flux-card:hover {
-  background-color: #0c0c0f;
+  background-color: @core_raised;
   border-color: @core_accent;
-  transform: scale(1.05);
+  transform: scale(1.02);
   box-shadow: 0 0 30px alpha(@core_accent, 0.4);
 }
 
+.flux-card:selected {
+  border-color: @core_accent;
+  background-color: alpha(@core_accent, 0.08);
+  box-shadow: 0 0 40px alpha(@core_accent, 0.5), inset 0 0 20px alpha(@core_accent, 0.1);
+}
+
+.flux-card--restricted {
+  opacity: 0.6;
+  border-color: alpha(@core_heat, 0.3);
+}
+
+.flux-card--restricted .flux-label {
+  color: @core_heat;
+}
+
+.flux-lock-badge {
+  -gtk-icon-size: 14px;
+  color: @core_heat;
+  margin-right: 4px;
+}
+
 .thumbnail {
-  border-radius: 4px;
+  border-radius: 2px;
   border: 1px solid alpha(@core_accent, 0.2);
 }
 
@@ -119,68 +241,22 @@ scrolledwindow.sidebar {
   margin-top: 14px;
 }
 
-/* 5. SETTINGS WINDOW FIX (PLASMA STYLE) */
-
-window.settings-window,
-window.settings-window list,
-window.settings-window scrolledwindow,
-window.settings-window adwpreferencespage,
-window.settings-window adwpreferencesgroup,
-window.settings-window adwactionrow {
-  background-color: @core_void;
-  color: white;
+.flux-rename-entry {
+  background-color: @core_surface;
+  border: 1px solid @core_accent;
+  border-radius: 2px;
+  color: @core_text;
+  padding: 4px 8px;
+  font-family: "Geist Mono", monospace;
 }
 
-window.settings-window label,
-window.settings-window .title,
-window.settings-window .subtitle,
-window.settings-window adwactionrow label,
-window.settings-window adwpreferencesgroup > box > label {
-  color: white;
-  opacity: 1;
-  text-shadow: 0 0 5px alpha(@core_accent, 0.5);
-}
-
-window.settings-window .subtitle {
-  color: alpha(@core_accent, 0.6);
-}
-
-/* ComboBox / Dropdowns / Inputs */
-window.settings-window dropdown,
-window.settings-window combobox,
-window.settings-window dropdown button,
-window.settings-window combobox button,
-window.settings-window dropdown label,
-window.settings-window combobox label,
-window.settings-window spinbutton,
-window.settings-window entry {
-  color: @core_accent;
-  background-color: #0c0c0f;
-  border: 1px solid alpha(@core_accent, 0.3);
-  border-radius: 4px;
-}
-
-popover.menu,
-popover.menu contents,
-popover.menu listview,
-popover.menu modelbutton label {
-  background-color: #08080a;
-  color: white;
-}
-
-popover.menu modelbutton:hover {
-  background-color: alpha(@core_accent, 0.2);
-  color: @core_accent;
-}
-
-/* 6. Sort & Status */
+/* ---------- SORT ---------- */
 .sort-container {
   background-color: transparent;
   padding: 8px;
 }
 
-.sort-status-label,
-.sort-label {
+.sort-status-label {
   background-color: #1a0005;
   color: @core_heat;
   border: 1px solid @core_heat;
@@ -190,17 +266,533 @@ popover.menu modelbutton:hover {
   box-shadow: 0 0 10px alpha(@core_heat, 0.3);
 }
 
-/* 7. Utilities */
+/* ---------- BUTTONS ---------- */
 .destructive-action {
   background-color: #1a0005;
   color: @core_heat;
   border: 2px solid @core_heat;
   border-radius: 2px;
+  padding: 6px 18px;
   font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 200ms ease;
 }
 
 .destructive-action:hover {
   background-color: @core_heat;
   color: white;
   box-shadow: 0 0 20px @core_heat;
+}
+
+.destructive-action:active {
+  background-color: alpha(@core_heat, 0.6);
+}
+
+.suggested-action {
+  background-color: @core_accent;
+  color: @core_void;
+  border: none;
+  border-radius: 2px;
+  padding: 6px 18px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 200ms ease;
+}
+
+.suggested-action:hover {
+  box-shadow: 0 0 20px @core_accent;
+  background-color: alpha(@core_accent, 0.8);
+}
+
+/* ---------- CONTEXT MENU ---------- */
+popover.menu contents {
+  background-color: @core_surface;
+  border: 1px solid alpha(@core_accent, 0.3);
+  border-radius: 4px;
+  padding: 6px;
+  box-shadow: 0 12px 40px alpha(black, 0.8);
+}
+
+popover.menu modelbutton {
+  background: transparent;
+  border: none;
+  border-radius: 0px;
+  color: alpha(@core_text, 0.8);
+  padding: 8px 16px;
+  font-size: 10pt;
+  font-weight: 700;
+  transition: all 150ms ease;
+}
+
+popover.menu modelbutton label {
+  letter-spacing: 0.5px;
+}
+
+popover.menu modelbutton:hover {
+  background-color: alpha(@core_accent, 0.15);
+  color: @core_accent;
+  text-shadow: 0 0 10px @core_accent;
+  box-shadow: inset 0 0 20px alpha(@core_accent, 0.1);
+}
+
+popover.menu > contents separator {
+  background-color: alpha(@core_accent, 0.2);
+  min-height: 1px;
+  margin: 4px 0;
+}
+
+/* ---------- ENTRIES ---------- */
+entry {
+  background-color: @core_surface;
+  border: 1px solid alpha(@core_accent, 0.3);
+  border-radius: 0px;
+  color: @core_accent;
+  font-family: "Geist Mono", monospace;
+  font-size: 9pt;
+  padding: 6px 12px;
+  transition: all 200ms ease;
+}
+
+entry:focus {
+  border-color: @core_accent;
+  box-shadow: 0 0 20px alpha(@core_accent, 0.3);
+}
+
+/* ---------- STATUS BAR ---------- */
+.selection-status {
+  background-color: alpha(@core_void, 0.8);
+  border-top: 1px solid alpha(@core_accent, 0.2);
+  padding: 4px 16px;
+  min-height: 28px;
+}
+
+.selection-status label.caption {
+  color: alpha(@core_accent, 0.7);
+  font-size: 8.5pt;
+  font-family: "Geist Mono", monospace;
+}
+
+progressbar trough {
+  background-color: alpha(white, 0.05);
+  border-radius: 2px;
+  min-height: 4px;
+  border: 1px solid alpha(@core_accent, 0.2);
+}
+
+progressbar progress {
+  background-color: @core_accent;
+  border-radius: 2px;
+  box-shadow: 0 0 12px @core_accent;
+}
+
+/* ---------- SETTINGS ---------- */
+window.settings-window {
+  background-color: @core_void;
+  color: @core_text;
+}
+
+window.settings-window preferencespage,
+window.settings-window preferencesgroup,
+window.settings-window list,
+window.settings-window listbox,
+window.settings-window scrolledwindow,
+window.settings-window clamp,
+window.settings-window box {
+  background: transparent;
+  color: @core_text;
+}
+
+window.settings-window preferencesgroup > box > label,
+window.settings-window preferencesgroup label.title {
+  color: @core_accent;
+  font-size: 8.5pt;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px @core_accent;
+  margin-bottom: 8px;
+}
+
+window.settings-window .settings-row,
+window.settings-window actionrow {
+  background-color: @core_surface;
+  border: 1px solid alpha(@core_accent, 0.15);
+  border-radius: 0px;
+  color: @core_text;
+  margin-bottom: 4px;
+  padding: 6px 0;
+  transition: all 200ms ease;
+}
+
+window.settings-window .settings-row:hover,
+window.settings-window actionrow:hover {
+  background-color: alpha(@core_accent, 0.05);
+  border-color: @core_accent;
+  box-shadow: 0 0 20px alpha(@core_accent, 0.1);
+}
+
+window.settings-window .settings-row label.title,
+window.settings-window actionrow label.title {
+  color: @core_text;
+  font-size: 10.5pt;
+  font-weight: 700;
+}
+
+window.settings-window .settings-row label.subtitle,
+window.settings-window actionrow label.subtitle {
+  color: alpha(@core_accent, 0.6);
+  font-size: 9.5pt;
+}
+
+window.settings-window spinbutton,
+window.settings-window entry,
+window.settings-window dropdown button {
+  background-color: @core_surface;
+  border: 1px solid alpha(@core_accent, 0.3);
+  border-radius: 0px;
+  color: @core_accent;
+  font-family: "Geist Mono", monospace;
+  padding: 4px 10px;
+  min-height: 28px;
+}
+
+window.settings-window spinbutton:focus,
+window.settings-window entry:focus,
+window.settings-window dropdown button:focus {
+  border-color: @core_accent;
+  box-shadow: 0 0 15px alpha(@core_accent, 0.3);
+}
+
+window.settings-window switch {
+  background-color: alpha(white, 0.1);
+  border: 1px solid alpha(@core_accent, 0.2);
+  border-radius: 0px;
+}
+
+window.settings-window switch:checked {
+  background-color: @core_accent;
+  border-color: @core_accent;
+  box-shadow: 0 0 15px @core_accent;
+}
+
+window.settings-window switch slider {
+  background-color: @core_text;
+  border-radius: 0px;
+}
+
+/* ---------- SCROLLBARS ---------- */
+scrollbar {
+  background: transparent;
+  border: none;
+}
+
+scrollbar slider {
+  background-color: alpha(@core_accent, 0.25);
+  border-radius: 0px;
+  min-width: 5px;
+  min-height: 5px;
+  margin: 1px;
+  transition: all 200ms ease;
+}
+
+scrollbar slider:hover {
+  background-color: @core_accent;
+  box-shadow: 0 0 12px @core_accent;
+}
+
+/* ---------- FLAT ---------- */
+button.flat {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0px;
+  color: alpha(@core_text, 0.6);
+  padding: 4px 12px;
+  font-weight: 600;
+  transition: all 200ms ease;
+}
+
+button.flat:hover {
+  background-color: alpha(@core_accent, 0.08);
+  color: @core_accent;
+  box-shadow: 0 0 15px alpha(@core_accent, 0.15);
+}
+
+/* ---------- CHECKS ---------- */
+check,
+radio {
+  background-color: @core_surface;
+  border: 1px solid alpha(@core_accent, 0.2);
+  border-radius: 0px;
+  min-height: 16px;
+  min-width: 16px;
+  transition: all 150ms ease;
+}
+
+check:checked,
+radio:checked {
+  background-color: @core_accent;
+  border-color: @core_accent;
+  box-shadow: 0 0 12px @core_accent;
+}
+
+check:hover,
+radio:hover {
+  border-color: @core_accent;
+}
+
+check:disabled,
+radio:disabled {
+  opacity: 0.3;
+}
+
+/* ---------- TOOLTIPS ---------- */
+tooltip.background {
+  background-color: @core_surface;
+  border: 1px solid alpha(@core_accent, 0.3);
+  border-radius: 2px;
+  color: @core_text;
+  padding: 6px 12px;
+  box-shadow: 0 4px 20px alpha(black, 0.6);
+}
+
+/* ---------- NOTEBOOK ---------- */
+notebook > header {
+  background: transparent;
+  border: none;
+}
+
+notebook > header > tabs > tab {
+  background: transparent;
+  color: alpha(@core_text, 0.4);
+  padding: 4px 12px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-weight: 700;
+  transition: all 200ms ease;
+}
+
+notebook > header > tabs > tab:hover {
+  color: @core_text;
+}
+
+notebook > header > tabs > tab:checked {
+  color: @core_accent;
+  border-bottom-color: @core_accent;
+  box-shadow: 0 2px 10px alpha(@core_accent, 0.3);
+}
+
+/* ---------- SCALE ---------- */
+scale trough {
+  background: alpha(white, 0.05);
+  border: 1px solid alpha(@core_accent, 0.2);
+  border-radius: 0px;
+  min-height: 4px;
+}
+
+scale highlight {
+  background: @core_accent;
+}
+
+scale slider {
+  background: @core_text;
+  border: 2px solid @core_accent;
+  border-radius: 0px;
+  min-width: 16px;
+  min-height: 16px;
+  box-shadow: 0 0 12px @core_accent;
+}
+
+/* ---------- LEVELBAR ---------- */
+levelbar block {
+  border-radius: 0px;
+}
+
+levelbar block.low {
+  background: @core_heat;
+}
+
+levelbar block.high {
+  background: @core_accent;
+}
+
+levelbar block.full {
+  background: #00ff88;
+}
+
+/* ---------- LISTS & ROWS (NO HOVER ON GRID ROWS) ---------- */
+list,
+listview {
+  background: transparent;
+  color: @core_text;
+}
+
+row {
+  background: transparent;
+  color: @core_text;
+}
+
+row:selected {
+  background: alpha(@core_accent, 0.08);
+  color: @core_accent;
+}
+
+.view {
+  background: transparent;
+  color: @core_text;
+}
+
+.view:selected {
+  background: alpha(@core_accent, 0.08);
+  color: @core_accent;
+}
+
+/* ---------- PROPERTY ---------- */
+.property {
+  background: transparent;
+  border-bottom: 1px solid alpha(@core_accent, 0.1);
+  padding: 6px 0;
+  color: alpha(@core_text, 0.6);
+  font-size: 9.5pt;
+}
+
+.property label {
+  color: @core_text;
+}
+
+/* ---------- MISC ---------- */
+.monospace {
+  font-family: "Geist Mono", monospace;
+}
+
+.error {
+  border: 1px solid @core_heat;
+  background-color: alpha(@core_heat, 0.08);
+  color: @core_heat;
+}
+
+.warning {
+  border: 1px solid #ffaa00;
+  background-color: alpha(#ffaa00, 0.08);
+  color: #ffaa00;
+}
+
+.card {
+  background: @core_surface;
+  border: 1px solid alpha(@core_accent, 0.1);
+  border-radius: 0px;
+  padding: 8px;
+}
+
+.frame {
+  border: 1px solid alpha(@core_accent, 0.1);
+  border-radius: 0px;
+  background: transparent;
+}
+
+.boxed-list {
+  background: @core_surface;
+  border: 1px solid alpha(@core_accent, 0.1);
+  border-radius: 0px;
+  padding: 4px;
+}
+
+/* ---------- DROPDOWN ---------- */
+dropdown,
+combobox {
+  background-color: @core_surface;
+  border: 1px solid alpha(@core_accent, 0.3);
+  border-radius: 0px;
+  color: @core_accent;
+  font-family: "Geist Mono", monospace;
+  padding: 4px 8px;
+}
+
+dropdown button,
+combobox button {
+  background: transparent;
+  border: none;
+  color: @core_accent;
+}
+
+dropdown:focus-within,
+combobox:focus-within {
+  border-color: @core_accent;
+  box-shadow: 0 0 15px alpha(@core_accent, 0.3);
+}
+
+/* ---------- TOAST ---------- */
+toast {
+  background-color: @core_surface;
+  border: 1px solid alpha(@core_accent, 0.3);
+  border-radius: 0px;
+  box-shadow: 0 8px 20px alpha(black, 0.6);
+}
+
+toast label {
+  color: @core_text;
+}
+
+/* ---------- TITLES ---------- */
+.title-1 {
+  font-size: 24pt;
+  font-weight: 900;
+}
+.title-2 {
+  font-size: 18pt;
+  font-weight: 800;
+}
+.title-3 {
+  font-size: 14pt;
+  font-weight: 700;
+}
+.title-4 {
+  font-size: 11pt;
+  font-weight: 700;
+}
+
+/* ---------- LINKED ---------- */
+box.linked {
+  background: transparent;
+  border: none;
+}
+
+box.linked button {
+  background: transparent;
+  border: none;
+}
+
+/* ---------- SPINBUTTON ---------- */
+spinbutton {
+  background-color: @core_surface;
+  border: 1px solid alpha(@core_accent, 0.3);
+  border-radius: 0px;
+  color: @core_accent;
+  font-family: "Geist Mono", monospace;
+  padding: 0 4px;
+  min-height: 28px;
+}
+
+spinbutton:focus-within {
+  border-color: @core_accent;
+  box-shadow: 0 0 15px alpha(@core_accent, 0.3);
+}
+
+spinbutton > button {
+  background: transparent;
+  border: none;
+  color: alpha(@core_text, 0.5);
+}
+
+spinbutton > button:hover {
+  color: @core_accent;
+}
+
+/* ---------- POPOVER ---------- */
+popover contents {
+  background-color: @core_surface;
+  border: 1px solid alpha(@core_accent, 0.3);
+  border-radius: 4px;
+  box-shadow: 0 12px 40px alpha(black, 0.8);
 }

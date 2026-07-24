@@ -5,35 +5,29 @@
 
 :root {
   /* --- Glass System --- */
-  --glass-bg-0: alpha(@window_fg_color, 0.04); /* resting surface     */
-  --glass-bg-1: alpha(@window_fg_color, 0.07); /* elevated surface    */
-  --glass-bg-2: alpha(@window_fg_color, 0.11); /* hover surface       */
-  --glass-bg-3: alpha(@window_fg_color, 0.18); /* pressed / active    */
+  --glass-bg-0: alpha(@window_fg_color, 0.04);
+  --glass-bg-1: alpha(@window_fg_color, 0.07);
+  --glass-bg-2: alpha(@window_fg_color, 0.11);
+  --glass-bg-3: alpha(@window_fg_color, 0.18);
 
   /* --- Light Simulation --- */
-  /* Top-left highlight (refracted light entering glass from upper-left) */
   --light-edge-top: alpha(white, 0.22);
   --light-edge-left: alpha(white, 0.12);
   --light-edge-right: alpha(white, 0.04);
   --light-edge-bottom: alpha(black, 0.25);
 
-  /* Inset shadow = depth illusion inside the glass */
   --depth-inset:
     inset 0 1px 0 var(--light-edge-top), inset 1px 0 0 var(--light-edge-left),
     inset -1px 0 0 var(--light-edge-right),
     inset 0 -1px 0 var(--light-edge-bottom);
 
-  /* --- Border System --- */
   --glass-border: alpha(@window_fg_color, 0.14);
-  --glass-border-lit: alpha(white, 0.22); /* top/left lit edges  */
-  --glass-border-dark: alpha(black, 0.4); /* bottom shadow edge  */
+  --glass-border-lit: alpha(white, 0.22);
+  --glass-border-dark: alpha(black, 0.4);
 
-  /* --- Glow --- */
   --hue-glow: alpha(@accent_color, 0.18);
   --hue-glow-strong: alpha(@accent_color, 0.35);
 
-  /* --- Drop Shadow Stack --- */
-  /* Three layers: ambient occlusion + penumbra + key shadow */
   --shadow-resting:
     0 1px 2px alpha(black, 0.15), 0 4px 12px alpha(black, 0.25),
     0 8px 24px alpha(black, 0.18);
@@ -45,12 +39,10 @@
   --shadow-active:
     0 1px 3px alpha(black, 0.3), inset 0 2px 8px alpha(black, 0.3);
 
-  /* --- Fonts --- */
   --font-main:
     "Oxanium", "Tektur", "Geist Mono", "Google Sans Code",
     "MesloLGS Nerd Font Mono", "Inter", "Segoe UI", monospace;
 
-  /* --- Radii --- */
   --r-pill: 100px;
   --r-xl: 18px;
   --r-l: 14px;
@@ -86,7 +78,6 @@ scrolledwindow > viewport {
 
 headerbar {
   background-color: alpha(@headerbar_bg_color, 0.55);
-  /* Backdrop blur: supported in GNOME 47+ compositors */
   -gtk-backdrop-filter: blur(24px) saturate(1.8);
   border-bottom: 1px solid var(--glass-border-lit);
   box-shadow:
@@ -140,12 +131,11 @@ headerbar button:disabled {
 }
 
 /* ============================================================
-   3. BREADCRUMBS  (.breadcrumb-btn)
+   3. BREADCRUMBS
    ============================================================ */
 
 button.breadcrumb-btn {
   background-color: var(--glass-bg-1);
-  /* Two-tone border: lit top, dark bottom = the 3D "tab" effect */
   border-top: 1px solid var(--glass-border-lit);
   border-left: 1px solid var(--glass-border-lit);
   border-right: 1px solid var(--glass-border);
@@ -154,6 +144,9 @@ button.breadcrumb-btn {
   padding: 3px 12px;
   margin: 0 2px;
   min-height: 26px;
+  min-width: 0;
+  max-width: none;
+  width: auto;
   box-shadow:
     var(--depth-inset),
     0 3px 8px alpha(black, 0.22);
@@ -166,6 +159,8 @@ button.breadcrumb-btn label {
   font-weight: 700;
   letter-spacing: 0.3px;
   text-shadow: 0 1px 2px alpha(black, 0.6);
+  ellipsize: none;
+  max-width: none;
 }
 
 button.breadcrumb-btn:hover {
@@ -179,7 +174,6 @@ button.breadcrumb-btn:hover label {
   color: @window_fg_color;
 }
 
-/* Last / active segment — raised glass with accent glow */
 button.breadcrumb-btn:last-child {
   background-color: alpha(@accent_color, 0.2);
   border-top: 1px solid alpha(@accent_color, 0.6);
@@ -200,7 +194,6 @@ button.breadcrumb-btn:last-child label {
     0 1px 2px alpha(black, 0.5);
 }
 
-/* Path / search entry */
 headerbar entry,
 headerbar searchentry {
   background-color: alpha(black, 0.35);
@@ -232,7 +225,7 @@ headerbar searchentry:focus {
 }
 
 /* ============================================================
-   4. SIDEBAR  (.sidebar, .sidebar-row, .sidebar-label)
+   4. SIDEBAR
    ============================================================ */
 
 scrolledwindow.sidebar {
@@ -297,13 +290,18 @@ scrolledwindow.sidebar listbox {
   text-shadow: 0 1px 2px alpha(black, 0.5);
 }
 
+.sidebar-dragging {
+  opacity: 0.5;
+  transform: scale(0.96);
+  transition: all 150ms ease;
+}
+
 /* ============================================================
-   5. FILE GRID CARDS  (.flux-card)
+   5. FILE GRID CARDS
    ============================================================ */
 
 .flux-card {
   background-color: var(--glass-bg-1);
-  /* Physical glass highlight: bright top-left corner, dim bottom-right */
   border-top: 1px solid var(--glass-border-lit);
   border-left: 1px solid var(--glass-border-lit);
   border-right: 1px solid var(--glass-border);
@@ -312,12 +310,11 @@ scrolledwindow.sidebar listbox {
   margin: 8px;
   padding: 14px 10px 10px;
   box-shadow:
-    /* Inner highlight sheet — simulates glass refraction */
     inset 0 1px 0 var(--light-edge-top),
     inset 1px 0 0 var(--light-edge-left),
     inset -1px 0 0 var(--light-edge-right),
     inset 0 -1px 0 var(--light-edge-bottom),
-    /* Outer drop shadow stack */ var(--shadow-resting);
+    var(--shadow-resting);
   transition:
     background-color 220ms ease,
     border-color 220ms ease,
@@ -352,8 +349,23 @@ scrolledwindow.sidebar listbox {
   transform: translateY(-2px);
 }
 
+.flux-card--restricted {
+  opacity: 0.7;
+  border-color: alpha(#ff6b6b, 0.3);
+}
+
+.flux-card--restricted .flux-label {
+  color: #ff6b6b;
+}
+
+.flux-lock-badge {
+  -gtk-icon-size: 14px;
+  color: #ff6b6b;
+  margin-right: 2px;
+}
+
 /* ============================================================
-   6. FILE LABELS  (.flux-label, .thumbnail)
+   6. FILE LABELS
    ============================================================ */
 
 .flux-label {
@@ -366,12 +378,11 @@ scrolledwindow.sidebar listbox {
 
 .thumbnail {
   border-radius: var(--r-s);
-  /* Subtle inner frame for thumbnails */
   box-shadow: inset 0 0 0 1px alpha(black, 0.25);
 }
 
 /* ============================================================
-   7. RENAME ENTRY  (.flux-rename-entry)
+   7. RENAME ENTRY
    ============================================================ */
 
 entry.flux-rename-entry {
@@ -393,7 +404,7 @@ entry.flux-rename-entry {
 }
 
 /* ============================================================
-   8. SORT INDICATOR  (.sort-container, .sort-status-label)
+   8. SORT INDICATOR
    ============================================================ */
 
 .sort-container {
@@ -415,7 +426,7 @@ entry.flux-rename-entry {
 }
 
 /* ============================================================
-   9. DESTRUCTIVE ACTION  (.destructive-action)
+   9. DESTRUCTIVE ACTION
    ============================================================ */
 
 .destructive-action {
@@ -541,7 +552,7 @@ entry:focus {
 }
 
 /* ============================================================
-   12. SELECTION STATUS BAR  (.selection-status)
+   12. SELECTION STATUS BAR
    ============================================================ */
 
 .selection-status {
@@ -564,7 +575,6 @@ entry:focus {
   text-shadow: 0 1px 2px alpha(black, 0.5);
 }
 
-/* Progress bar embedded in status bar */
 .selection-status progressbar trough,
 progressbar trough {
   background-color: alpha(@window_fg_color, 0.06);
@@ -590,7 +600,7 @@ progressbar progress {
 }
 
 /* ============================================================
-   13. SETTINGS WINDOW  (.settings-window, .settings-row, etc.)
+   13. SETTINGS WINDOW
    ============================================================ */
 
 window.settings-window {
@@ -743,3 +753,328 @@ box.linked button {
   border: none;
   background: transparent;
 }
+
+/* ============================================================
+   16. MISSING CLASSES (Flux/GTK)
+   ============================================================ */
+
+/* Property row (file properties, menu editor) */
+.property {
+  background: transparent;
+  border-bottom: 1px solid var(--glass-border);
+  padding: 6px 0;
+  color: alpha(@window_fg_color, 0.5);
+  font-size: 9.5pt;
+}
+
+.property label {
+  color: @window_fg_color;
+}
+
+/* Monospace */
+.monospace {
+  font-family: "Geist Mono", "JetBrains Mono", monospace;
+}
+
+/* Error & Warning */
+.error {
+  border: 1px solid #ff6b6b;
+  background-color: alpha(#ff6b6b, 0.08);
+  color: #ff6b6b;
+}
+
+.warning {
+  border: 1px solid #ffd93d;
+  background-color: alpha(#ffd93d, 0.08);
+  color: #ffd93d;
+}
+
+/* Card, Frame, Boxed-List */
+.card {
+  background: var(--glass-bg-1);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-m);
+  padding: 8px;
+  box-shadow: var(--depth-inset), var(--shadow-resting);
+}
+
+.frame {
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-s);
+  background: transparent;
+}
+
+.boxed-list {
+  background: var(--glass-bg-1);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-m);
+  padding: 4px;
+  box-shadow: var(--depth-inset), var(--shadow-resting);
+}
+
+/* Checks & Radios */
+check,
+radio {
+  background-color: alpha(black, 0.3);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-xs);
+  min-height: 16px;
+  min-width: 16px;
+  box-shadow: inset 0 1px 2px alpha(black, 0.2);
+}
+
+check:checked,
+radio:checked {
+  background-color: @accent_color;
+  border-color: @accent_color;
+  box-shadow: 0 0 8px var(--hue-glow);
+}
+
+check:hover,
+radio:hover {
+  border-color: alpha(@accent_color, 0.6);
+}
+
+check:disabled,
+radio:disabled {
+  opacity: 0.4;
+}
+
+/* Tooltips */
+tooltip.background {
+  background-color: alpha(@window_bg_color, 0.85);
+  -gtk-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border-lit);
+  border-radius: var(--r-s);
+  color: @window_fg_color;
+  padding: 6px 12px;
+  box-shadow: var(--shadow-resting);
+}
+
+/* Spinbutton */
+spinbutton {
+  background-color: alpha(black, 0.35);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-s);
+  color: @window_fg_color;
+  padding: 0 4px;
+  min-height: 28px;
+  box-shadow:
+    inset 0 2px 4px alpha(black, 0.3),
+    var(--depth-inset);
+}
+
+spinbutton:focus-within {
+  border-color: alpha(@accent_color, 0.7);
+  box-shadow:
+    inset 0 2px 4px alpha(black, 0.3),
+    0 0 0 2px alpha(@accent_color, 0.18),
+    0 0 12px var(--hue-glow);
+}
+
+spinbutton > button {
+  background: transparent;
+  border: none;
+  color: alpha(@window_fg_color, 0.5);
+}
+
+spinbutton > button:hover {
+  color: @accent_color;
+}
+
+/* Dropdown & Combobox */
+dropdown,
+combobox {
+  background-color: alpha(black, 0.35);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-s);
+  color: @window_fg_color;
+  min-height: 28px;
+  box-shadow:
+    inset 0 2px 4px alpha(black, 0.3),
+    var(--depth-inset);
+}
+
+dropdown button,
+combobox button {
+  background: transparent;
+  border: none;
+  color: @window_fg_color;
+}
+
+dropdown:focus-within,
+combobox:focus-within {
+  border-color: alpha(@accent_color, 0.7);
+  box-shadow:
+    inset 0 2px 4px alpha(black, 0.3),
+    0 0 0 2px alpha(@accent_color, 0.18),
+    0 0 12px var(--hue-glow);
+}
+
+/* Notebook */
+notebook > header {
+  background: transparent;
+  border: none;
+}
+
+notebook > header > tabs > tab {
+  background: transparent;
+  color: alpha(@window_fg_color, 0.4);
+  padding: 4px 12px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 150ms ease;
+}
+
+notebook > header > tabs > tab:hover {
+  color: @window_fg_color;
+}
+
+notebook > header > tabs > tab:checked {
+  color: @accent_color;
+  border-bottom-color: @accent_color;
+  text-shadow: 0 0 8px var(--hue-glow);
+}
+
+/* Scale */
+scale trough {
+  background: alpha(@window_fg_color, 0.08);
+  border-radius: var(--r-pill);
+  border: 1px solid var(--glass-border);
+  min-height: 4px;
+  box-shadow: inset 0 1px 2px alpha(black, 0.3);
+}
+
+scale highlight {
+  background: @accent_color;
+  border-radius: var(--r-pill);
+}
+
+scale slider {
+  background: @window_fg_color;
+  border: 2px solid @accent_color;
+  border-radius: 50%;
+  min-width: 16px;
+  min-height: 16px;
+  box-shadow: 0 2px 6px alpha(black, 0.3), 0 0 8px var(--hue-glow);
+}
+
+/* Levelbar */
+levelbar block {
+  border-radius: var(--r-xs);
+}
+
+levelbar block.low {
+  background: #ff6b6b;
+}
+
+levelbar block.high {
+  background: @accent_color;
+}
+
+levelbar block.full {
+  background: #6bff6b;
+}
+
+/* Lists & Rows */
+list,
+listview {
+  background: transparent;
+  color: @window_fg_color;
+}
+
+row {
+  background: transparent;
+  color: @window_fg_color;
+}
+
+row:selected {
+  background: alpha(@accent_color, 0.08);
+  color: @accent_color;
+}
+
+.view {
+  background: transparent;
+  color: @window_fg_color;
+}
+
+.view:selected {
+  background: alpha(@accent_color, 0.08);
+  color: @accent_color;
+}
+
+/* Flat Button */
+button.flat {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--r-s);
+  color: alpha(@window_fg_color, 0.5);
+  padding: 4px 12px;
+  font-weight: 600;
+  transition: all 150ms ease;
+}
+
+button.flat:hover {
+  background-color: var(--glass-bg-1);
+  border-color: var(--glass-border-lit);
+  color: @window_fg_color;
+  box-shadow: var(--depth-inset), var(--shadow-resting);
+}
+
+/* Suggested Action (already used in settings) */
+.suggested-action {
+  background-color: alpha(@accent_color, 0.8);
+  color: @window_fg_color;
+  border: none;
+  border-radius: var(--r-s);
+  padding: 6px 18px;
+  font-weight: 700;
+  box-shadow: var(--shadow-resting);
+  transition: all 150ms ease;
+}
+
+.suggested-action:hover {
+  background-color: @accent_color;
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-1px);
+}
+
+/* Title classes */
+.title-1 {
+  font-size: 24pt;
+  font-weight: 800;
+}
+.title-2 {
+  font-size: 18pt;
+  font-weight: 700;
+}
+.title-3 {
+  font-size: 14pt;
+  font-weight: 600;
+}
+.title-4 {
+  font-size: 11pt;
+  font-weight: 600;
+}
+
+/* Toast */
+toast {
+  background-color: alpha(@window_bg_color, 0.75);
+  -gtk-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border-lit);
+  border-radius: var(--r-pill);
+  padding: 6px 16px;
+  box-shadow: var(--shadow-resting);
+}
+
+toast label {
+  color: @window_fg_color;
+  font-weight: 600;
+}
+
+/* ============================================================
+   END — Hyperion Glass
+   ============================================================ */

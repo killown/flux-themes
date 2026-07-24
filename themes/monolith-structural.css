@@ -24,6 +24,11 @@ window {
   background-size: 60px 100%;
 }
 
+gridview,
+scrolledwindow > viewport {
+  background-color: transparent;
+}
+
 /* 2. Header: The Alloy Girder */
 headerbar {
   background-color: #1a1a1a;
@@ -44,10 +49,34 @@ headerbar label,
   -gtk-icon-shadow: 2px 2px black;
 }
 
+headerbar button {
+  background-color: transparent;
+  color: @monolith_text;
+  border: none;
+  border-radius: 0px;
+  padding: 6px 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+headerbar button:hover {
+  background-color: alpha(@monolith_signal, 0.15);
+  color: @monolith_signal;
+}
+
+headerbar button:disabled {
+  color: alpha(@monolith_text, 0.3);
+}
+
 /* 3. Sidebar: Structural Hub */
 scrolledwindow.sidebar {
   background-color: #222222;
   border-right: 3px solid #1a1a1a;
+}
+
+scrolledwindow.sidebar list,
+scrolledwindow.sidebar listbox {
+  background: transparent;
 }
 
 .sidebar-row {
@@ -56,7 +85,7 @@ scrolledwindow.sidebar {
   background-color: transparent;
   color: alpha(@monolith_text, 0.4);
   border-bottom: 1px solid alpha(black, 0.2);
-  /* Fixed Animation: Rigid mechanical snap */
+  border-left: 0px solid transparent;
   transition: all 150ms steps(3, end);
 }
 
@@ -78,6 +107,20 @@ scrolledwindow.sidebar {
   box-shadow: inset 10px 0 20px alpha(@monolith_active, 0.05);
 }
 
+.sidebar-row image {
+  color: inherit;
+  margin-right: 12px;
+}
+
+.sidebar-label {
+  font-weight: 700;
+}
+
+.sidebar-dragging {
+  opacity: 0.4;
+  transform: scale(0.96);
+}
+
 /* 4. Grid View: Recessed Component Slots */
 .flux-card {
   background-color: #333333;
@@ -88,7 +131,6 @@ scrolledwindow.sidebar {
   box-shadow:
     inset 4px 4px 10px alpha(black, 0.5),
     6px 6px 0px #1a1a1a;
-  /* Smoothed mechanical transition */
   transition:
     background-color 200ms ease,
     border-color 200ms ease,
@@ -102,6 +144,27 @@ scrolledwindow.sidebar {
   border-color: @monolith_signal;
 }
 
+.flux-card:selected {
+  background-color: alpha(@monolith_active, 0.15);
+  border-color: @monolith_active;
+  box-shadow: inset 0 0 20px alpha(@monolith_active, 0.1), 6px 6px 0px #1a1a1a;
+}
+
+.flux-card--restricted {
+  opacity: 0.6;
+  border-color: #800000;
+}
+
+.flux-card--restricted .flux-label {
+  color: #ff4444;
+}
+
+.flux-lock-badge {
+  -gtk-icon-size: 14px;
+  color: #ff4444;
+  margin-right: 4px;
+}
+
 .flux-label {
   font-size: 10pt;
   font-weight: 700;
@@ -111,7 +174,67 @@ scrolledwindow.sidebar {
   letter-spacing: 1px !important;
 }
 
-/* 5. Destructive Action: Safety Interlock */
+.thumbnail {
+  border: 1px solid @monolith_alloy;
+  border-radius: 0px;
+}
+
+.flux-rename-entry {
+  background-color: #111111;
+  border: 2px solid @monolith_signal;
+  color: @monolith_text;
+  padding: 4px 8px;
+  font-family: "Geist Mono", monospace;
+}
+
+/* 5. BREADCRUMBS - FIXED (No Truncation) */
+button.breadcrumb-btn {
+  background-color: transparent;
+  border: none;
+  border-radius: 0px;
+  padding: 4px 12px;
+  margin: 0 2px;
+  min-height: 26px;
+  min-width: 0;
+  max-width: none;
+  width: auto;
+  transition: background-color 150ms ease;
+}
+
+button.breadcrumb-btn:hover {
+  background-color: alpha(@monolith_signal, 0.1);
+}
+
+button.breadcrumb-btn:hover label {
+  color: @monolith_signal;
+}
+
+button.breadcrumb-btn:last-child {
+  background-color: alpha(@monolith_active, 0.1);
+  border-bottom: 2px solid @monolith_active;
+}
+
+button.breadcrumb-btn:last-child label {
+  color: @monolith_active;
+  font-weight: 800;
+}
+
+/* 6. Sort Indicator */
+.sort-container {
+  background-color: #1a1a1a;
+  padding: 2px 12px;
+  border-left: 2px solid @monolith_alloy;
+}
+
+.sort-status-label {
+  color: @monolith_text;
+  font-family: "Geist Mono", monospace;
+  font-size: 8.5pt;
+  font-weight: 700;
+  letter-spacing: 1px !important;
+}
+
+/* 7. Destructive Action: Safety Interlock */
 .destructive-action {
   background-color: #800000;
   color: white;
@@ -133,7 +256,29 @@ scrolledwindow.sidebar {
   box-shadow: 0 4px 0px #400000;
 }
 
-/* 6. Context Menu: Slab Overlay */
+/* 8. Suggested Action */
+.suggested-action {
+  background-color: @monolith_active;
+  color: #111;
+  border: none;
+  border-radius: 0px;
+  padding: 10px 30px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px !important;
+  box-shadow: 0 6px 0px alpha(black, 0.3);
+  transition:
+    transform 100ms steps(2),
+    box-shadow 100ms steps(2);
+}
+
+.suggested-action:hover {
+  background-color: alpha(@monolith_active, 0.8);
+  transform: translateY(2px);
+  box-shadow: 0 4px 0px alpha(black, 0.3);
+}
+
+/* 9. Context Menu: Slab Overlay */
 popover.menu contents {
   background-color: #1a1a1a;
   color: white;
@@ -143,9 +288,19 @@ popover.menu contents {
   box-shadow: 20px 20px 40px alpha(black, 0.6);
 }
 
+popover.menu modelbutton {
+  background: transparent;
+  border: none;
+  border-radius: 0px;
+  color: @monolith_text;
+  padding: 10px 20px;
+  font-size: 10pt;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
 popover.menu modelbutton label {
   letter-spacing: 1px !important;
-  text-transform: uppercase;
 }
 
 popover.menu modelbutton:hover {
@@ -153,7 +308,13 @@ popover.menu modelbutton:hover {
   color: black;
 }
 
-/* 7. Search & Inputs: Alloy Casing */
+popover.menu > contents separator {
+  background-color: @monolith_alloy;
+  min-height: 2px;
+  margin: 0;
+}
+
+/* 10. Search & Inputs: Alloy Casing */
 entry {
   background-color: #111111;
   border: 2px solid @monolith_alloy;
@@ -161,6 +322,7 @@ entry {
   padding: 12px;
   color: @monolith_active;
   letter-spacing: 1.5px !important;
+  caret-color: @monolith_signal;
 }
 
 entry:focus {
@@ -168,7 +330,260 @@ entry:focus {
   box-shadow: inset 0 0 10px alpha(@monolith_active, 0.1);
 }
 
-/* 8. Functional UI: Heavy Rail Scroller */
+/* 11. Status Bar */
+.selection-status {
+  background-color: #1a1a1a;
+  border-top: 2px solid @monolith_alloy;
+  padding: 4px 16px;
+  min-height: 28px;
+}
+
+.selection-status label.caption {
+  color: @monolith_text;
+  font-family: "Geist Mono", monospace;
+  font-size: 8.5pt;
+  letter-spacing: 0.8px !important;
+}
+
+progressbar trough {
+  background-color: #222;
+  border: 1px solid @monolith_alloy;
+  border-radius: 0px;
+  min-height: 6px;
+}
+
+progressbar progress {
+  background-color: @monolith_active;
+  border-radius: 0px;
+  box-shadow: 0 0 10px @monolith_active;
+}
+
+/* 12. Property Row */
+.property {
+  background: transparent;
+  border-bottom: 1px solid @monolith_alloy;
+  padding: 6px 0;
+  color: alpha(@monolith_text, 0.6);
+  font-size: 9.5pt;
+}
+
+.property label {
+  color: @monolith_text;
+}
+
+/* 13. Misc */
+.monospace {
+  font-family: "Geist Mono", monospace;
+}
+
+.error {
+  border: 2px solid #800000;
+  background-color: alpha(#800000, 0.1);
+  color: #ff4444;
+}
+
+.warning {
+  border: 2px solid @monolith_signal;
+  background-color: alpha(@monolith_signal, 0.1);
+  color: @monolith_signal;
+}
+
+.card {
+  background: #222;
+  border: 1px solid @monolith_alloy;
+  border-radius: 0px;
+  padding: 8px;
+}
+
+.frame {
+  border: 1px solid @monolith_alloy;
+  border-radius: 0px;
+  background: transparent;
+}
+
+.boxed-list {
+  background: #222;
+  border: 1px solid @monolith_alloy;
+  border-radius: 0px;
+  padding: 4px;
+}
+
+/* 14. Checks & Radios */
+check,
+radio {
+  background-color: #111;
+  border: 2px solid @monolith_alloy;
+  border-radius: 0px;
+  min-height: 16px;
+  min-width: 16px;
+}
+
+check:checked,
+radio:checked {
+  background-color: @monolith_active;
+  border-color: @monolith_active;
+}
+
+check:hover,
+radio:hover {
+  border-color: @monolith_signal;
+}
+
+check:disabled,
+radio:disabled {
+  opacity: 0.3;
+}
+
+/* 15. Tooltips */
+tooltip.background {
+  background-color: #222;
+  border: 2px solid @monolith_alloy;
+  border-radius: 0px;
+  color: @monolith_text;
+  padding: 6px 12px;
+}
+
+/* 16. Spinbutton */
+spinbutton {
+  background-color: #111;
+  border: 2px solid @monolith_alloy;
+  border-radius: 0px;
+  color: @monolith_text;
+  padding: 0 4px;
+  min-height: 28px;
+}
+
+spinbutton:focus-within {
+  border-color: @monolith_signal;
+}
+
+spinbutton > button {
+  background: transparent;
+  border: none;
+  color: @monolith_alloy;
+}
+
+spinbutton > button:hover {
+  color: @monolith_signal;
+}
+
+/* 17. Dropdown & Combobox */
+dropdown,
+combobox {
+  background-color: #111;
+  border: 2px solid @monolith_alloy;
+  border-radius: 0px;
+  color: @monolith_text;
+  min-height: 28px;
+}
+
+dropdown button,
+combobox button {
+  background: transparent;
+  border: none;
+  color: @monolith_text;
+}
+
+dropdown:focus-within,
+combobox:focus-within {
+  border-color: @monolith_signal;
+}
+
+/* 18. Notebook */
+notebook > header {
+  background: transparent;
+  border: none;
+}
+
+notebook > header > tabs > tab {
+  background: transparent;
+  color: @monolith_alloy;
+  padding: 6px 16px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+notebook > header > tabs > tab:hover {
+  color: @monolith_text;
+}
+
+notebook > header > tabs > tab:checked {
+  color: @monolith_active;
+  border-bottom-color: @monolith_active;
+}
+
+/* 19. Scale */
+scale trough {
+  background: #222;
+  border: 1px solid @monolith_alloy;
+  border-radius: 0px;
+  min-height: 6px;
+}
+
+scale highlight {
+  background: @monolith_active;
+}
+
+scale slider {
+  background: @monolith_signal;
+  border: 2px solid #111;
+  border-radius: 0px;
+  min-width: 16px;
+  min-height: 16px;
+  box-shadow: 0 0 10px @monolith_signal;
+}
+
+/* 20. Levelbar */
+levelbar block {
+  border-radius: 0px;
+}
+
+levelbar block.low {
+  background: #800000;
+}
+
+levelbar block.high {
+  background: @monolith_active;
+}
+
+levelbar block.full {
+  background: @monolith_active;
+}
+
+/* 21. Lists & Rows */
+list,
+listview {
+  background: transparent;
+  color: @monolith_text;
+}
+
+row {
+  background: transparent;
+  color: @monolith_text;
+}
+
+row:selected {
+  background: alpha(@monolith_active, 0.08);
+  color: @monolith_active;
+}
+
+.view {
+  background: transparent;
+  color: @monolith_text;
+}
+
+.view:selected {
+  background: alpha(@monolith_active, 0.08);
+  color: @monolith_active;
+}
+
+/* 22. Scrollbars */
+scrollbar {
+  background: transparent;
+}
+
 scrollbar slider {
   background-color: @monolith_alloy;
   border: 2px solid black;
@@ -176,17 +591,21 @@ scrollbar slider {
   min-width: 14px;
 }
 
-.sort-label {
+scrollbar slider:hover {
   background-color: @monolith_signal;
-  color: black;
-  font-size: 8pt;
-  padding: 3px 12px;
-  font-weight: 900;
-  letter-spacing: 1.5px !important;
-  clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
 }
 
-/* Adw/Settings Matrix Overrides */
+/* 23. Settings Window */
+window.settings-window headerbar label,
+adwpreferenceswindow headerbar label {
+  letter-spacing: 2px !important;
+  font-weight: 800;
+}
+
+.settings-row label {
+  letter-spacing: 0.3px !important;
+}
+
 adwpreferencesgroup > box > label {
   letter-spacing: 2px !important;
   text-transform: uppercase;
@@ -205,4 +624,64 @@ dropdown label {
 
 toast label {
   letter-spacing: 1px !important;
+}
+
+toast {
+  background-color: #1a1a1a;
+  border: 2px solid @monolith_alloy;
+  border-radius: 0px;
+  box-shadow: 10px 10px 20px alpha(black, 0.5);
+}
+
+toast label {
+  color: @monolith_text;
+}
+
+/* 24. Title Classes */
+.title-1 {
+  font-size: 24pt;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+.title-2 {
+  font-size: 18pt;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.title-3 {
+  font-size: 14pt;
+  font-weight: 700;
+}
+.title-4 {
+  font-size: 11pt;
+  font-weight: 700;
+}
+
+/* 25. Linked Box */
+box.linked {
+  background: transparent;
+  border: none;
+}
+
+box.linked button {
+  background: transparent;
+  border: none;
+}
+
+/* 26. Flat Button */
+button.flat {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0px;
+  color: @monolith_alloy;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 6px 16px;
+}
+
+button.flat:hover {
+  background-color: alpha(@monolith_signal, 0.1);
+  color: @monolith_signal;
+  border-color: @monolith_signal;
 }
