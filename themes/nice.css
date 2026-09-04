@@ -7,7 +7,10 @@
   letter-spacing: 0.5px !important;
 }
 
-window {
+window:not(popover),
+window.main-window,
+window > box:not(popover *),
+.background:not(popover):not(popover *) {
   background-image: radial-gradient(
     circle at 50% -50%,
     color-mix(in srgb, @accent_bg_color, transparent 85%) 0%,
@@ -16,15 +19,30 @@ window {
   color: @window_fg_color;
 }
 
+gridview,
+scrolledwindow > viewport,
+gridview.view,
+scrolledwindow > viewport.view {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+scrolledwindow > viewport:hover,
+scrolledwindow > viewport.view:hover {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
 /* 2. Header: Ion-Plated System Bar */
 headerbar {
   background-color: alpha(@headerbar_bg_color, 0.8);
   border-bottom: 1px solid alpha(@accent_color, 0.2);
   box-shadow: inset 0 1px 0 0 alpha(white, 0.05);
   padding: 4px 12px;
-  min-height: 44px;
+  min-height: 38px;
 }
 
+headerbar > windowtitle label.title,
 headerbar label,
 .settings-window headerbar label {
   font-weight: 800;
@@ -40,7 +58,7 @@ headerbar button {
   border-radius: 8px;
   color: @headerbar_fg_color;
   padding: 4px 10px;
-  min-width: 30px;
+  min-width: 28px;
   min-height: 28px;
   transition: background-color 150ms ease;
 }
@@ -54,19 +72,42 @@ headerbar button:disabled {
   opacity: 0.3;
 }
 
+headerbar togglebutton {
+  background-color: transparent;
+  border: none;
+  border-radius: 8px;
+  color: @headerbar_fg_color;
+  padding: 4px 8px;
+}
+
+headerbar togglebutton:hover {
+  background-color: alpha(@accent_color, 0.12);
+}
+
+headerbar togglebutton:checked,
+headerbar togglebutton:active {
+  background-color: alpha(@accent_color, 0.2);
+  color: @accent_color;
+}
+
 /* 3. Sidebar: Clean Navigation with Hover/Selected */
 scrolledwindow.sidebar {
   background-color: alpha(@window_bg_color, 0.4);
   border-right: 1px solid alpha(@window_fg_color, 0.05);
 }
 
-.sidebar-row {
-  margin: 4px 12px;
-  padding: 10px 14px;
+scrolledwindow.sidebar list,
+scrolledwindow.sidebar listbox {
+  background: transparent;
+}
+
+.sidebar-row:not(.sidebar-section) {
+  margin: 1px 12px;
+  padding: 3px 12px;
   min-height: 24px;
   background-color: transparent;
   border: 1px solid transparent;
-  border-radius: 10px;
+  border-radius: 8px;
   color: alpha(@window_fg_color, 0.7);
   transition:
     background-color 200ms ease,
@@ -75,18 +116,19 @@ scrolledwindow.sidebar {
     box-shadow 200ms ease;
 }
 
-.sidebar-row label {
+.sidebar-row:not(.sidebar-section) label {
   letter-spacing: 0.4px !important;
+  color: inherit;
 }
 
-.sidebar-row:hover:not(:selected) {
+.sidebar-row:not(.sidebar-section):hover:not(:selected) {
   background-color: alpha(@accent_color, 0.08);
   color: @window_fg_color;
   transform: translateX(4px);
   box-shadow: 0 2px 8px alpha(black, 0.1);
 }
 
-.sidebar-row:selected {
+.sidebar-row:not(.sidebar-section):selected {
   background-color: @accent_bg_color;
   color: @accent_fg_color;
   font-weight: 700;
@@ -94,10 +136,103 @@ scrolledwindow.sidebar {
   transform: translateX(6px);
 }
 
+.sidebar-row:not(.sidebar-section):selected label {
+  color: @accent_fg_color;
+  font-weight: 700;
+}
+
 .sidebar-row image {
   color: inherit;
   -gtk-icon-size: 16px;
   margin-right: 8px;
+}
+
+.sidebar-row:not(.sidebar-section):selected image {
+  color: @accent_fg_color;
+}
+
+.sidebar-section {
+  margin-top: 6px;
+  margin-bottom: 2px;
+  padding: 6px 12px 4px 12px;
+  min-height: 16px;
+  background: transparent;
+  border-radius: 0px;
+  transform: none;
+}
+
+.sidebar-section:hover,
+.sidebar-section:focus {
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+.sidebar-section-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: alpha(@window_fg_color, 0.45);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  margin-left: 12px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.sidebar-mount {
+  background: transparent;
+  border: 1px solid alpha(@window_fg_color, 0.08);
+  border-radius: 8px;
+  min-height: 20px;
+  padding: 1px 6px;
+  margin: 1px 12px;
+  transition: all 0.15s ease;
+}
+
+button.eject-button {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 1px 3px;
+  min-height: 0;
+  min-width: 0;
+  border-radius: 4px;
+  color: alpha(@window_fg_color, 0.5);
+  opacity: 0.7;
+  transition:
+    opacity 150ms ease,
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+button.eject-button image {
+  color: inherit;
+  -gtk-icon-size: 12px;
+}
+
+button.eject-button:hover {
+  background-color: alpha(@window_fg_color, 0.08);
+  color: @window_fg_color;
+  opacity: 1;
+}
+
+button.eject-button:active {
+  background-color: alpha(@window_fg_color, 0.15);
+  color: @window_fg_color;
+}
+
+.sidebar-row:not(.sidebar-section):selected button.eject-button {
+  color: @accent_fg_color;
+  opacity: 0.9;
+}
+
+.sidebar-row:not(.sidebar-section):selected button.eject-button:hover {
+  background-color: alpha(@accent_fg_color, 0.2);
+  color: @accent_fg_color;
+  opacity: 1;
 }
 
 .sidebar-label {
@@ -110,7 +245,24 @@ scrolledwindow.sidebar {
   transform: scale(0.96);
 }
 
+.sidebar-drop-hover {
+  background-color: alpha(@accent_color, 0.25);
+  box-shadow: inset 0 0 0 1px @accent_color;
+}
+
 /* 4. Grid View: Volumetric System Cards */
+gridview,
+listview {
+  background-color: transparent;
+  padding: 16px 24px;
+}
+
+gridview child {
+  padding: 2px;
+  margin: 0px;
+  background-color: transparent;
+}
+
 .flux-card {
   background-color: @card_bg_color;
   border: 1px solid alpha(@window_fg_color, 0.06);
@@ -138,7 +290,25 @@ scrolledwindow.sidebar {
 
 .flux-card:selected {
   border-color: @accent_color;
-  box-shadow: 0 0 0 2px @accent_color, 0 8px 24px alpha(black, 0.25);
+  box-shadow:
+    0 0 0 2px @accent_color,
+    0 8px 24px alpha(black, 0.25);
+}
+
+gridview child:selected .flux-card {
+  border-color: @accent_color;
+  box-shadow:
+    0 0 0 2px @accent_color,
+    0 8px 24px alpha(black, 0.25);
+}
+
+gridview child:selected .flux-label {
+  color: @window_fg_color;
+  font-weight: bold;
+}
+
+gridview child:selected .flux-list-info {
+  color: alpha(@window_fg_color, 0.85);
 }
 
 .flux-card--restricted {
@@ -176,6 +346,13 @@ scrolledwindow.sidebar {
   color: @window_fg_color;
   padding: 4px 8px;
   font-family: "JetBrains Mono", monospace;
+  min-height: 24px;
+}
+
+.flux-list-info {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 8.5pt;
+  color: alpha(@window_fg_color, 0.65);
 }
 
 /* 5. Breadcrumbs: No Truncation + Hover/Active */
@@ -189,7 +366,9 @@ button.breadcrumb-btn {
   min-width: 0;
   max-width: none;
   width: auto;
-  transition: background-color 150ms ease, box-shadow 150ms ease;
+  transition:
+    background-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 button.breadcrumb-btn label {
@@ -235,6 +414,10 @@ button.breadcrumb-btn:last-child label {
   transition: all 200ms ease;
 }
 
+.destructive-action label {
+  color: @error_bg_color;
+}
+
 .destructive-action:hover {
   background-color: @error_bg_color;
   color: @error_fg_color;
@@ -254,16 +437,38 @@ button.breadcrumb-btn:last-child label {
   transition: all 200ms ease;
 }
 
+.suggested-action label {
+  color: @accent_fg_color;
+}
+
 .suggested-action:hover {
   box-shadow: 0 4px 16px alpha(@accent_color, 0.4);
 }
 
 /* 8. Context Menu: Bento Modal */
+popover,
+popover.menu,
+popover.background,
+popover > .background {
+  background: none;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+popover arrow {
+  background: none;
+  border: none;
+}
+
 popover.menu contents {
   background-color: @window_bg_color;
   border: 1px solid alpha(@window_fg_color, 0.1);
+  outline: none;
   border-radius: 14px;
-  padding: 8px;
+  padding: 4px;
   box-shadow: 0 12px 35px alpha(black, 0.3);
 }
 
@@ -272,14 +477,29 @@ popover.menu modelbutton {
   border: none;
   border-radius: 8px;
   color: @window_fg_color;
-  padding: 8px 14px;
+  padding: 4px 10px;
+  min-height: 24px;
   font-size: 10pt;
   font-weight: 600;
-  transition: background-color 150ms ease, box-shadow 150ms ease;
+  transition:
+    background-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 popover.menu modelbutton label {
   letter-spacing: 0.4px !important;
+  color: @window_fg_color;
+}
+
+popover.menu modelbutton label:disabled,
+popover.menu modelbutton accelerator,
+popover.menu modelbutton .accelerator {
+  color: alpha(@window_fg_color, 0.5);
+}
+
+popover.menu modelbutton image,
+popover.menu modelbutton arrow {
+  color: @window_fg_color;
 }
 
 popover.menu modelbutton:hover {
@@ -288,14 +508,26 @@ popover.menu modelbutton:hover {
   box-shadow: 0 2px 12px alpha(@accent_color, 0.2);
 }
 
+popover.menu modelbutton:hover label,
+popover.menu modelbutton:hover accelerator,
+popover.menu modelbutton:hover image,
+popover.menu modelbutton:hover arrow {
+  color: @accent_fg_color;
+}
+
 popover.menu > contents separator {
   background-color: alpha(@window_fg_color, 0.1);
   min-height: 1px;
-  margin: 4px 0;
+  margin: 2px 4px;
 }
 
 /* 9. Search & Inputs */
-entry {
+entry,
+searchentry,
+passwordentry,
+entry text,
+searchentry text,
+passwordentry text {
   background-color: color-mix(in srgb, @window_bg_color, @window_fg_color 5%);
   border: 1px solid alpha(@window_fg_color, 0.1);
   border-radius: 12px;
@@ -308,13 +540,38 @@ entry {
   min-height: 28px;
 }
 
-entry:focus {
+entry placeholder,
+searchentry placeholder,
+passwordentry placeholder {
+  color: alpha(@window_fg_color, 0.45);
+}
+
+entry:focus,
+searchentry:focus,
+passwordentry:focus,
+entry:focus-within,
+searchentry:focus-within,
+passwordentry:focus-within {
   border-color: @accent_color;
   box-shadow: 0 0 0 3px alpha(@accent_color, 0.2);
 }
 
+entry image,
+entry button {
+  color: @window_fg_color;
+  background: transparent;
+  border: none;
+}
+
 entry:disabled {
   opacity: 0.5;
+}
+
+textview,
+textview text {
+  background-color: transparent;
+  color: @window_fg_color;
+  caret-color: @accent_color;
 }
 
 /* 10. Status Bar */
@@ -332,6 +589,39 @@ entry:disabled {
   letter-spacing: 0.5px !important;
 }
 
+.selection-status label.dim-label {
+  color: alpha(@window_fg_color, 0.45);
+}
+
+.selection-status button.flat {
+  background: transparent;
+  color: @accent_color;
+  padding: 2px 8px;
+  min-height: 22px;
+  font-size: 8.5pt;
+  font-family: "JetBrains Mono", monospace;
+  border-radius: 4px;
+}
+
+.selection-status button.flat:hover {
+  background-color: alpha(@accent_color, 0.12);
+}
+
+.selection-status button.destructive-action {
+  padding: 2px 6px;
+  min-height: 22px;
+  font-size: 8.5pt;
+  border-radius: 4px;
+}
+
+window:backdrop .selection-status {
+  background-color: alpha(@window_bg_color, 0.85);
+}
+
+window:backdrop .selection-status label {
+  color: alpha(@window_fg_color, 0.35);
+}
+
 progressbar trough {
   background-color: alpha(@window_fg_color, 0.1);
   border-radius: 4px;
@@ -341,6 +631,7 @@ progressbar trough {
 progressbar progress {
   background-color: @accent_color;
   border-radius: 4px;
+  min-height: 4px;
 }
 
 /* 11. Sort Indicator */
@@ -359,9 +650,41 @@ progressbar progress {
 }
 
 /* 12. Settings & Preferences Integration */
-window.settings-window {
+window.settings-window,
+adwpreferenceswindow,
+.settings-window {
   background-color: @window_bg_color;
   color: @window_fg_color;
+  letter-spacing: 0px;
+}
+
+window.settings-window headerbar,
+adwpreferenceswindow headerbar {
+  background-color: @headerbar_bg_color;
+  border-bottom: 1px solid alpha(@accent_color, 0.2);
+}
+
+window.settings-window headerbar label,
+adwpreferenceswindow headerbar label,
+.settings-window headerbar label,
+viewswitcher label,
+adwviewswitcher label,
+viewswitchertitle label,
+adwviewswitchertitle label,
+viewswitcherbar label,
+adwviewswitcherbar label,
+viewswitcher button label,
+adwviewswitcher button label {
+  font-weight: 500;
+  text-transform: none;
+  font-size: 9pt;
+}
+
+viewswitcher button,
+adwviewswitcher button {
+  padding-left: 4px;
+  padding-right: 4px;
+  min-width: 60px;
 }
 
 window.settings-window preferencespage,
@@ -392,7 +715,9 @@ window.settings-window actionrow {
   color: @window_fg_color;
   margin-bottom: 4px;
   padding: 4px 0;
-  transition: background-color 150ms ease, box-shadow 150ms ease;
+  transition:
+    background-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 window.settings-window .settings-row:hover,
@@ -406,6 +731,7 @@ window.settings-window actionrow label.title {
   font-size: 10.5pt;
   font-weight: 700;
   letter-spacing: 0.3px !important;
+  color: @window_fg_color;
 }
 
 window.settings-window .settings-row label.subtitle,
@@ -456,6 +782,14 @@ combobox {
   border-radius: 10px;
   color: @window_fg_color;
   padding: 4px 8px;
+  min-height: 28px;
+}
+
+dropdown button,
+combobox button {
+  background: transparent;
+  border: none;
+  color: @window_fg_color;
 }
 
 dropdown label,
@@ -572,7 +906,8 @@ tooltip.background {
 }
 
 /* 21. Spinbutton */
-spinbutton {
+spinbutton,
+spinbutton text {
   background-color: @view_bg_color;
   border: 1px solid alpha(@window_fg_color, 0.1);
   border-radius: 8px;
@@ -609,7 +944,9 @@ notebook > header > tabs > tab {
   border: none;
   border-bottom: 2px solid transparent;
   font-weight: 700;
-  transition: color 150ms ease, border-color 150ms ease;
+  transition:
+    color 150ms ease,
+    border-color 150ms ease;
 }
 
 notebook > header > tabs > tab:hover {

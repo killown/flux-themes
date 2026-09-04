@@ -6,6 +6,20 @@
 @define-color kinetic_accent #ffffff;
 @define-color kinetic_warn #ff3e3e;
 
+/* Libadwaita Palette Mapping */
+@define-color window_bg_color     @obsidian_base;
+@define-color window_fg_color     alpha(white, 0.9);
+@define-color headerbar_bg_color  @obsidian_base;
+@define-color headerbar_fg_color  alpha(white, 0.5);
+@define-color card_bg_color       @obsidian_plate;
+@define-color card_fg_color       alpha(white, 0.9);
+@define-color accent_color        @kinetic_accent;
+@define-color accent_bg_color     @kinetic_accent;
+@define-color accent_fg_color     #08090a;
+@define-color destructive_color   @kinetic_warn;
+@define-color destructive_bg_color @kinetic_warn;
+@define-color destructive_fg_color #ffffff;
+
 /* 1. Global Setup */
 * {
   font-family: "Geist Mono", "JetBrains Mono", "Input Mono", monospace;
@@ -13,9 +27,12 @@
   letter-spacing: 0.8px !important;
 }
 
-window {
-  background-color: @obsidian_base;
-  color: alpha(white, 0.9);
+window:not(popover),
+window.main-window,
+window > box:not(popover *),
+.background:not(popover):not(popover *) {
+  background-color: @window_bg_color;
+  color: @window_fg_color;
 }
 
 gridview,
@@ -25,18 +42,19 @@ scrolledwindow > viewport {
 
 /* 2. Header: The Monolith */
 headerbar {
-  background-color: @obsidian_base;
+  background-color: @headerbar_bg_color;
   border-bottom: 1px solid alpha(white, 0.05);
-  padding: 14px;
-  min-height: 44px;
+  padding: 4px 12px;
+  min-height: 38px;
 }
 
+headerbar > windowtitle label.title,
 headerbar label,
 .settings-window headerbar label {
   font-weight: 300;
   text-transform: lowercase;
   letter-spacing: 4px !important;
-  color: alpha(white, 0.5);
+  color: @headerbar_fg_color;
 }
 
 headerbar button {
@@ -44,7 +62,7 @@ headerbar button {
   border: none;
   border-radius: 2px;
   color: alpha(white, 0.5);
-  padding: 6px 10px;
+  padding: 4px 10px;
   min-width: 28px;
   min-height: 28px;
   transition: all 200ms ease;
@@ -59,6 +77,25 @@ headerbar button:disabled {
   color: alpha(white, 0.15);
 }
 
+headerbar togglebutton {
+  background-color: transparent;
+  border: none;
+  border-radius: 2px;
+  color: alpha(white, 0.5);
+  padding: 4px 8px;
+}
+
+headerbar togglebutton:hover {
+  background-color: alpha(white, 0.05);
+  color: @kinetic_accent;
+}
+
+headerbar togglebutton:checked,
+headerbar togglebutton:active {
+  background-color: alpha(@kinetic_accent, 0.15);
+  color: @kinetic_accent;
+}
+
 /* 3. Sidebar: The Carved Channel */
 scrolledwindow.sidebar {
   background-color: @obsidian_base;
@@ -71,10 +108,10 @@ scrolledwindow.sidebar listbox {
   background: transparent;
 }
 
-.sidebar-row {
-  margin: 2px 12px;
-  padding: 8px 16px;
-  min-height: 40px;
+.sidebar-row:not(.sidebar-section) {
+  margin: 1px 12px;
+  padding: 3px 14px;
+  min-height: 24px;
   background-color: transparent;
   border-radius: 4px;
   color: alpha(white, 0.4);
@@ -85,17 +122,18 @@ scrolledwindow.sidebar listbox {
     transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.sidebar-row label {
+.sidebar-row:not(.sidebar-section) label {
   letter-spacing: 1px !important;
+  color: alpha(white, 0.4);
 }
 
-.sidebar-row:hover:not(:selected) {
+.sidebar-row:not(.sidebar-section):hover:not(:selected) {
   color: @kinetic_accent;
   background-color: alpha(white, 0.03);
   transform: translateX(4px);
 }
 
-.sidebar-row:selected {
+.sidebar-row:not(.sidebar-section):selected {
   background-color: alpha(white, 0.07);
   color: @kinetic_accent;
   font-weight: 800;
@@ -104,6 +142,87 @@ scrolledwindow.sidebar listbox {
     15px 0 30px alpha(@obsidian_glow, 0.15),
     inset 0 0 10px alpha(white, 0.05);
   transform: translateX(8px);
+}
+
+.sidebar-row:not(.sidebar-section):selected label {
+  color: @kinetic_accent;
+  font-weight: 800;
+}
+
+.sidebar-section {
+  margin-top: 6px;
+  margin-bottom: 1px;
+  padding: 6px 12px 3px 12px;
+  min-height: 0px;
+  background: transparent;
+  border-radius: 0px;
+  transform: none;
+}
+
+.sidebar-section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: alpha(white, 0.45);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  margin-left: 26px;
+  margin-top: 6px;
+}
+
+.sidebar-mount {
+  background: transparent;
+  border: 1px solid alpha(white, 0.06);
+  border-radius: 4px;
+  min-height: 22px;
+  padding: 1px 6px;
+  margin: 1px 12px;
+  transition: all 0.15s ease;
+}
+
+button.eject-button {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 1px 3px;
+  min-height: 0;
+  min-width: 0;
+  border-radius: 2px;
+  color: alpha(white, 0.4);
+  opacity: 0.7;
+  transition:
+    opacity 150ms ease,
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+button.eject-button image {
+  color: inherit;
+  -gtk-icon-size: 12px;
+}
+
+button.eject-button:hover {
+  background-color: alpha(@kinetic_warn, 0.15);
+  color: @kinetic_warn;
+  opacity: 1;
+}
+
+button.eject-button:active {
+  background-color: alpha(@kinetic_warn, 0.25);
+  color: @kinetic_warn;
+}
+
+.sidebar-row:not(.sidebar-section):selected button.eject-button {
+  color: @kinetic_accent;
+  opacity: 0.9;
+}
+
+.sidebar-row:not(.sidebar-section):selected button.eject-button:hover {
+  background-color: alpha(@kinetic_accent, 0.2);
+  color: #ffffff;
+  opacity: 1;
 }
 
 .sidebar-row image {
@@ -127,9 +246,25 @@ scrolledwindow.sidebar listbox {
   transform: scale(0.96);
 }
 
+.sidebar-drop-hover {
+  background-color: alpha(@kinetic_accent, 0.25);
+  box-shadow: inset 0 0 0 1px @kinetic_accent;
+}
+
 /* 4. Grid View: High-Specular Tectonic Plates */
+gridview,
+listview {
+  background-color: transparent;
+  padding: 16px 24px;
+}
+
+gridview child {
+  padding: 2px;
+  margin: 0px;
+}
+
 .flux-card {
-  background-color: @obsidian_plate;
+  background-color: @card_bg_color;
   border-top: 1px solid alpha(white, 0.12);
   border-left: 1px solid alpha(white, 0.08);
   border-right: 1px solid alpha(black, 0.5);
@@ -160,7 +295,27 @@ scrolledwindow.sidebar listbox {
   border-left-color: @kinetic_accent;
   border-right-color: alpha(black, 0.4);
   border-bottom-color: alpha(black, 0.8);
-  box-shadow: 0 0 20px alpha(white, 0.1), 10px 10px 20px alpha(black, 0.5);
+  box-shadow:
+    0 0 20px alpha(white, 0.1),
+    10px 10px 20px alpha(black, 0.5);
+}
+
+gridview child:selected .flux-card {
+  background-color: alpha(white, 0.08);
+  border-top-color: @kinetic_accent;
+  border-left-color: @kinetic_accent;
+  box-shadow:
+    0 0 20px alpha(white, 0.1),
+    10px 10px 20px alpha(black, 0.5);
+}
+
+gridview child:selected .flux-label {
+  color: white;
+  font-weight: bold;
+}
+
+gridview child:selected .flux-list-info {
+  color: alpha(white, 0.85);
 }
 
 .flux-card--restricted {
@@ -196,7 +351,7 @@ scrolledwindow.sidebar listbox {
   border-radius: 2px;
 }
 
-.flux-rename-entry {
+entry.flux-rename-entry {
   background-color: black;
   border: 1px solid @kinetic_accent;
   border-radius: 2px;
@@ -220,6 +375,11 @@ button.breadcrumb-btn {
   transition: all 200ms ease;
 }
 
+button.breadcrumb-btn:first-child {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
 button.breadcrumb-btn:hover {
   background-color: alpha(white, 0.03);
 }
@@ -230,11 +390,16 @@ button.breadcrumb-btn:hover label {
 
 button.breadcrumb-btn:last-child {
   border-bottom-color: @kinetic_accent;
+  background: transparent;
 }
 
 button.breadcrumb-btn:last-child label {
   color: @kinetic_accent;
   font-weight: 800;
+}
+
+button.breadcrumb-btn label {
+  color: alpha(white, 0.8);
 }
 
 /* 6. Sort Indicator */
@@ -254,9 +419,27 @@ button.breadcrumb-btn:last-child label {
 }
 
 /* 7. Context Menu: Obsidian Slab */
+popover,
+popover.menu,
+popover.background,
+popover > .background {
+  background: none;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+popover arrow {
+  background: none;
+  border: none;
+}
+
 popover.menu contents {
   background-color: #0c0d0f;
   border: 1px solid alpha(white, 0.1);
+  outline: none;
   border-radius: 0px;
   padding: 8px;
   box-shadow: 0 30px 60px alpha(black, 0.8);
@@ -267,20 +450,36 @@ popover.menu modelbutton {
   border: none;
   border-radius: 0px;
   color: alpha(white, 0.7);
-  padding: 8px 16px;
-  font-size: 13pt;
+  padding: 6px 12px;
+  min-height: 24px;
+  font-size: 10pt;
   font-weight: 300;
 }
 
 popover.menu modelbutton label {
   letter-spacing: 1.5px !important;
+  color: alpha(white, 0.7);
+}
+
+popover.menu modelbutton label:disabled,
+popover.menu modelbutton accelerator,
+popover.menu modelbutton .accelerator {
+  color: alpha(white, 0.3);
+}
+
+popover.menu modelbutton image,
+popover.menu modelbutton arrow {
+  color: alpha(white, 0.7);
 }
 
 popover.menu modelbutton:hover {
   background-color: alpha(white, 0.05);
 }
 
-popover.menu modelbutton:hover label {
+popover.menu modelbutton:hover label,
+popover.menu modelbutton:hover accelerator,
+popover.menu modelbutton:hover image,
+popover.menu modelbutton:hover arrow {
   color: @kinetic_accent;
   text-shadow: 0 0 10px alpha(white, 0.5);
 }
@@ -288,23 +487,58 @@ popover.menu modelbutton:hover label {
 popover.menu > contents separator {
   background-color: alpha(white, 0.06);
   min-height: 1px;
-  margin: 4px 0;
+  margin: 2px 4px;
 }
 
 /* 8. Entries */
-entry {
+entry,
+searchentry,
+passwordentry,
+entry text,
+searchentry text,
+passwordentry text {
   background-color: black;
   border: 1px solid alpha(white, 0.1);
   border-radius: 0px;
   color: white;
-  padding: 10px;
+  padding: 6px 12px;
   letter-spacing: 1px !important;
   caret-color: @kinetic_accent;
 }
 
-entry:focus {
+entry placeholder,
+searchentry placeholder,
+passwordentry placeholder {
+  color: alpha(white, 0.35);
+}
+
+entry:focus,
+searchentry:focus,
+passwordentry:focus,
+entry:focus-within,
+searchentry:focus-within,
+passwordentry:focus-within {
   border-color: @kinetic_accent;
   box-shadow: inset 0 0 10px alpha(@kinetic_accent, 0.1);
+}
+
+entry image,
+entry button {
+  color: alpha(white, 0.6);
+  background: transparent;
+  border: none;
+}
+
+entry image:hover,
+entry button:hover {
+  color: @kinetic_accent;
+}
+
+textview,
+textview text {
+  background-color: transparent;
+  color: white;
+  caret-color: @kinetic_accent;
 }
 
 /* 9. Status Bar */
@@ -322,15 +556,48 @@ entry:focus {
   letter-spacing: 0.8px !important;
 }
 
-progressbar trough {
+.selection-status label.dim-label {
+  color: alpha(white, 0.3);
+}
+
+.selection-status button.flat {
+  background: transparent;
+  color: @kinetic_accent;
+  padding: 2px 8px;
+  min-height: 22px;
+  font-size: 8.5pt;
+  font-family: "Geist Mono", monospace;
+  border-radius: 0px;
+}
+
+.selection-status button.flat:hover {
+  background-color: alpha(white, 0.05);
+}
+
+.selection-status button.destructive-action {
+  padding: 2px 6px;
+  min-height: 22px;
+  font-size: 8.5pt;
+  border-radius: 0px;
+}
+
+window:backdrop .selection-status {
+  background-color: @obsidian_base;
+}
+
+window:backdrop .selection-status label {
+  color: alpha(white, 0.25);
+}
+
+progressbar {
   background-color: alpha(white, 0.05);
   border-radius: 0px;
-  min-height: 4px;
 }
 
 progressbar progress {
   background-color: @kinetic_accent;
   border-radius: 0px;
+  min-height: 4px;
 }
 
 /* 10. Destructive Action: Thermal Breach */
@@ -343,6 +610,10 @@ progressbar progress {
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 2px !important;
+}
+
+.destructive-action label {
+  color: @kinetic_warn;
 }
 
 .destructive-action:hover {
@@ -362,6 +633,10 @@ progressbar progress {
   text-transform: uppercase;
   letter-spacing: 2px !important;
   transition: all 200ms ease;
+}
+
+.suggested-action label {
+  color: @kinetic_accent;
 }
 
 .suggested-action:hover {
@@ -457,7 +732,8 @@ tooltip.background {
 }
 
 /* 18. Spinbutton */
-spinbutton {
+spinbutton,
+spinbutton text {
   background-color: black;
   border: 1px solid alpha(white, 0.1);
   border-radius: 0px;
@@ -500,6 +776,10 @@ combobox button {
 dropdown:focus-within,
 combobox:focus-within {
   border-color: @kinetic_accent;
+}
+
+dropdown label {
+  letter-spacing: 0px;
 }
 
 /* 20. Notebook */
@@ -629,9 +909,35 @@ button.flat:hover {
 }
 
 /* 26. Settings Window */
-window.settings-window {
+window.settings-window,
+adwpreferenceswindow,
+.settings-window {
   background-color: @obsidian_base;
   color: alpha(white, 0.9);
+  letter-spacing: 0px;
+}
+
+window.settings-window headerbar label,
+adwpreferenceswindow headerbar label,
+.settings-window headerbar label,
+viewswitcher label,
+adwviewswitcher label,
+viewswitchertitle label,
+adwviewswitchertitle label,
+viewswitcherbar label,
+adwviewswitcherbar label,
+viewswitcher button label,
+adwviewswitcher button label {
+  font-weight: 300;
+  text-transform: lowercase;
+  font-size: 9pt;
+}
+
+viewswitcher button,
+adwviewswitcher button {
+  padding-left: 4px;
+  padding-right: 4px;
+  min-width: 60px;
 }
 
 window.settings-window preferencespage,
