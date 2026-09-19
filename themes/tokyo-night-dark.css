@@ -1,6 +1,5 @@
 /* ============================================================
    Flux - Tokyo Night (Storm)
-   Strictly aligned with os-dark.css pattern (Full File)
    ============================================================ */
 
 /* ── Tokyo Night Color Ramp ── */
@@ -28,7 +27,7 @@
 /* ── Libadwaita Palette Mapping ── */
 @define-color window_bg_color     @tn_bg_base;
 @define-color window_fg_color     @tn_fg;
-@define-color headerbar_bg_color  @tn_bg_deep;
+@define-color headerbar_bg_color  @tn_bg_base;
 @define-color headerbar_fg_color  @tn_fg;
 @define-color card_bg_color       @tn_bg_surface;
 @define-color card_fg_color       @tn_fg;
@@ -68,7 +67,7 @@ headerbar {
   padding: 4px 12px;
   min-height: 38px;
   border: none;
-  box-shadow: 0 1px 0 0 @tn_border;
+  box-shadow: none;
   font-family: var(--font-main);
   letter-spacing: 0px;
 }
