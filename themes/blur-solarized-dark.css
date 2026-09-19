@@ -1,0 +1,1215 @@
+/* ============================================================
+   Flux - B L U R   S O L A R I Z E D   D A R K (Glassmorphism)
+   ============================================================ */
+
+/* ── Solarized Dark Blur Color Ramp ── */
+@define-color sol_tr_bg           rgba(0, 43, 54, 0.75);
+@define-color sol_tr_surface      rgba(7, 54, 66, 0.5);
+@define-color sol_tr_raised       rgba(88, 110, 117, 0.35);
+@define-color sol_tr_overlay      rgba(101, 123, 131, 0.3);
+@define-color sol_tr_text         #839496;
+@define-color sol_tr_text_dim     rgba(131, 148, 150, 0.65);
+@define-color sol_tr_accent       #2aa198;
+@define-color sol_tr_accent_hover  #268bd2;
+@define-color sol_tr_border       rgba(42, 161, 152, 0.2);
+@define-color sol_tr_red          #dc322f;
+@define-color sol_tr_green        #859900;
+@define-color sol_tr_yellow       #b58900;
+@define-color sol_tr_cyan         #2aa198;
+
+/* ── Libadwaita Palette Mapping ── */
+@define-color window_bg_color     @sol_tr_bg;
+@define-color window_fg_color     @sol_tr_text;
+@define-color headerbar_bg_color  transparent;
+@define-color headerbar_fg_color  @sol_tr_cyan;
+@define-color card_bg_color       @sol_tr_surface;
+@define-color card_fg_color       @sol_tr_text;
+@define-color popover_bg_color    rgba(7, 54, 66, 0.9);
+@define-color popover_fg_color    @sol_tr_text;
+@define-color accent_color        @sol_tr_cyan;
+@define-color accent_bg_color     @sol_tr_cyan;
+@define-color accent_fg_color     #002b36;
+@define-color destructive_color   @sol_tr_red;
+@define-color destructive_bg_color @sol_tr_red;
+@define-color destructive_fg_color #ffffff;
+@define-color theme_fg_color      @sol_tr_text;
+
+/* ── Theme Root Variables ── */
+:root {
+  --accent-color: #2aa198;
+  --shadow: rgba(0, 43, 54, 0.5);
+  --shadow-hover: rgba(0, 43, 54, 0.7);
+  --font-main: "Inter", "Helvetica Neue", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  letter-spacing: 0px;
+}
+
+/* ── Global Base (Translucent Viewport) ── */
+window,
+window > box,
+.background {
+  background-color: @window_bg_color;
+  color: @window_fg_color;
+}
+
+/* ── HeaderBar & Navigation (Blended Transparent) ── */
+headerbar {
+  background-color: transparent;
+  padding: 4px 12px;
+  min-height: 38px;
+  border: none;
+  box-shadow: none;
+  font-family: var(--font-main);
+  letter-spacing: 0px;
+}
+
+headerbar > windowtitle label.title {
+  color: @headerbar_fg_color;
+  font-weight: 700;
+  letter-spacing: 0px;
+}
+
+headerbar label {
+  color: @headerbar_fg_color;
+  letter-spacing: 0px;
+}
+
+headerbar button {
+  background-color: rgba(255, 255, 255, 0.03);
+  color: @headerbar_fg_color;
+  border: 1px solid @sol_tr_border;
+  box-shadow: none;
+  border-radius: 6px;
+  padding: 4px 10px;
+  transition: all 150ms ease;
+}
+
+headerbar button:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(42, 161, 152, 0.4);
+  color: @accent_color;
+}
+
+headerbar togglebutton {
+  background-color: rgba(255, 255, 255, 0.03);
+  color: @headerbar_fg_color;
+  border: 1px solid @sol_tr_border;
+  border-radius: 6px;
+  padding: 4px 8px;
+}
+
+headerbar togglebutton:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: @accent_color;
+}
+
+headerbar togglebutton:checked,
+headerbar togglebutton:active {
+  background-color: alpha(@accent_color, 0.25);
+  border-color: alpha(@accent_color, 0.5);
+  color: @accent_color;
+}
+
+/* ── Sidebar & Navigation Tree (Glass Pane) ── */
+.sidebar {
+  background-color: rgba(0, 43, 54, 0.45);
+  border-radius: 14px;
+  border: 1px solid @sol_tr_border;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+.sidebar-inner {
+  background-color: transparent;
+  border-radius: inherit;
+}
+
+.sidebar ScrolledWindow,
+.sidebar viewport {
+  background-color: transparent;
+}
+
+.sidebar-row:not(.sidebar-section) {
+  margin: 1px 14px;
+  padding: 3px 14px;
+  min-height: 24px;
+  border-radius: 10px;
+  background-color: transparent;
+  border: none;
+  transition:
+    background-color 200ms linear,
+    transform 200ms cubic-bezier(0.1, 0.7, 0.1, 1);
+  color: alpha(@theme_fg_color, 0.85);
+}
+
+.sidebar-row:not(.sidebar-section) label {
+  color: alpha(@theme_fg_color, 0.85);
+  font-family: var(--font-main);
+  font-size: 9.5pt;
+  letter-spacing: 0px;
+}
+
+.sidebar-row:not(.sidebar-section):hover:not(:selected) {
+  background-color: rgba(255, 255, 255, 0.05);
+  transform: translateX(4px);
+}
+
+.sidebar-row:not(.sidebar-section):selected {
+  background-color: @accent_bg_color;
+  box-shadow: 0 4px 12px var(--shadow);
+  transform: translateX(6px);
+}
+
+.sidebar-row:not(.sidebar-section):selected label {
+  color: #002b36;
+  font-weight: bold;
+}
+
+.sidebar-section {
+  margin-top: 6px;
+  margin-bottom: 1px;
+  padding: 6px 12px 3px 12px;
+  min-height: 0px;
+  background: transparent;
+  border-radius: 0px;
+  transform: none;
+}
+
+.sidebar-section:hover,
+.sidebar-section:focus {
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+.sidebar-section-label {
+  font-family: var(--font-main);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: @sol_tr_yellow;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  margin-left: 26px;
+  margin-top: 6px;
+}
+
+.sidebar-mount {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid @sol_tr_border;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  min-height: 22px;
+  padding: 1px 6px;
+  margin: 1px 14px;
+  transition: all 0.15s ease;
+}
+
+button.eject-button {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 1px 3px;
+  min-height: 0;
+  min-width: 0;
+  border-radius: 4px;
+  color: alpha(@theme_fg_color, 0.45);
+  opacity: 0.7;
+  transition:
+    opacity 150ms ease,
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+button.eject-button image {
+  color: inherit;
+  -gtk-icon-size: 12px;
+}
+
+button.eject-button:hover {
+  background-color: alpha(@sol_tr_red, 0.2);
+  color: @sol_tr_red;
+  opacity: 1;
+}
+
+button.eject-button:active {
+  background-color: alpha(@sol_tr_red, 0.35);
+  color: @sol_tr_red;
+}
+
+.sidebar-row:not(.sidebar-section):selected button.eject-button {
+  color: #002b36;
+  opacity: 0.9;
+}
+
+.sidebar-row:not(.sidebar-section):selected button.eject-button:hover {
+  background-color: rgba(0, 43, 54, 0.2);
+  color: #002b36;
+  opacity: 1;
+}
+
+/* ── Grid & List Item Views ── */
+gridview,
+listview {
+  background-color: transparent;
+  padding: 16px 24px;
+}
+
+gridview child {
+  padding: 2px;
+  margin: 0px;
+}
+
+/* ── Flux Cards (Translucent) ── */
+.flux-card {
+  background-color: @card_bg_color;
+  border-radius: 18px;
+  padding: 12px;
+  margin: 6px;
+  border: 1px solid @sol_tr_border;
+  box-shadow:
+    0 8px 32px 0 rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition:
+    background-color 200ms ease,
+    box-shadow 200ms ease,
+    transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.flux-card:hover {
+  background-color: rgba(7, 54, 66, 0.65);
+  box-shadow:
+    0 0 0 1px alpha(@accent_color, 0.4),
+    0 12px 28px 0 rgba(0, 0, 0, 0.4);
+  transform: translateY(-4px);
+}
+
+.flux-label {
+  color: @theme_fg_color;
+  font-family: var(--font-main);
+  font-size: 10pt;
+  letter-spacing: 0px;
+}
+
+gridview child:selected .flux-card {
+  background-color: rgba(42, 161, 152, 0.2);
+  box-shadow:
+    0 0 0 2px @accent_color,
+    0 8px 24px alpha(@accent_color, 0.3);
+  transform: translateY(-2px);
+}
+
+gridview child:selected .flux-label {
+  color: @sol_tr_cyan;
+  font-weight: 700;
+}
+
+.flux-card--restricted {
+  border-left: 2px solid @sol_tr_yellow;
+}
+
+.flux-lock-badge {
+  color: @sol_tr_yellow;
+}
+
+/* HIG-Compliant Metadata Capsule */
+.flux-list-info {
+  font-family: var(--font-mono);
+  font-size: 8.5pt;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  padding: 2px 10px;
+  min-width: 170px;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid @sol_tr_border;
+  border-radius: 99px;
+  color: alpha(@theme_fg_color, 0.7);
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease;
+}
+
+gridview child:hover .flux-list-info {
+  background-color: rgba(255, 255, 255, 0.06);
+  border-color: rgba(42, 161, 152, 0.3);
+  color: alpha(@theme_fg_color, 0.9);
+}
+
+gridview child:selected .flux-list-info {
+  background-color: alpha(@accent_color, 0.25);
+  border-color: alpha(@accent_color, 0.5);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+entry.flux-rename-entry {
+  background-color: rgba(0, 43, 54, 0.8);
+  border: 1px solid @accent_color;
+  box-shadow: 0 0 0 2px alpha(@accent_color, 0.3);
+  padding: 2px 8px;
+  font-size: 9.5pt;
+  min-height: 24px;
+}
+
+/* ── Drag & Drop States ── */
+.sidebar-dragging {
+  opacity: 0.45;
+}
+
+.sidebar-drop-hover {
+  background-color: alpha(@accent_color, 0.25);
+  box-shadow: inset 0 0 0 1px @accent_color;
+}
+
+/* ── Breadcrumb Navigation ── */
+button.breadcrumb-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid @sol_tr_border;
+  padding: 3px 10px;
+  margin: 1px;
+  font-weight: 500;
+  transition: all 0.12s ease;
+  color: alpha(@theme_fg_color, 0.8);
+  font-family: var(--font-main);
+  font-size: 0.9em;
+}
+
+button.breadcrumb-btn:first-child {
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+  border-right-width: 0px;
+  padding-left: 12px;
+}
+
+button.breadcrumb-btn:last-child {
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+  border-right-width: 1px;
+  background: @accent_bg_color;
+  border-color: @accent_bg_color;
+  color: @accent_fg_color;
+  box-shadow:
+    0 2px 8px alpha(@accent_color, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+  padding: 3px 14px;
+}
+
+button.breadcrumb-btn:last-child label {
+  color: @accent_fg_color;
+  font-weight: 600;
+}
+
+button.breadcrumb-btn:last-child:hover {
+  background: @sol_tr_accent_hover;
+  box-shadow: 0 4px 12px alpha(@accent_color, 0.4);
+}
+
+button.breadcrumb-btn:hover:not(:last-child) {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(42, 161, 152, 0.3);
+  color: @theme_fg_color;
+}
+
+button.breadcrumb-btn:active:not(:last-child) {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(1px);
+}
+
+button.breadcrumb-btn label {
+  color: inherit;
+  font-family: var(--font-main);
+  letter-spacing: 0px;
+}
+
+/* ── Popovers & Context Menus (Glass Shell) ── */
+popover,
+popover.background,
+popover.menu {
+  background-color: transparent;
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  padding: 0px;
+}
+
+popover.menu contents,
+popover.background contents {
+  background-color: @popover_bg_color;
+  border: 1px solid @sol_tr_border;
+  outline: none;
+  border-radius: 12px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+  padding: 4px;
+}
+
+popover.menu modelbutton {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: @popover_fg_color;
+  border-radius: 6px;
+  padding: 4px 8px;
+  min-height: 28px;
+}
+
+popover.menu modelbutton label {
+  color: @popover_fg_color;
+  letter-spacing: 0px;
+  font-weight: 500;
+}
+
+popover.menu modelbutton label:disabled,
+popover.menu modelbutton accelerator,
+popover.menu modelbutton .accelerator {
+  color: alpha(@theme_fg_color, 0.55);
+}
+
+popover.menu modelbutton image,
+popover.menu modelbutton arrow,
+popover.menu modelbutton arrow.right,
+popover.menu modelbutton arrow.left {
+  color: @accent_color;
+}
+
+popover.menu modelbutton:hover {
+  background-color: @accent_bg_color;
+  color: @accent_fg_color;
+}
+
+popover.menu modelbutton:hover label,
+popover.menu modelbutton:hover label:disabled,
+popover.menu modelbutton:hover accelerator,
+popover.menu modelbutton:hover .accelerator,
+popover.menu modelbutton:hover image,
+popover.menu modelbutton:hover arrow,
+popover.menu modelbutton:hover arrow.right,
+popover.menu modelbutton:hover arrow.left {
+  color: @accent_fg_color;
+}
+
+popover.menu > contents separator {
+  background-color: @sol_tr_border;
+  min-height: 1px;
+  margin: 4px 8px;
+}
+
+/* ── Text Entries & Inputs ── */
+entry,
+searchentry,
+passwordentry,
+entry text,
+searchentry text,
+passwordentry text {
+  background-color: rgba(0, 43, 54, 0.5);
+  border: 1px solid @sol_tr_border;
+  border-radius: 22px;
+  padding: 4px 12px;
+  color: @theme_fg_color;
+  caret-color: @accent_color;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  letter-spacing: 0px;
+}
+
+entry placeholder,
+searchentry placeholder,
+passwordentry placeholder {
+  color: alpha(@theme_fg_color, 0.45);
+}
+
+entry:focus,
+searchentry:focus,
+passwordentry:focus,
+entry:focus-within,
+searchentry:focus-within,
+passwordentry:focus-within {
+  border-color: @accent_color;
+  box-shadow:
+    0 0 0 3px alpha(@accent_color, 0.3),
+    inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+entry image,
+entry image.clear,
+searchentry image,
+searchentry image.clear,
+passwordentry image,
+passwordentry image.clear,
+entry image.left,
+entry image.right,
+searchentry image.left,
+searchentry image.right,
+passwordentry image.left,
+passwordentry image.right,
+entry button,
+entry button.image-button,
+entry button.clear,
+entry button.close,
+searchentry button,
+searchentry button.image-button,
+searchentry button.clear,
+searchentry button.close,
+passwordentry button,
+passwordentry button.image-button,
+passwordentry button.clear,
+passwordentry button.close {
+  color: @accent_color;
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+  opacity: 0.75;
+}
+
+entry image:hover,
+entry image.clear:hover,
+searchentry image:hover,
+searchentry image.clear:hover,
+passwordentry image:hover,
+passwordentry image.clear:hover,
+entry button:hover,
+entry button.image-button:hover,
+entry button.clear:hover,
+entry button.close:hover,
+searchentry button:hover,
+searchentry button.image-button:hover,
+searchentry button.clear:hover,
+searchentry button.close:hover,
+passwordentry button:hover,
+passwordentry button.image-button:hover,
+passwordentry button.clear:hover,
+passwordentry button.close:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.08);
+  opacity: 1;
+}
+
+textview,
+textview text {
+  background-color: transparent;
+  color: @theme_fg_color;
+  caret-color: @accent_color;
+}
+
+/* ── Status Bar & Transfers (Glass Capsule Style) ── */
+.selection-status {
+  background-color: rgba(7, 54, 66, 0.75);
+  border: 1px solid @sol_tr_border;
+  border-radius: 12px;
+  padding: 6px 16px;
+  min-height: 28px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  margin-bottom: 8px;
+}
+
+.selection-status label.caption {
+  color: alpha(@theme_fg_color, 0.82);
+  font-family: var(--font-mono);
+  font-size: 8.5pt;
+  letter-spacing: -0.01em;
+}
+
+.selection-status label.dim-label {
+  color: alpha(@theme_fg_color, 0.5);
+}
+
+.selection-status progressbar {
+  background-color: transparent;
+  min-height: 6px;
+  border-radius: 99px;
+}
+
+.selection-status progressbar trough {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid @sol_tr_border;
+  border-radius: 99px;
+  min-height: 6px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.selection-status progressbar progress {
+  background-color: @accent_bg_color;
+  border-radius: 99px;
+  min-height: 6px;
+  box-shadow: 0 0 8px alpha(@accent_color, 0.5);
+}
+
+.selection-status button.flat {
+  background-color: rgba(255, 255, 255, 0.03);
+  color: alpha(@theme_fg_color, 0.85);
+  border: 1px solid @sol_tr_border;
+  border-radius: 6px;
+  padding: 2px 8px;
+  min-height: 20px;
+  font-size: 8pt;
+  font-family: var(--font-mono);
+  transition: all 150ms ease;
+}
+
+.selection-status button.flat:hover {
+  background-color: alpha(@accent_color, 0.2);
+  border-color: alpha(@accent_color, 0.4);
+  color: @accent_color;
+}
+
+.selection-status button.flat:active {
+  background-color: @accent_bg_color;
+  color: #002b36;
+}
+
+.selection-status button.destructive-action {
+  background-color: alpha(@sol_tr_red, 0.15);
+  border: 1px solid alpha(@sol_tr_red, 0.3);
+  border-radius: 6px;
+  color: @sol_tr_red;
+  padding: 2px 7px;
+  min-height: 20px;
+  font-size: 8pt;
+  font-family: var(--font-mono);
+}
+
+.selection-status button.destructive-action:hover {
+  background-color: alpha(@sol_tr_red, 0.3);
+  color: #ffffff;
+}
+
+window:backdrop .selection-status {
+  background-color: rgba(0, 43, 54, 0.5);
+}
+
+window:backdrop .selection-status label {
+  color: alpha(@theme_fg_color, 0.35);
+}
+
+/* ── Quick Panel (Floating Glass Dock) ── */
+.quick-panel-scroll {
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.quick-panel-scroll undershoot.left,
+.quick-panel-scroll undershoot.right {
+  background: none;
+}
+
+.quick-panel {
+  background: rgba(7, 54, 66, 0.75);
+  border: 1px solid @sol_tr_border;
+  border-radius: 12px;
+  padding: 4px 6px;
+  box-shadow:
+    0 12px 36px 0 rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.quick-panel button,
+.quick-panel-tab {
+  min-width: 82px;
+  min-height: 26px;
+  padding: 3px 14px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid @sol_tr_border;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  color: alpha(@theme_fg_color, 0.88);
+  transition: all 150ms ease;
+}
+
+.quick-panel button label,
+.quick-panel-tab label {
+  color: alpha(@theme_fg_color, 0.88);
+  font-family: var(--font-main);
+  font-size: 9.5pt;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.quick-panel button:hover:not(:checked):not(:active):not(.suggested-action),
+.quick-panel-tab:hover:not(:checked):not(:active):not(.suggested-action) {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(42, 161, 152, 0.3);
+}
+
+.quick-panel
+  button:hover:not(:checked):not(:active):not(.suggested-action)
+  label,
+.quick-panel-tab:hover:not(:checked):not(:active):not(.suggested-action) label {
+  color: #ffffff;
+}
+
+.quick-panel button:active,
+.quick-panel button:checked,
+.quick-panel button.suggested-action,
+.quick-panel-tab:active,
+.quick-panel-tab:checked,
+.quick-panel-tab.suggested-action {
+  background-color: @accent_bg_color;
+  border: 1px solid alpha(@accent_color, 0.5);
+  box-shadow: 0 0 12px alpha(@accent_color, 0.4);
+  color: #002b36;
+}
+
+.quick-panel button:active label,
+.quick-panel button:checked label,
+.quick-panel button.suggested-action label,
+.quick-panel-tab:active label,
+.quick-panel-tab:checked label,
+.quick-panel-tab.suggested-action label {
+  color: #002b36;
+  font-weight: 700;
+}
+
+/* ── Standard Buttons & Actions ── */
+.suggested-action {
+  background-color: @accent_bg_color;
+  color: @accent_fg_color;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 18px;
+  font-weight: bold;
+  box-shadow: 0 0 12px alpha(@accent_color, 0.35);
+}
+
+.suggested-action label {
+  color: @accent_fg_color;
+}
+
+.suggested-action:hover {
+  background-color: @sol_tr_accent_hover;
+  box-shadow: 0 0 20px alpha(@accent_color, 0.6);
+}
+
+.destructive-action {
+  background-color: alpha(@sol_tr_red, 0.15);
+  color: @sol_tr_red;
+  border: 1px solid alpha(@sol_tr_red, 0.3);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: bold;
+  letter-spacing: 0px;
+}
+
+.destructive-action label {
+  color: @sol_tr_red;
+}
+
+.destructive-action:hover {
+  background-color: alpha(@sol_tr_red, 0.3);
+  box-shadow: 0 0 12px alpha(@sol_tr_red, 0.4);
+}
+
+/* ── Form Controls & Widgets ── */
+check,
+radio {
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid @sol_tr_border;
+  border-radius: 4px;
+  min-height: 16px;
+  min-width: 16px;
+}
+
+check:checked,
+radio:checked {
+  background-color: @accent_bg_color;
+  border-color: @accent_bg_color;
+  box-shadow: 0 0 8px alpha(@accent_color, 0.5);
+}
+
+check:hover,
+radio:hover {
+  border-color: @accent_bg_color;
+}
+
+check:disabled,
+radio:disabled {
+  opacity: 0.4;
+}
+
+spinbutton,
+spinbutton text {
+  background-color: rgba(0, 43, 54, 0.4);
+  border: 1px solid @sol_tr_border;
+  border-radius: 8px;
+  color: @theme_fg_color;
+  caret-color: @accent_color;
+  padding: 0 4px;
+  min-height: 28px;
+}
+
+spinbutton:focus-within {
+  border-color: @accent_bg_color;
+  box-shadow: 0 0 8px alpha(@accent_color, 0.3);
+}
+
+spinbutton > button {
+  background: transparent;
+  border: none;
+  color: @accent_color;
+}
+
+spinbutton > button:hover {
+  color: #ffffff;
+}
+
+dropdown,
+combobox {
+  background-color: rgba(0, 43, 54, 0.4);
+  border: 1px solid @sol_tr_border;
+  border-radius: 8px;
+  color: @theme_fg_color;
+  min-height: 28px;
+}
+
+dropdown button,
+combobox button {
+  background: transparent;
+  border: none;
+  color: @theme_fg_color;
+}
+
+dropdown:focus-within,
+combobox:focus-within {
+  border-color: @accent_bg_color;
+  box-shadow: 0 0 8px alpha(@accent_color, 0.3);
+}
+
+dropdown label {
+  letter-spacing: 0px;
+}
+
+scale trough {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  min-height: 4px;
+}
+
+scale highlight {
+  background: @accent_bg_color;
+  box-shadow: 0 0 8px alpha(@accent_color, 0.5);
+}
+
+scale slider {
+  background: @accent_color;
+  border: 2px solid #002b36;
+  box-shadow: 0 0 8px alpha(@accent_color, 0.8);
+  border-radius: 50%;
+  min-width: 16px;
+  min-height: 16px;
+}
+
+levelbar block {
+  border-radius: 4px;
+}
+
+levelbar block.low {
+  background: @sol_tr_red;
+}
+
+levelbar block.high {
+  background: @accent_color;
+  box-shadow: 0 0 8px alpha(@accent_color, 0.5);
+}
+
+levelbar block.full {
+  background: @sol_tr_green;
+  box-shadow: 0 0 8px alpha(@sol_tr_green, 0.5);
+}
+
+progressbar {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+}
+
+progressbar progress {
+  background-color: @accent_bg_color;
+  border-radius: 4px;
+  min-height: 4px;
+}
+
+scrollbar {
+  background: transparent;
+}
+
+scrollbar slider {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+}
+
+scrollbar slider:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 8px alpha(@accent_color, 0.4);
+}
+
+notebook > header {
+  background: transparent;
+  border: none;
+}
+
+notebook > header > tabs > tab {
+  background: transparent;
+  color: alpha(@theme_fg_color, 0.7);
+  padding: 4px 12px;
+  border: none;
+  border-bottom: 2px solid transparent;
+}
+
+notebook > header > tabs > tab:checked {
+  color: @accent_color;
+  border-bottom-color: @accent_color;
+  text-shadow: 0 0 8px alpha(@accent_color, 0.5);
+}
+
+/* ── Cards, Lists & Frames ── */
+.card {
+  background: @card_bg_color;
+  border-radius: 12px;
+  border: 1px solid @sol_tr_border;
+}
+
+.frame {
+  border: 1px solid @sol_tr_border;
+  border-radius: 8px;
+  background: transparent;
+}
+
+.boxed-list {
+  background: rgba(7, 54, 66, 0.35);
+  border-radius: 12px;
+  border: 1px solid @sol_tr_border;
+}
+
+list,
+listview {
+  background: transparent;
+  color: @theme_fg_color;
+}
+
+row {
+  background: transparent;
+  color: @theme_fg_color;
+}
+
+row:selected {
+  background: alpha(@accent_bg_color, 0.15);
+  color: @accent_color;
+}
+
+.view {
+  background: transparent;
+  color: @theme_fg_color;
+}
+
+.view:selected {
+  background: alpha(@accent_bg_color, 0.15);
+  color: @accent_color;
+}
+
+.property {
+  background: transparent;
+  border-bottom: 1px solid @sol_tr_border;
+  padding: 6px 0px;
+  color: @theme_fg_color;
+  font-size: 9.5pt;
+}
+
+.property label {
+  color: @theme_fg_color;
+}
+
+/* ── Settings & Libadwaita Preferences ── */
+window.settings-window,
+adwpreferenceswindow,
+.settings-window {
+  letter-spacing: 0px;
+}
+
+window.settings-window headerbar label,
+adwpreferenceswindow headerbar label,
+.settings-window headerbar label,
+viewswitcher label,
+adwviewswitcher label,
+viewswitchertitle label,
+adwviewswitchertitle label,
+viewswitcherbar label,
+adwviewswitcherbar label,
+viewswitcher button label,
+adwviewswitcher button label {
+  font-weight: 500;
+  text-transform: none;
+  font-size: 9pt;
+}
+
+viewswitcher button,
+adwviewswitcher button {
+  padding-left: 4px;
+  padding-right: 4px;
+  min-width: 60px;
+}
+
+.settings-row label {
+  letter-spacing: 0px;
+}
+
+adwpreferencesgroup > box > label {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  opacity: 0.7;
+}
+
+adwactionrow,
+adwactionrow label,
+adwpreferencesrow,
+adwpreferencesrow label,
+adwpreferencespage,
+adwpreferencespage label {
+  color: @theme_fg_color;
+}
+
+adwactionrow .title,
+adwpreferencesrow .title,
+adwactionrow label.title,
+adwpreferencesrow label.title,
+adwpreferencesgroup .title,
+adwpreferencesgroup label.title {
+  color: @theme_fg_color;
+  font-weight: 600;
+}
+
+adwactionrow .subtitle,
+adwpreferencesrow .subtitle,
+adwactionrow label.subtitle,
+adwpreferencesrow label.subtitle,
+adwpreferencesgroup .description,
+adwpreferencesgroup label.description,
+.subtitle {
+  color: alpha(@theme_fg_color, 0.65);
+}
+
+/* ── Utilities, Tooltips & Status States ── */
+tooltip.background {
+  background-color: rgba(7, 54, 66, 0.85);
+  border: 1px solid @sol_tr_border;
+  border-radius: 8px;
+  color: @accent_color;
+  padding: 6px 12px;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.4);
+}
+
+toast label {
+  color: @accent_color;
+  letter-spacing: 0.4px;
+}
+
+.dim-label {
+  color: alpha(@theme_fg_color, 0.65);
+}
+
+.caption {
+  color: alpha(@theme_fg_color, 0.65);
+}
+
+.numeric {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: @accent_color;
+}
+
+.accent {
+  color: @accent_color;
+  font-weight: 700;
+}
+
+.heading {
+  font-weight: 700;
+  color: @theme_fg_color;
+}
+
+.monospace {
+  font-family: var(--font-mono);
+}
+
+.error {
+  border: 1px solid @sol_tr_red;
+  background: alpha(@sol_tr_red, 0.1);
+  color: @sol_tr_red;
+}
+
+.warning {
+  border: 1px solid @sol_tr_yellow;
+  background: alpha(@sol_tr_yellow, 0.1);
+  color: @sol_tr_yellow;
+}
+
+/* ── Window Controls ── */
+windowcontrols button {
+  background-color: transparent;
+  border: none;
+  border-color: transparent;
+  border-radius: 0;
+  padding: 6px 6px;
+  min-width: 24px;
+  min-height: 24px;
+  color: @headerbar_fg_color;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+windowcontrols button:hover {
+  background-color: alpha(@headerbar_fg_color, 0.12);
+}
+
+windowcontrols button:active {
+  background-color: alpha(@headerbar_fg_color, 0.2);
+}
+
+windowcontrols button.close:hover {
+  background-color: alpha(@sol_tr_red, 0.25);
+  color: @sol_tr_red;
+}
+
+windowcontrols button.close:active {
+  background-color: alpha(@sol_tr_red, 0.4);
+  color: @sol_tr_red;
+}
+
+windowcontrols button.minimize:hover,
+windowcontrols button.maximize:hover {
+  background-color: alpha(@headerbar_fg_color, 0.15);
+}
+
+/* Position toasts cleanly above the floating dock capsule */
+toastoverlay.quick-dock-active toast {
+  margin-bottom: 60px;
+}
+
+/* ── Empty Folder & Symlink Dynamic Theme Styling ── */
+.flux-card.flux-card--empty {
+  border-left: 2.5px solid alpha(@theme_fg_color, 0.45);
+}
+
+.flux-card.flux-card--empty .flux-label {
+  color: alpha(@theme_fg_color, 0.65);
+}
+
+.flux-card.flux-card--symlink {
+  border-right: 2.5px solid alpha(@accent_color, 0.75);
+}
+
+.flux-card.flux-card--symlink .flux-label {
+  color: @theme_fg_color;
+  font-weight: 500;
+}
+
+.flux-card.flux-card--broken-symlink {
+  border-right: 2.5px solid @sol_tr_red;
+}
+
+.flux-card.flux-card--broken-symlink .flux-label {
+  color: @sol_tr_red;
+  text-decoration-line: line-through;
+}
