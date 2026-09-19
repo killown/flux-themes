@@ -1,4 +1,9 @@
-/* ── Theme Root Variables ── */
+/* ============================================================
+   Flux - S C I F I (Full Theme - Aligned with os-dark specs)
+   Futuristic Cyberpunk / Sci-Fi Design System
+   ============================================================ */
+
+/* ── Sci-Fi Color Ramp ── */
 @define-color sf_void         #050508;
 @define-color sf_bg           #07080d;
 @define-color sf_surface      #0b0d17;
@@ -12,20 +17,24 @@
 @define-color sf_text_bright  #f8fafc;
 @define-color sf_text_dim     rgba(226, 232, 240, 0.65);
 
-/* Libadwaita palette mapping */
+/* ── Libadwaita Palette Mapping ── */
 @define-color window_bg_color     @sf_bg;
 @define-color window_fg_color     @sf_text;
-@define-color headerbar_bg_color  @sf_panel;
+@define-color headerbar_bg_color  transparent;
 @define-color headerbar_fg_color  @sf_cyan;
 @define-color card_bg_color       @sf_card;
 @define-color card_fg_color       @sf_text_bright;
+@define-color popover_bg_color    #0b0d17;
+@define-color popover_fg_color    @sf_text;
 @define-color accent_color        @sf_cyan;
 @define-color accent_bg_color     @sf_cyan;
 @define-color accent_fg_color     #050508;
 @define-color destructive_color   @sf_pink;
 @define-color destructive_bg_color @sf_pink;
 @define-color destructive_fg_color #ffffff;
+@define-color theme_fg_color      @sf_text;
 
+/* ── Theme Root Variables ── */
 :root {
   --accent-color: #00f0ff;
   --accent-alt: #7000ff;
@@ -37,13 +46,27 @@
   letter-spacing: 0.3px;
 }
 
-/* ── HeaderBar & Navigation ── */
+/* ── Global Background Radiance ── */
+window,
+window > box,
+.background {
+  background-color: @window_bg_color;
+  background-image: radial-gradient(
+    ellipse 75% 45% at 50% 0%,
+    alpha(@sf_purple, 0.12) 0%,
+    alpha(@sf_surface, 0.04) 45%,
+    transparent 75%
+  );
+  color: @window_fg_color;
+}
+
+/* ── HeaderBar & Navigation (Blended Transparent) ── */
 headerbar {
-  background-color: @headerbar_bg_color;
+  background-color: transparent;
   padding: 4px 12px;
   min-height: 38px;
   border: none;
-  box-shadow: 0 1px 0 0 rgba(0, 240, 255, 0.15);
+  box-shadow: none;
   font-family: var(--font-main);
   letter-spacing: 0.3px;
 }
@@ -97,11 +120,22 @@ headerbar togglebutton:active {
   color: @accent_color;
 }
 
-/* ── Sidebar & Navigation Tree ── */
+/* ── Sidebar & Navigation Tree (Dark) ── */
 .sidebar {
-  background-color: @window_bg_color;
-  border: none;
-  box-shadow: inset -1px 0 0 0 rgba(0, 240, 255, 0.08);
+  background-color: color-mix(in srgb, @window_bg_color 20%, #000000 20%);
+  border-radius: 14px;
+  border: 1px solid rgba(0, 240, 255, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+.sidebar-inner {
+  background-color: transparent;
+  border-radius: inherit;
+}
+
+.sidebar ScrolledWindow,
+.sidebar viewport {
+  background-color: transparent;
 }
 
 .sidebar-row:not(.sidebar-section) {
@@ -234,7 +268,7 @@ button.eject-button:active {
 /* ── Grid & List Item Views ── */
 gridview,
 listview {
-  background-color: transparent;
+  background-color: @window_bg_color;
   padding: 16px 24px;
 }
 
@@ -284,10 +318,6 @@ gridview child:selected .flux-label {
   text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
 }
 
-gridview child:selected .flux-list-info {
-  color: rgba(255, 255, 255, 0.85);
-}
-
 .flux-card--restricted {
   border-left: 2px solid #ffaa00;
 }
@@ -296,10 +326,35 @@ gridview child:selected .flux-list-info {
   color: #ffaa00;
 }
 
+/* HIG-Compliant Dark Mode Metadata Capsule for List Mode */
 .flux-list-info {
   font-family: var(--font-mono);
   font-size: 8.5pt;
-  color: rgba(226, 232, 240, 0.65);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  padding: 2px 10px;
+  min-width: 170px;
+  background-color: rgba(0, 240, 255, 0.07);
+  border: 1px solid rgba(0, 240, 255, 0.12);
+  border-radius: 99px;
+  color: rgba(226, 232, 240, 0.7);
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease;
+}
+
+gridview child:hover .flux-list-info {
+  background-color: rgba(0, 240, 255, 0.12);
+  border-color: rgba(0, 240, 255, 0.2);
+  color: rgba(226, 232, 240, 0.9);
+}
+
+gridview child:selected .flux-list-info {
+  background-color: rgba(0, 240, 255, 0.22);
+  border-color: rgba(0, 240, 255, 0.4);
+  color: #ffffff;
+  font-weight: 600;
 }
 
 entry.flux-rename-entry {
@@ -382,28 +437,42 @@ button.breadcrumb-btn label {
   letter-spacing: 0.3px;
 }
 
-/* ── Popovers & Context Menus ── */
+/* ── Popovers & Context Menus (Clean & Borderless Outer Shell) ── */
+popover,
+popover.background,
 popover.menu {
+  background-color: transparent;
+  background: none;
   border: none;
   outline: none;
   box-shadow: none;
+  padding: 0px;
 }
 
-popover.menu contents {
-  background-color: #0b0d17;
+popover.menu contents,
+popover.background contents {
+  background-color: @popover_bg_color;
   border: 1px solid rgba(0, 240, 255, 0.2);
   outline: none;
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+  padding: 4px;
 }
 
 popover.menu modelbutton {
-  color: @window_fg_color;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: @popover_fg_color;
+  border-radius: 6px;
+  padding: 4px 8px;
+  min-height: 28px;
 }
 
 popover.menu modelbutton label {
-  color: @window_fg_color;
+  color: @popover_fg_color;
   letter-spacing: 0.3px;
+  font-weight: 500;
 }
 
 popover.menu modelbutton label:disabled,
@@ -541,12 +610,15 @@ textview text {
   caret-color: @accent_color;
 }
 
-/* ── Status Bar & Transfers ── */
+/* ── Status Bar & Transfers (Floating Card Style) ── */
 .selection-status {
   background-color: rgba(11, 13, 20, 0.9);
-  border-top: 1px solid rgba(0, 240, 255, 0.15);
-  padding: 4px 16px;
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  border-radius: 12px;
+  padding: 6px 16px;
   min-height: 28px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  margin-bottom: 8px;
 }
 
 .selection-status label.caption {
@@ -561,46 +633,77 @@ textview text {
 }
 
 .selection-status progressbar {
+  background-color: transparent;
+  min-height: 6px;
+  border-radius: 99px;
+}
+
+.selection-status progressbar trough {
   background-color: rgba(0, 240, 255, 0.1);
-  border-radius: 4px;
-  min-height: 4px;
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  border-radius: 99px;
+  min-height: 6px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 
 .selection-status progressbar progress {
   background: linear-gradient(90deg, #00f0ff, #7000ff);
+  border-radius: 99px;
+  min-height: 6px;
   box-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
-  border-radius: 4px;
-  min-height: 4px;
 }
 
 .selection-status button.flat {
-  background: transparent;
+  background-color: rgba(0, 240, 255, 0.05);
   color: @accent_color;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 6px;
   padding: 2px 8px;
-  min-height: 22px;
-  font-size: 8.5pt;
+  min-height: 20px;
+  font-size: 8pt;
   font-family: var(--font-mono);
-  border-radius: 4px;
+  transition: all 150ms ease;
 }
 
 .selection-status button.flat:hover {
-  background-color: rgba(0, 240, 255, 0.15);
+  background-color: rgba(0, 240, 255, 0.2);
+  color: #ffffff;
+}
+
+.selection-status button.flat:active {
+  background-color: @accent_color;
+  color: #050508;
 }
 
 .selection-status button.destructive-action {
-  padding: 2px 6px;
-  min-height: 22px;
-  font-size: 8.5pt;
-  border-radius: 4px;
+  background-color: rgba(255, 0, 85, 0.14);
+  border: 1px solid rgba(255, 0, 85, 0.25);
+  border-radius: 6px;
+  color: #ff0055;
+  padding: 2px 7px;
+  min-height: 20px;
+  font-size: 8pt;
+  font-family: var(--font-mono);
 }
 
-/* ── Floating Quick Panel ── */
+.selection-status button.destructive-action:hover {
+  background-color: rgba(255, 0, 85, 0.3);
+  color: #ffffff;
+}
+
+window:backdrop .selection-status {
+  background-color: rgba(11, 13, 20, 0.95);
+}
+
+window:backdrop .selection-status label {
+  color: rgba(226, 232, 240, 0.35);
+}
+
+/* ── Quick Panel (Floating Dock) ── */
 .quick-panel-scroll {
-  background: rgba(11, 13, 20, 0.85);
-  box-shadow:
-    inset 0 1px 0 rgba(0, 240, 255, 0.2),
-    0 8px 24px rgba(0, 0, 0, 0.7);
-  border-top: 1px solid rgba(0, 240, 255, 0.2);
+  background: none;
+  border: none;
+  box-shadow: none;
 }
 
 .quick-panel-scroll undershoot.left,
@@ -608,30 +711,49 @@ textview text {
   background: none;
 }
 
+.quick-panel {
+  background: rgba(11, 13, 20, 0.85);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 12px;
+  padding: 4px 6px;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(0, 240, 255, 0.2);
+}
+
 .quick-panel button,
 .quick-panel-tab {
-  min-width: 80px;
-  padding: 5px 14px;
-  font-size: 0.85em;
-  border-radius: 6px;
+  min-width: 82px;
+  min-height: 26px;
+  padding: 3px 14px;
+  border-radius: 8px;
   background-color: rgba(0, 240, 255, 0.05);
-  background-image: none;
-  color: @window_fg_color;
   border: 1px solid rgba(0, 240, 255, 0.2);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-  transition: all 0.15s ease;
+  color: @window_fg_color;
+  transition: all 150ms ease;
 }
 
 .quick-panel button label,
 .quick-panel-tab label {
   color: @window_fg_color;
+  font-family: var(--font-main);
+  font-size: 9.5pt;
+  font-weight: 500;
+  letter-spacing: 0.3px;
 }
 
-.quick-panel button:hover,
-.quick-panel-tab:hover {
+.quick-panel button:hover:not(:checked):not(:active):not(.suggested-action),
+.quick-panel-tab:hover:not(:checked):not(:active):not(.suggested-action) {
   background-color: rgba(0, 240, 255, 0.15);
   border-color: @accent_color;
   box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+}
+
+.quick-panel
+  button:hover:not(:checked):not(:active):not(.suggested-action)
+  label,
+.quick-panel-tab:hover:not(:checked):not(:active):not(.suggested-action) label {
   color: @accent_color;
 }
 
@@ -859,7 +981,7 @@ notebook > header > tabs > tab:checked {
 
 /* ── Cards, Lists & Frames ── */
 .card {
-  background: #0d101a;
+  background: @card_bg_color;
   border-radius: 12px;
   border: 1px solid rgba(0, 240, 255, 0.12);
 }
@@ -871,7 +993,7 @@ notebook > header > tabs > tab:checked {
 }
 
 .boxed-list {
-  background: #0a0d14;
+  background: @card_bg_color;
   border-radius: 12px;
   border: 1px solid rgba(0, 240, 255, 0.15);
 }
@@ -925,7 +1047,7 @@ adwpreferenceswindow,
 
 window.settings-window headerbar,
 adwpreferenceswindow headerbar {
-  background-color: #0b0d14;
+  background-color: transparent;
   border-bottom: 1px solid rgba(0, 240, 255, 0.15);
 }
 
@@ -1063,4 +1185,74 @@ toast label {
   border: 1px solid #ffaa00;
   background: rgba(255, 170, 0, 0.1);
   color: #ffaa00;
+}
+
+/* ── Window Controls ── */
+windowcontrols button {
+  background-color: transparent;
+  border: none;
+  border-color: transparent;
+  border-radius: 0;
+  padding: 6px 6px;
+  min-width: 24px;
+  min-height: 24px;
+  color: @headerbar_fg_color;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+windowcontrols button:hover {
+  background-color: alpha(@headerbar_fg_color, 0.12);
+}
+
+windowcontrols button:active {
+  background-color: alpha(@headerbar_fg_color, 0.2);
+}
+
+windowcontrols button.close:hover {
+  background-color: alpha(#ff0055, 0.25);
+  color: #ff0055;
+}
+
+windowcontrols button.close:active {
+  background-color: alpha(#ff0055, 0.4);
+  color: #ff0055;
+}
+
+windowcontrols button.minimize:hover,
+windowcontrols button.maximize:hover {
+  background-color: alpha(@headerbar_fg_color, 0.15);
+}
+
+/* Position toasts cleanly above the floating dock capsule */
+toastoverlay.quick-dock-active toast {
+  margin-bottom: 60px;
+}
+
+/* ── Empty Folder & Symlink Dynamic Theme Styling ── */
+.flux-card.flux-card--empty {
+  border-left: 2.5px solid alpha(@window_fg_color, 0.45);
+}
+
+.flux-card.flux-card--empty .flux-label {
+  color: alpha(@window_fg_color, 0.65);
+}
+
+.flux-card.flux-card--symlink {
+  border-right: 2.5px solid alpha(@accent_color, 0.75);
+}
+
+.flux-card.flux-card--symlink .flux-label {
+  color: @window_fg_color;
+  font-weight: 500;
+}
+
+.flux-card.flux-card--broken-symlink {
+  border-right: 2.5px solid #ff0055;
+}
+
+.flux-card.flux-card--broken-symlink .flux-label {
+  color: #ff0055;
+  text-decoration-line: line-through;
 }

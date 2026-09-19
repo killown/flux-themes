@@ -1,8 +1,9 @@
 /* ============================================================
-   Flux - S T E A M
-   Valve Design System v4 - Authentic Store Palette
+   Flux - S T E A M (Full Theme - Fixed Popover & Header)
+   Valve Design System v4 - Strictly Aligned with os-dark.css
    ============================================================ */
 
+/* ── Steam Color Ramp ── */
 @define-color sv_void    #0b0e14;
 @define-color sv_ink     #101720;
 @define-color sv_navy    #1b2838;
@@ -17,157 +18,140 @@
 @define-color sv_green   #a4d007;
 @define-color sv_red     #ff4c4c;
 
-/* Libadwaita color mapping overrides */
-@define-color window_bg_color @sv_void;
-@define-color window_fg_color @sv_mist;
-@define-color headerbar_bg_color @sv_ink;
-@define-color headerbar_fg_color @sv_mist;
-@define-color card_bg_color @sv_navy;
-@define-color accent_color @sv_azure;
-@define-color accent_bg_color @sv_azure_d;
-@define-color accent_fg_color #ffffff;
-@define-color destructive_color @sv_red;
+/* ── Libadwaita Palette Mapping ── */
+@define-color window_bg_color     @sv_void;
+@define-color window_fg_color     @sv_mist;
+@define-color headerbar_bg_color  @sv_void;
+@define-color headerbar_fg_color  @sv_mist;
+@define-color card_bg_color       @sv_navy;
+@define-color card_fg_color       @sv_mist;
+@define-color popover_bg_color    @sv_navy;
+@define-color popover_fg_color    @sv_mist;
+@define-color accent_color        @sv_azure;
+@define-color accent_bg_color     @sv_azure_d;
+@define-color accent_fg_color     #ffffff;
+@define-color destructive_color   @sv_red;
 @define-color destructive_bg_color @sv_red;
 @define-color destructive_fg_color #ffffff;
+@define-color theme_fg_color      @sv_mist;
 
+/* ── Theme Root Variables ── */
 :root {
-  --accent-color: @sv_azure;
-  --font-main: "Motiva Sans", "Inter", system-ui, sans-serif;
-  --font-mono: "Geist Mono", "JetBrains Mono", monospace;
-
-  /* Shadows */
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.45);
-  --shadow-hover:
-    0 8px 20px rgba(0, 0, 0, 0.65), 0 0 16px alpha(@sv_azure, 0.15);
-
-  /* Steam blue glow */
-  --glow-azure-s: 0 0 8px alpha(@sv_azure, 0.4);
-  --glow-azure-h: 0 0 12px alpha(@sv_azure, 0.7);
-
+  --accent-color: #1a9fff;
+  --shadow: rgba(0, 0, 0, 0.6);
+  --shadow-hover: rgba(0, 0, 0, 0.75);
+  --font-main: "Motiva Sans", "Inter", "Helvetica Neue", system-ui, sans-serif;
+  --font-mono: "Geist Mono", "JetBrains Mono", "Fira Code", monospace;
   letter-spacing: 0px;
 }
 
-/* ============================================================
-   1. GLOBAL & WINDOW
-   ============================================================ */
-
-* {
-  font-family: var(--font-main);
-  -gtk-secondary-caret-color: @sv_azure;
-  letter-spacing: 0px;
-}
-
+/* ── Global Background Radiance ── */
 window,
 window > box,
 .background {
-  background-color: @sv_void;
+  background-color: @window_bg_color;
   background-image: radial-gradient(
     ellipse 75% 45% at 50% 0%,
-    alpha(@sv_azure_x, 0.16) 0%,
-    alpha(@sv_navy, 0.05) 45%,
+    alpha(@sv_azure_x, 0.14) 0%,
+    alpha(@sv_navy, 0.04) 45%,
     transparent 75%
   );
-  color: @sv_mist;
+  color: @window_fg_color;
 }
 
-/* ============================================================
-   2. HEADERBAR & NAVIGATION
-   ============================================================ */
-
+/* ── HeaderBar & Navigation (Blended Transparent) ── */
 headerbar {
-  background-color: @sv_ink;
-  background-image: linear-gradient(
-    180deg,
-    alpha(@sv_azure_x, 0.08) 0%,
-    transparent 100%
-  );
+  background-color: transparent;
   padding: 4px 12px;
   min-height: 38px;
   border: none;
-  box-shadow: 0 1px 0 0 @sv_iron;
+  box-shadow: none;
+  font-family: var(--font-main);
+  letter-spacing: 0px;
 }
 
 headerbar > windowtitle label.title {
-  color: @sv_mist;
+  color: @headerbar_fg_color;
   font-weight: 700;
+  letter-spacing: 0px;
 }
 
 headerbar label {
-  color: @sv_mist;
+  color: @headerbar_fg_color;
+  letter-spacing: 0px;
 }
 
 headerbar button {
   background-color: transparent;
-  color: @sv_cloud;
+  color: @headerbar_fg_color;
   border: none;
   box-shadow: none;
-  border-radius: 4px;
+  border-radius: 6px;
   padding: 4px 10px;
-  min-width: 28px;
-  min-height: 28px;
-  transition: all 150ms ease-out;
 }
 
 headerbar button:hover {
-  background-color: alpha(white, 0.06);
-  color: @sv_mist;
-}
-
-headerbar button:active {
-  background-color: alpha(white, 0.1);
-  color: #ffffff;
+  background-color: alpha(@headerbar_fg_color, 0.08);
 }
 
 headerbar togglebutton {
   background-color: transparent;
-  color: @sv_cloud;
+  color: @headerbar_fg_color;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   padding: 4px 8px;
 }
 
 headerbar togglebutton:hover {
-  background-color: alpha(white, 0.06);
-  color: @sv_mist;
+  background-color: alpha(@headerbar_fg_color, 0.08);
 }
 
 headerbar togglebutton:checked,
 headerbar togglebutton:active {
-  background-color: alpha(@sv_azure, 0.2);
-  color: @sv_azure;
+  background-color: alpha(@accent_color, 0.2);
+  color: @accent_color;
 }
 
-/* ============================================================
-   3. SIDEBAR & NAVIGATION TREE
-   ============================================================ */
-
+/* ── Sidebar & Navigation Tree (Dark) ── */
 .sidebar {
-  background-color: @sv_ink;
-  border: none;
-  box-shadow: inset -1px 0 0 0 @sv_iron;
+  background-color: color-mix(in srgb, @window_bg_color 20%, @sv_ink 80%);
+  border-radius: 14px;
+  border: 1px solid @sv_iron;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.sidebar-inner {
+  background-color: transparent;
+  border-radius: inherit;
+}
+
+.sidebar ScrolledWindow,
+.sidebar viewport {
+  background-color: transparent;
 }
 
 .sidebar-row:not(.sidebar-section) {
   margin: 1px 14px;
-  padding: 4px 14px;
-  min-height: 28px;
-  border-radius: 6px;
+  padding: 3px 14px;
+  min-height: 24px;
+  border-radius: 10px;
   background-color: transparent;
   border: none;
   transition:
-    background-color 150ms ease-out,
-    transform 150ms ease-out;
+    background-color 200ms linear,
+    transform 200ms cubic-bezier(0.1, 0.7, 0.1, 1);
   color: @sv_cloud;
 }
 
 .sidebar-row:not(.sidebar-section) label {
   color: @sv_cloud;
+  font-family: var(--font-main);
   font-size: 9.5pt;
+  letter-spacing: 0px;
 }
 
 .sidebar-row:not(.sidebar-section):hover:not(:selected) {
-  background-color: alpha(white, 0.05);
+  background-color: alpha(@sv_mist, 0.08);
   color: @sv_mist;
   transform: translateX(4px);
 }
@@ -175,14 +159,16 @@ headerbar togglebutton:active {
 .sidebar-row:not(.sidebar-section):selected {
   background-color: @sv_steel;
   color: @sv_azure;
+  box-shadow:
+    0 4px 12px var(--shadow),
+    0 0 8px alpha(@sv_azure, 0.3);
   border: 1px solid alpha(@sv_azure, 0.35);
-  box-shadow: var(--glow-azure-s);
   transform: translateX(6px);
 }
 
 .sidebar-row:not(.sidebar-section):selected label {
   color: @sv_azure;
-  font-weight: 700;
+  font-weight: bold;
 }
 
 .sidebar-section {
@@ -203,9 +189,10 @@ headerbar togglebutton:active {
 }
 
 .sidebar-section-label {
+  font-family: var(--font-main);
   font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: @sv_dim;
   background: transparent;
@@ -218,7 +205,8 @@ headerbar togglebutton:active {
 .sidebar-mount {
   background: transparent;
   border: 1px solid @sv_iron;
-  border-radius: 6px;
+  border-bottom-color: @sv_dim;
+  border-radius: 8px;
   min-height: 22px;
   padding: 1px 6px;
   margin: 1px 14px;
@@ -235,7 +223,10 @@ button.eject-button {
   border-radius: 4px;
   color: @sv_dim;
   opacity: 0.7;
-  transition: all 150ms ease;
+  transition:
+    opacity 150ms ease,
+    background-color 150ms ease,
+    color 150ms ease;
 }
 
 button.eject-button image {
@@ -244,38 +235,31 @@ button.eject-button image {
 }
 
 button.eject-button:hover {
-  background-color: alpha(white, 0.08);
-  color: @sv_mist;
+  background-color: alpha(@sv_red, 0.15);
+  color: @sv_red;
   opacity: 1;
 }
 
+button.eject-button:active {
+  background-color: alpha(@sv_red, 0.25);
+  color: @sv_red;
+}
+
 .sidebar-row:not(.sidebar-section):selected button.eject-button {
-  color: @sv_mist;
+  color: @sv_cloud;
   opacity: 0.9;
 }
 
 .sidebar-row:not(.sidebar-section):selected button.eject-button:hover {
-  background-color: alpha(@sv_azure, 0.25);
+  background-color: alpha(@sv_azure, 0.2);
   color: #ffffff;
   opacity: 1;
 }
 
-.sidebar-dragging {
-  opacity: 0.45;
-}
-
-.sidebar-drop-hover {
-  background-color: alpha(@sv_azure, 0.2);
-  box-shadow: inset 0 0 0 1px @sv_azure;
-}
-
-/* ============================================================
-   4. GRID & LIST VIEWS (.flux-card, .flux-label)
-   ============================================================ */
-
+/* ── Grid & List Item Views ── */
 gridview,
 listview {
-  background-color: transparent;
+  background-color: @window_bg_color;
   padding: 16px 24px;
 }
 
@@ -285,39 +269,41 @@ gridview child {
 }
 
 .flux-card {
-  background-color: @sv_navy;
-  border: 1px solid @sv_iron;
-  border-radius: 8px;
-  padding: 0px;
+  background-color: @card_bg_color;
+  border-radius: 12px;
+  padding: 12px;
   margin: 6px;
-  overflow: hidden;
-  box-shadow: var(--shadow-card);
+  border: 1px solid @sv_iron;
+  box-shadow: 0 2px 8px var(--shadow);
   transition:
-    background-color 150ms ease-out,
-    box-shadow 150ms ease-out,
-    border-color 150ms ease-out,
-    transform 150ms ease-out;
+    background-color 200ms ease,
+    box-shadow 200ms ease,
+    border-color 200ms ease,
+    transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .flux-card:hover {
   background-color: @sv_steel;
-  border-color: @sv_azure;
+  border-color: @accent_color;
+  box-shadow:
+    0 0 0 1px alpha(@accent_color, 0.4),
+    0 8px 16px var(--shadow-hover);
   transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
 }
 
 .flux-label {
-  color: @sv_mist;
-  font-size: 9.5pt;
-  font-weight: 600;
-  margin-top: 6px;
-  padding: 0px 4px 6px;
+  color: @window_fg_color;
+  font-family: var(--font-main);
+  font-size: 10pt;
+  letter-spacing: 0px;
 }
 
 gridview child:selected .flux-card {
-  background-color: alpha(@sv_azure, 0.14);
-  border-color: @sv_azure;
-  box-shadow: var(--shadow-hover), var(--glow-azure-h);
+  background-color: alpha(@accent_color, 0.12);
+  border-color: @accent_color;
+  box-shadow:
+    0 0 0 2px @accent_color,
+    0 6px 18px alpha(@accent_color, 0.35);
   transform: translateY(-2px);
 }
 
@@ -326,131 +312,172 @@ gridview child:selected .flux-label {
   font-weight: 700;
 }
 
-gridview child:selected .flux-list-info {
-  color: alpha(#ffffff, 0.85);
-}
-
 .flux-card--restricted {
-  border-left: 2px solid #ff9500;
+  border-left: 2px solid @sv_yellow;
 }
 
 .flux-lock-badge {
-  color: #ff9500;
+  color: @sv_yellow;
 }
 
+/* HIG-Compliant Dark Mode Metadata Capsule for List Mode */
 .flux-list-info {
   font-family: var(--font-mono);
   font-size: 8.5pt;
-  color: @sv_cloud;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  padding: 2px 10px;
+  min-width: 170px;
+  background-color: alpha(@window_fg_color, 0.07);
+  border: 1px solid alpha(@window_fg_color, 0.1);
+  border-radius: 99px;
+  color: alpha(@window_fg_color, 0.7);
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease;
 }
 
-.thumbnail {
-  border-radius: 6px 6px 0px 0px;
+gridview child:hover .flux-list-info {
+  background-color: alpha(@window_fg_color, 0.12);
+  border-color: alpha(@window_fg_color, 0.18);
+  color: alpha(@window_fg_color, 0.9);
+}
+
+gridview child:selected .flux-list-info {
+  background-color: alpha(#ffffff, 0.22);
+  border-color: alpha(#ffffff, 0.35);
+  color: #ffffff;
+  font-weight: 600;
 }
 
 entry.flux-rename-entry {
   background-color: @sv_void;
-  border: 1px solid @sv_azure;
-  border-radius: 4px;
-  color: @sv_mist;
-  font-size: 9pt;
+  border: 1px solid @accent_color;
+  box-shadow: 0 0 0 2px alpha(@accent_color, 0.35);
   padding: 2px 8px;
+  font-size: 9.5pt;
   min-height: 24px;
-  box-shadow:
-    inset 0 1px 3px rgba(0, 0, 0, 0.4),
-    var(--glow-azure-s);
 }
 
-/* ============================================================
-   5. BREADCRUMB NAVIGATION
-   ============================================================ */
+/* ── Drag & Drop States ── */
+.sidebar-dragging {
+  opacity: 0.45;
+}
 
+.sidebar-drop-hover {
+  background-color: alpha(@accent_color, 0.25);
+  box-shadow: inset 0 0 0 1px @accent_color;
+}
+
+/* ── Breadcrumb Navigation ── */
 button.breadcrumb-btn {
-  background: @sv_ink;
+  background: linear-gradient(
+    to bottom,
+    alpha(@window_fg_color, 0.06),
+    alpha(@window_fg_color, 0.02)
+  );
   border: 1px solid @sv_iron;
   padding: 3px 10px;
   margin: 1px;
   font-weight: 500;
-  color: @sv_cloud;
+  transition: all 0.12s ease;
+  color: alpha(@window_fg_color, 0.8);
+  font-family: var(--font-main);
   font-size: 0.9em;
-  transition: all 120ms ease;
 }
 
 button.breadcrumb-btn:first-child {
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
   border-right-width: 0px;
   padding-left: 12px;
 }
 
 button.breadcrumb-btn:last-child {
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
   border-right-width: 1px;
-  background: alpha(@sv_azure, 0.16);
-  border-color: @sv_azure;
-  color: @sv_azure;
-  box-shadow: var(--glow-azure-s);
-  font-weight: 700;
+  background: @accent_bg_color;
+  border-color: @accent_bg_color;
+  color: @accent_fg_color;
+  box-shadow:
+    0 2px 8px alpha(@accent_color, 0.3),
+    inset 0 1px 0 alpha(white, 0.2);
+  font-weight: 600;
   padding: 3px 14px;
 }
 
 button.breadcrumb-btn:last-child label {
-  color: @sv_azure;
-  font-weight: 700;
+  color: @accent_fg_color;
+  font-weight: 600;
 }
 
 button.breadcrumb-btn:last-child:hover {
-  background: alpha(@sv_azure, 0.25);
-  box-shadow: var(--glow-azure-h);
+  background: color-mix(in srgb, @accent_bg_color, #000 10%);
+  box-shadow: 0 4px 12px alpha(@accent_color, 0.4);
 }
 
 button.breadcrumb-btn:hover:not(:last-child) {
-  background: @sv_steel;
-  border-color: alpha(white, 0.2);
-  color: @sv_mist;
+  background: linear-gradient(
+    to bottom,
+    alpha(@window_fg_color, 0.12),
+    alpha(@window_fg_color, 0.06)
+  );
+  box-shadow:
+    inset 0 1px 0 alpha(@window_fg_color, 0.08),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+  border-color: alpha(@window_fg_color, 0.18);
+  color: @window_fg_color;
 }
 
 button.breadcrumb-btn:active:not(:last-child) {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
   transform: translateY(1px);
 }
 
 button.breadcrumb-btn label {
   color: inherit;
+  font-family: var(--font-main);
+  letter-spacing: 0px;
 }
 
-/* ============================================================
-   6. POPOVERS & CONTEXT MENUS
-   ============================================================ */
-
+/* ── Popovers & Context Menus (Clean & Borderless Outer Shell) ── */
+popover,
+popover.background,
 popover.menu {
+  background-color: transparent;
+  background: none;
   border: none;
   outline: none;
   box-shadow: none;
-  background: none;
   padding: 0px;
 }
 
-popover.menu contents {
-  background-color: @sv_navy;
+popover.menu contents,
+popover.background contents {
+  background-color: @popover_bg_color;
   border: 1px solid @sv_iron;
-  border-radius: 8px;
-  padding: 6px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  outline: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px var(--shadow);
+  padding: 4px;
 }
 
 popover.menu modelbutton {
-  border-radius: 4px;
-  color: @sv_mist;
-  padding: 6px 12px;
-  min-height: 32px;
-  font-size: 9.5pt;
-  font-weight: 500;
-  transition: all 100ms ease-out;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: @popover_fg_color;
+  border-radius: 6px;
+  padding: 4px 8px;
+  min-height: 28px;
 }
 
 popover.menu modelbutton label {
-  color: inherit;
+  color: @popover_fg_color;
+  letter-spacing: 0px;
+  font-weight: 500;
 }
 
 popover.menu modelbutton label:disabled,
@@ -460,20 +487,26 @@ popover.menu modelbutton .accelerator {
 }
 
 popover.menu modelbutton image,
-popover.menu modelbutton arrow {
-  color: @sv_cloud;
+popover.menu modelbutton arrow,
+popover.menu modelbutton arrow.right,
+popover.menu modelbutton arrow.left {
+  color: @popover_fg_color;
 }
 
 popover.menu modelbutton:hover {
-  background-color: @sv_azure;
-  color: #ffffff;
+  background-color: @accent_bg_color;
+  color: @accent_fg_color;
 }
 
 popover.menu modelbutton:hover label,
+popover.menu modelbutton:hover label:disabled,
 popover.menu modelbutton:hover accelerator,
+popover.menu modelbutton:hover .accelerator,
 popover.menu modelbutton:hover image,
-popover.menu modelbutton:hover arrow {
-  color: #ffffff;
+popover.menu modelbutton:hover arrow,
+popover.menu modelbutton:hover arrow.right,
+popover.menu modelbutton:hover arrow.left {
+  color: @accent_fg_color;
 }
 
 popover.menu > contents separator {
@@ -482,23 +515,21 @@ popover.menu > contents separator {
   margin: 4px 8px;
 }
 
-/* ============================================================
-   7. TEXT ENTRIES & INPUTS
-   ============================================================ */
-
+/* ── Text Entries & Inputs ── */
 entry,
 searchentry,
-passwordentry {
-  background-color: @sv_void;
+passwordentry,
+entry text,
+searchentry text,
+passwordentry text {
+  background-color: @sv_ink;
   border: 1px solid @sv_iron;
-  border-radius: 6px;
-  padding: 4px 10px;
-  color: @sv_mist;
-  caret-color: @sv_azure;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
-  transition:
-    border-color 150ms ease,
-    box-shadow 150ms ease;
+  border-radius: 22px;
+  padding: 4px 12px;
+  color: @window_fg_color;
+  caret-color: @window_fg_color;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  letter-spacing: 0px;
 }
 
 entry placeholder,
@@ -513,119 +544,352 @@ passwordentry:focus,
 entry:focus-within,
 searchentry:focus-within,
 passwordentry:focus-within {
-  border-color: @sv_azure;
-  box-shadow:
-    inset 0 1px 3px rgba(0, 0, 0, 0.4),
-    var(--glow-azure-s);
+  border-color: @accent_color;
+  box-shadow: 0 0 0 3px alpha(@accent_color, 0.3);
 }
 
+entry image,
+entry image.clear,
+searchentry image,
+searchentry image.clear,
+passwordentry image,
+passwordentry image.clear,
+entry image.left,
+entry image.right,
+searchentry image.left,
+searchentry image.right,
+passwordentry image.left,
+passwordentry image.right,
 entry button,
-searchentry button {
-  color: @sv_cloud;
-  background: transparent;
-  border: none;
+entry button.image-button,
+entry button.clear,
+entry button.close,
+searchentry button,
+searchentry button.image-button,
+searchentry button.clear,
+searchentry button.close,
+passwordentry button,
+passwordentry button.image-button,
+passwordentry button.clear,
+passwordentry button.close {
+  color: @window_fg_color;
+  background-color: transparent;
   box-shadow: none;
+  border: none;
+  opacity: 0.75;
 }
 
+entry image:hover,
+entry image.clear:hover,
+searchentry image:hover,
+searchentry image.clear:hover,
+passwordentry image:hover,
+passwordentry image.clear:hover,
 entry button:hover,
-searchentry button:hover {
-  color: @sv_mist;
-  background-color: alpha(white, 0.08);
+entry button.image-button:hover,
+entry button.clear:hover,
+entry button.close:hover,
+searchentry button:hover,
+searchentry button.image-button:hover,
+searchentry button.clear:hover,
+searchentry button.close:hover,
+passwordentry button:hover,
+passwordentry button.image-button:hover,
+passwordentry button.clear:hover,
+passwordentry button.close:hover {
+  color: @window_fg_color;
+  background-color: alpha(@window_fg_color, 0.08);
+  opacity: 1;
 }
 
-/* ============================================================
-   8. STATUS BAR & SELECTION
-   ============================================================ */
+entry image:active,
+entry image.clear:active,
+searchentry image:active,
+searchentry image.clear:active,
+passwordentry image:active,
+passwordentry image.clear:active,
+entry button:active,
+entry button.image-button:active,
+entry button.clear:active,
+entry button.close:active,
+searchentry button:active,
+searchentry button.image-button:active,
+searchentry button.clear:active,
+searchentry button.close:active,
+passwordentry button:active,
+passwordentry button.image-button:active,
+passwordentry button.clear:active,
+passwordentry button.close:active {
+  color: @accent_color;
+  opacity: 1;
+}
 
+textview,
+textview text {
+  background-color: transparent;
+  color: @window_fg_color;
+  caret-color: @window_fg_color;
+}
+
+/* ── Status Bar & Transfers (Floating Card Style) ── */
 .selection-status {
-  background-color: @sv_ink;
-  border-top: 1px solid @sv_iron;
-  padding: 4px 16px;
+  background-color: color-mix(in srgb, @window_bg_color 85%, @sv_ink 15%);
+  border: 1px solid @sv_iron;
+  border-radius: 12px;
+  padding: 6px 16px;
   min-height: 28px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  margin-bottom: 8px;
 }
 
 .selection-status label.caption {
-  color: @sv_cloud;
+  color: alpha(@window_fg_color, 0.82);
   font-family: var(--font-mono);
   font-size: 8.5pt;
+  letter-spacing: -0.01em;
 }
 
 .selection-status label.dim-label {
   color: @sv_dim;
 }
 
+.selection-status progressbar {
+  background-color: transparent;
+  min-height: 6px;
+  border-radius: 99px;
+}
+
 .selection-status progressbar trough {
-  background-color: @sv_steel;
-  border-radius: 3px;
-  min-height: 4px;
+  background-color: @sv_iron;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 99px;
+  min-height: 6px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 
 .selection-status progressbar progress {
-  background-color: @sv_azure;
-  border-radius: 3px;
-  min-height: 4px;
-  box-shadow: var(--glow-azure-s);
+  background-color: @accent_bg_color;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(0, 0, 0, 0.15) 100%
+  );
+  border-radius: 99px;
+  min-height: 6px;
+  box-shadow: 0 0 6px alpha(@accent_color, 0.4);
 }
 
 .selection-status button.flat {
-  background: transparent;
-  color: @sv_azure;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: alpha(@window_fg_color, 0.85);
+  border: 1px solid @sv_iron;
+  border-top-color: alpha(@window_fg_color, 0.14);
+  border-radius: 6px;
   padding: 2px 8px;
-  min-height: 22px;
-  font-size: 8.5pt;
+  min-height: 20px;
+  font-size: 8pt;
   font-family: var(--font-mono);
-  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease;
 }
 
 .selection-status button.flat:hover {
-  background-color: alpha(@sv_azure, 0.15);
+  background-color: alpha(@accent_color, 0.18);
+  border-color: alpha(@accent_color, 0.4);
+  color: @accent_fg_color;
 }
 
-/* ============================================================
-   9. BUTTONS & ACTIONS
-   ============================================================ */
-
-.suggested-action {
-  background-color: @sv_azure_d;
+.selection-status button.flat:active {
+  background-color: @accent_bg_color;
   color: #ffffff;
-  border: none;
+}
+
+.selection-status button.destructive-action {
+  background-color: rgba(255, 59, 48, 0.14);
+  border: 1px solid rgba(255, 59, 48, 0.25);
   border-radius: 6px;
-  padding: 6px 18px;
+  color: #ff453a;
+  padding: 2px 7px;
+  min-height: 20px;
+  font-size: 8pt;
+  font-family: var(--font-mono);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease;
+}
+
+.selection-status button.destructive-action:hover {
+  background-color: rgba(255, 59, 48, 0.25);
+  border-color: rgba(255, 59, 48, 0.45);
+  color: #ffffff;
+}
+
+.selection-status button.destructive-action:active {
+  background-color: #ff3b30;
+  color: #ffffff;
+}
+
+window:backdrop .selection-status {
+  background-color: alpha(@window_bg_color, 0.95);
+  border-top-color: rgba(255, 255, 255, 0.04);
+}
+
+window:backdrop .selection-status label {
+  color: alpha(@window_fg_color, 0.35);
+}
+
+window:backdrop .selection-status button.flat,
+window:backdrop .selection-status button.destructive-action {
+  opacity: 0.6;
+}
+
+/* ── Quick Panel (Floating Dock) ── */
+.quick-panel-scroll {
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.quick-panel-scroll undershoot.left,
+.quick-panel-scroll undershoot.right {
+  background: none;
+}
+
+.quick-panel {
+  background: color-mix(in srgb, @window_bg_color 80%, @sv_ink 20%);
+  border: 1px solid @sv_iron;
+  border-radius: 12px;
+  padding: 4px 6px;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.quick-panel button,
+.quick-panel-tab {
+  min-width: 82px;
+  min-height: 26px;
+  padding: 3px 14px;
+  border-radius: 8px;
+  background-color: alpha(@window_fg_color, 0.07);
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.09) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  border: 1px solid @sv_iron;
+  border-top-color: rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  color: alpha(@window_fg_color, 0.88);
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.quick-panel button label,
+.quick-panel-tab label {
+  color: alpha(@window_fg_color, 0.88);
+  font-family: var(--font-main);
+  font-size: 9.5pt;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.quick-panel button:hover:not(:checked):not(:active):not(.suggested-action),
+.quick-panel-tab:hover:not(:checked):not(:active):not(.suggested-action) {
+  background-color: alpha(@window_fg_color, 0.14);
+  border-color: alpha(@window_fg_color, 0.22);
+  border-top-color: rgba(255, 255, 255, 0.35);
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.quick-panel
+  button:hover:not(:checked):not(:active):not(.suggested-action)
+  label,
+.quick-panel-tab:hover:not(:checked):not(:active):not(.suggested-action) label {
+  color: #ffffff;
+}
+
+.quick-panel button:active,
+.quick-panel button:checked,
+.quick-panel button.suggested-action,
+.quick-panel-tab:active,
+.quick-panel-tab:checked,
+.quick-panel-tab.suggested-action {
+  background-color: @accent_bg_color;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  border: 1px solid alpha(@accent_color, 0.5);
+  border-top-color: rgba(255, 255, 255, 0.4);
+  box-shadow:
+    0 2px 8px alpha(@accent_color, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+}
+
+.quick-panel button:active label,
+.quick-panel button:checked label,
+.quick-panel button.suggested-action label,
+.quick-panel-tab:active label,
+.quick-panel-tab:checked label,
+.quick-panel-tab.suggested-action label {
+  color: #ffffff;
   font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Standard Buttons & Actions ── */
+.suggested-action {
+  background-color: @accent_bg_color;
+  color: @accent_fg_color;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 18px;
+  font-weight: bold;
+}
+
+.suggested-action label {
+  color: @accent_fg_color;
 }
 
 .suggested-action:hover {
-  background-color: @sv_azure;
-  box-shadow: var(--glow-azure-s);
+  background-color: alpha(@accent_bg_color, 0.8);
 }
 
 .destructive-action {
-  background-color: alpha(@sv_red, 0.12);
-  color: @sv_red;
-  border: 1px solid alpha(@sv_red, 0.4);
-  border-radius: 6px;
-  padding: 6px 16px;
-  font-weight: 700;
-  transition: all 120ms ease;
+  background-color: alpha(#ff3b30, 0.1);
+  color: #ff3b30;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: bold;
+  letter-spacing: 0px;
+}
+
+.destructive-action label {
+  color: #ff3b30;
 }
 
 .destructive-action:hover {
-  background-color: @sv_red;
-  color: #ffffff;
-  box-shadow: 0 0 10px alpha(@sv_red, 0.4);
+  background-color: alpha(#ff3b30, 0.2);
 }
 
-.destructive-action:active {
-  background-color: alpha(@sv_red, 0.8);
-}
-
-/* ============================================================
-   10. CONTROLS, SCALES & FORM ELEMENTS
-   ============================================================ */
-
+/* ── Form Controls & Widgets ── */
 check,
 radio {
-  background-color: @sv_void;
+  background-color: alpha(@window_fg_color, 0.08);
   border: 1px solid @sv_iron;
   border-radius: 4px;
   min-height: 16px;
@@ -634,56 +898,113 @@ radio {
 
 check:checked,
 radio:checked {
-  background-color: @sv_azure;
-  border-color: @sv_azure;
+  background-color: @accent_bg_color;
+  border-color: @accent_bg_color;
 }
 
 check:hover,
 radio:hover {
-  border-color: @sv_azure;
+  border-color: @accent_bg_color;
+}
+
+check:disabled,
+radio:disabled {
+  opacity: 0.4;
 }
 
 spinbutton,
-dropdown,
-combobox {
-  background-color: @sv_void;
+spinbutton text {
+  background-color: alpha(@window_fg_color, 0.06);
   border: 1px solid @sv_iron;
-  border-radius: 6px;
-  color: @sv_mist;
+  border-radius: 8px;
+  color: @window_fg_color;
+  caret-color: @window_fg_color;
+  padding: 0 4px;
   min-height: 28px;
 }
 
-spinbutton:focus-within,
-dropdown:focus-within,
-combobox:focus-within {
-  border-color: @sv_azure;
-  box-shadow: var(--glow-azure-s);
+spinbutton:focus-within {
+  border-color: @accent_bg_color;
 }
 
-dropdown button,
-combobox button,
 spinbutton > button {
   background: transparent;
   border: none;
-  color: @sv_mist;
+  color: @window_fg_color;
+}
+
+spinbutton > button:hover {
+  color: @accent_color;
+}
+
+dropdown,
+combobox {
+  background-color: alpha(@window_fg_color, 0.06);
+  border: 1px solid @sv_iron;
+  border-radius: 8px;
+  color: @window_fg_color;
+  min-height: 28px;
+}
+
+dropdown button,
+combobox button {
+  background: transparent;
+  border: none;
+  color: @window_fg_color;
+}
+
+dropdown:focus-within,
+combobox:focus-within {
+  border-color: @accent_bg_color;
+}
+
+dropdown label {
+  letter-spacing: 0px;
 }
 
 scale trough {
   background: @sv_steel;
-  border-radius: 4px;
+  border-radius: 10px;
   min-height: 4px;
 }
 
 scale highlight {
-  background: @sv_azure;
+  background: @accent_bg_color;
 }
 
 scale slider {
-  background: #ffffff;
-  border: 2px solid @sv_azure;
+  background: @window_fg_color;
+  border: 2px solid @accent_bg_color;
   border-radius: 50%;
-  min-width: 14px;
-  min-height: 14px;
+  min-width: 16px;
+  min-height: 16px;
+}
+
+levelbar block {
+  border-radius: 4px;
+}
+
+levelbar block.low {
+  background: #ff3b30;
+}
+
+levelbar block.high {
+  background: @accent_bg_color;
+}
+
+levelbar block.full {
+  background: #34c759;
+}
+
+progressbar {
+  background-color: alpha(@window_fg_color, 0.05);
+  border-radius: 4px;
+}
+
+progressbar progress {
+  background-color: @accent_bg_color;
+  border-radius: 4px;
+  min-height: 4px;
 }
 
 scrollbar {
@@ -691,65 +1012,146 @@ scrollbar {
 }
 
 scrollbar slider {
-  background-color: alpha(white, 0.12);
-  border-radius: 4px;
-  min-width: 5px;
-  min-height: 5px;
-  margin: 2px;
+  background-color: alpha(@window_fg_color, 0.2);
+  border-radius: 10px;
 }
 
 scrollbar slider:hover {
-  background-color: alpha(@sv_azure, 0.6);
-  box-shadow: var(--glow-azure-s);
+  background-color: alpha(@window_fg_color, 0.4);
 }
 
-/* ============================================================
-   11. LIBADWAITA PREFERENCES & SETTINGS WINDOW
-   ============================================================ */
-
-window.settings-window,
-adwpreferenceswindow {
-  background-color: #121820;
-  color: @sv_mist;
+notebook > header {
+  background: transparent;
+  border: none;
 }
 
-window.settings-window headerbar,
-adwpreferenceswindow headerbar {
-  background-color: @sv_ink;
+notebook > header > tabs > tab {
+  background: transparent;
+  color: @window_fg_color;
+  padding: 4px 12px;
+  border: none;
+  border-bottom: 2px solid transparent;
+}
+
+notebook > header > tabs > tab:checked {
+  color: @accent_color;
+  border-bottom-color: @accent_color;
+}
+
+/* ── Cards, Lists & Frames ── */
+.card {
+  background: @card_bg_color;
+  border-radius: 12px;
+  border: 1px solid @sv_iron;
+}
+
+.frame {
+  border: 1px solid @sv_iron;
+  border-radius: 8px;
+  background: transparent;
+}
+
+.boxed-list {
+  background: @card_bg_color;
+  border-radius: 12px;
+  border: 1px solid @sv_iron;
+}
+
+list,
+listview {
+  background: transparent;
+  color: @window_fg_color;
+}
+
+row {
+  background: transparent;
+  color: @window_fg_color;
+}
+
+row:selected {
+  background: alpha(@accent_bg_color, 0.08);
+  color: @accent_color;
+}
+
+.view {
+  background: transparent;
+  color: @window_fg_color;
+}
+
+.view:selected {
+  background: alpha(@accent_bg_color, 0.08);
+  color: @accent_color;
+}
+
+.property {
+  background: transparent;
   border-bottom: 1px solid @sv_iron;
+  padding: 6px 0px;
+  color: @window_fg_color;
+  font-size: 9.5pt;
 }
 
-adwpreferencesgroup > box > label,
-adwpreferencesgroup label.title {
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
+.property label {
+  color: @window_fg_color;
+}
+
+/* ── Settings & Libadwaita Preferences ── */
+window.settings-window,
+adwpreferenceswindow,
+.settings-window {
+  letter-spacing: 0px;
+}
+
+window.settings-window headerbar label,
+adwpreferenceswindow headerbar label,
+.settings-window headerbar label,
+viewswitcher label,
+adwviewswitcher label,
+viewswitchertitle label,
+adwviewswitchertitle label,
+viewswitcherbar label,
+adwviewswitcherbar label,
+viewswitcher button label,
+adwviewswitcher button label {
+  font-weight: 500;
+  text-transform: none;
+  font-size: 9pt;
+}
+
+viewswitcher button,
+adwviewswitcher button {
+  padding-left: 4px;
+  padding-right: 4px;
+  min-width: 60px;
+}
+
+.settings-row label {
+  letter-spacing: 0px;
+}
+
+adwpreferencesgroup > box > label {
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   font-weight: 700;
-  color: @sv_azure;
-  margin-bottom: 4px;
+  opacity: 0.7;
 }
 
 adwactionrow,
-adwpreferencesrow {
-  background-color: @sv_navy;
-  border: 1px solid @sv_iron;
-  border-radius: 6px;
-  color: @sv_mist;
-  margin-bottom: 2px;
-  padding: 4px 0px;
-  transition: background-color 120ms ease;
-}
-
-adwactionrow:hover,
-adwpreferencesrow:hover {
-  background-color: @sv_steel;
+adwactionrow label,
+adwpreferencesrow,
+adwpreferencesrow label,
+adwpreferencespage,
+adwpreferencespage label {
+  color: @window_fg_color;
 }
 
 adwactionrow .title,
 adwpreferencesrow .title,
 adwactionrow label.title,
-adwpreferencesrow label.title {
-  color: @sv_mist;
+adwpreferencesrow label.title,
+adwpreferencesgroup .title,
+adwpreferencesgroup label.title {
+  color: @window_fg_color;
   font-weight: 600;
 }
 
@@ -758,24 +1160,29 @@ adwpreferencesrow .subtitle,
 adwactionrow label.subtitle,
 adwpreferencesrow label.subtitle,
 adwpreferencesgroup .description,
-adwpreferencesgroup label.description {
+adwpreferencesgroup label.description,
+.subtitle {
   color: @sv_cloud;
-  font-size: 9pt;
 }
 
-/* ============================================================
-   12. UTILITIES & BADGES
-   ============================================================ */
-
+/* ── Utilities, Tooltips & Status States ── */
 tooltip.background {
-  background-color: @sv_ink;
+  background-color: alpha(@window_bg_color, 0.95);
   border: 1px solid @sv_iron;
-  border-radius: 6px;
-  color: @sv_mist;
-  padding: 6px 10px;
+  border-radius: 8px;
+  color: @window_fg_color;
+  padding: 6px 12px;
 }
 
-.dim-label,
+toast label {
+  color: @window_fg_color;
+  letter-spacing: 0.4px;
+}
+
+.dim-label {
+  color: @sv_cloud;
+}
+
 .caption {
   color: @sv_cloud;
 }
@@ -787,13 +1194,13 @@ tooltip.background {
 }
 
 .accent {
-  color: @sv_azure;
+  color: @accent_color;
   font-weight: 700;
 }
 
 .heading {
   font-weight: 700;
-  color: @sv_mist;
+  color: @window_fg_color;
 }
 
 .monospace {
@@ -801,13 +1208,83 @@ tooltip.background {
 }
 
 .error {
-  border: 1px solid @sv_red;
-  background: alpha(@sv_red, 0.1);
-  color: @sv_red;
+  border: 1px solid #ff3b30;
+  background: alpha(#ff3b30, 0.08);
+  color: #ff3b30;
 }
 
 .warning {
   border: 1px solid #ff9500;
-  background: alpha(#ff9500, 0.1);
+  background: alpha(#ff9500, 0.08);
   color: #ff9500;
+}
+
+/* ── Window Controls ── */
+windowcontrols button {
+  background-color: transparent;
+  border: none;
+  border-color: transparent;
+  border-radius: 0;
+  padding: 6px 6px;
+  min-width: 24px;
+  min-height: 24px;
+  color: @headerbar_fg_color;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+windowcontrols button:hover {
+  background-color: alpha(@headerbar_fg_color, 0.12);
+}
+
+windowcontrols button:active {
+  background-color: alpha(@headerbar_fg_color, 0.2);
+}
+
+windowcontrols button.close:hover {
+  background-color: alpha(#ff3b30, 0.25);
+  color: #ff3b30;
+}
+
+windowcontrols button.close:active {
+  background-color: alpha(#ff3b30, 0.4);
+  color: #ff3b30;
+}
+
+windowcontrols button.minimize:hover,
+windowcontrols button.maximize:hover {
+  background-color: alpha(@headerbar_fg_color, 0.15);
+}
+
+/* Position toasts cleanly above the floating dock capsule */
+toastoverlay.quick-dock-active toast {
+  margin-bottom: 60px;
+}
+
+/* ── Empty Folder & Symlink Dynamic Theme Styling ── */
+.flux-card.flux-card--empty {
+  border-left: 2.5px solid alpha(@window_fg_color, 0.45);
+}
+
+.flux-card.flux-card--empty .flux-label {
+  color: alpha(@window_fg_color, 0.65);
+}
+
+.flux-card.flux-card--symlink {
+  border-right: 2.5px solid alpha(@accent_color, 0.75);
+}
+
+.flux-card.flux-card--symlink .flux-label {
+  color: @window_fg_color;
+  font-weight: 500;
+}
+
+.flux-card.flux-card--broken-symlink {
+  border-right: 2.5px solid #ff453a;
+}
+
+.flux-card.flux-card--broken-symlink .flux-label {
+  color: #ff453a;
+  text-decoration-line: line-through;
 }
