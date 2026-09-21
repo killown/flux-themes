@@ -1,44 +1,48 @@
 /* ============================================================
-   Flux - B L U R   T O K Y O   N I G H T (Glassmorphism)
+   Flux - B L U R   T O K Y O   N I G H T   (Glassmorphism v6)
    ============================================================ */
 
 /* ── Tokyo Night Blur Color Ramp ── */
-@define-color tn_bg           rgba(26, 27, 38, 0.65);
-@define-color tn_surface      rgba(36, 40, 59, 0.45);
-@define-color tn_raised       rgba(41, 46, 66, 0.4);
-@define-color tn_overlay      rgba(54, 61, 89, 0.35);
-@define-color tn_text         #c0caf5;
-@define-color tn_text_dim     rgba(192, 202, 245, 0.65);
-@define-color tn_accent       #7aa2f7;
+@define-color tn_bg            rgba(26, 27, 38, 0.72);
+@define-color tn_surface       rgba(36, 40, 59, 0.50);
+@define-color tn_raised        rgba(41, 46, 66, 0.45);
+@define-color tn_overlay       rgba(54, 61, 89, 0.40);
+@define-color tn_text          #c0caf5;
+@define-color tn_text_dim      rgba(192, 202, 245, 0.65);
+@define-color tn_accent        #7aa2f7;
 @define-color tn_accent_hover  #b4f9f8;
-@define-color tn_border       rgba(122, 162, 247, 0.15);
-@define-color tn_red          #f7768e;
-@define-color tn_green        #9ece6a;
-@define-color tn_yellow       #e0af68;
-@define-color tn_purple       #bb9af7;
+@define-color tn_border        rgba(122, 162, 247, 0.18);
+@define-color tn_border_active rgba(122, 162, 247, 0.45);
+@define-color tn_red           #f7768e;
+@define-color tn_green         #9ece6a;
+@define-color tn_yellow        #e0af68;
+@define-color tn_purple        #bb9af7;
+@define-color tn_cyan          #7dcfff;
+@define-color tn_magenta       #f7768e;
 
 /* ── Libadwaita Palette Mapping ── */
-@define-color window_bg_color     @tn_bg;
-@define-color window_fg_color     @tn_text;
-@define-color headerbar_bg_color  transparent;
-@define-color headerbar_fg_color  @tn_text;
-@define-color card_bg_color       @tn_surface;
-@define-color card_fg_color       @tn_text;
-@define-color popover_bg_color    rgba(36, 40, 59, 0.85);
-@define-color popover_fg_color    @tn_text;
-@define-color accent_color        @tn_accent;
-@define-color accent_bg_color     @tn_accent;
-@define-color accent_fg_color     #1a1b26;
-@define-color destructive_color   @tn_red;
-@define-color destructive_bg_color @tn_red;
-@define-color destructive_fg_color #ffffff;
-@define-color theme_fg_color      @tn_text;
+@define-color window_bg_color        @tn_bg;
+@define-color window_fg_color        @tn_text;
+@define-color headerbar_bg_color     transparent;
+@define-color headerbar_fg_color     @tn_text;
+@define-color card_bg_color          @tn_surface;
+@define-color card_fg_color          @tn_text;
+@define-color popover_bg_color       rgba(26, 27, 38, 0.88);
+@define-color popover_fg_color       @tn_text;
+@define-color accent_color           @tn_accent;
+@define-color accent_bg_color        @tn_accent;
+@define-color accent_fg_color        #1a1b26;
+@define-color destructive_color      @tn_red;
+@define-color destructive_bg_color   @tn_red;
+@define-color destructive_fg_color   #ffffff;
+@define-color theme_fg_color         @tn_text;
 
 /* ── Theme Root Variables ── */
 :root {
   --accent-color: #7aa2f7;
-  --shadow: rgba(0, 0, 0, 0.3);
-  --shadow-hover: rgba(0, 0, 0, 0.45);
+  --shadow: rgba(0, 0, 0, 0.35);
+  --shadow-hover: rgba(0, 0, 0, 0.5);
+  --glow-accent: rgba(122, 162, 247, 0.25);
   --font-main: "Inter", "Helvetica Neue", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
   letter-spacing: 0px;
@@ -55,67 +59,68 @@ window > box,
 /* ── HeaderBar & Navigation (Blended Transparent) ── */
 headerbar {
   background-color: transparent;
-  padding: 4px 12px;
-  min-height: 38px;
+  padding: 6px 14px;
+  min-height: 42px;
   border: none;
   box-shadow: none;
   font-family: var(--font-main);
-  letter-spacing: 0px;
 }
 
 headerbar > windowtitle label.title {
   color: @headerbar_fg_color;
   font-weight: 700;
-  letter-spacing: 0px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 headerbar label {
   color: @headerbar_fg_color;
-  letter-spacing: 0px;
 }
 
 headerbar button {
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: rgba(255, 255, 255, 0.05);
   color: @headerbar_fg_color;
   border: 1px solid @tn_border;
-  box-shadow: none;
-  border-radius: 6px;
-  padding: 4px 10px;
-  transition: all 150ms ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 5px 12px;
+  transition: all 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 headerbar button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(122, 162, 247, 0.3);
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: @tn_border_active;
   color: @accent_color;
+  box-shadow: 0 4px 12px var(--glow-accent);
 }
 
 headerbar togglebutton {
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: rgba(255, 255, 255, 0.05);
   color: @headerbar_fg_color;
   border: 1px solid @tn_border;
-  border-radius: 6px;
-  padding: 4px 8px;
+  border-radius: 8px;
+  padding: 5px 10px;
+  transition: all 180ms ease;
 }
 
 headerbar togglebutton:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.12);
   color: @accent_color;
 }
 
 headerbar togglebutton:checked,
 headerbar togglebutton:active {
-  background-color: alpha(@accent_color, 0.25);
-  border-color: alpha(@accent_color, 0.5);
+  background-color: alpha(@accent_color, 0.22);
+  border-color: alpha(@accent_color, 0.6);
   color: @accent_color;
+  box-shadow: 0 0 12px var(--glow-accent);
 }
 
-/* ── Sidebar & Navigation Tree (Glass Pane) ── */
+/* ── Sidebar & Navigation Tree (Glass Pane & Tight Gaps) ── */
 .sidebar {
-  background-color: rgba(26, 27, 38, 0.45);
-  border-radius: 14px;
+  background-color: rgba(26, 27, 38, 0.55);
+  border-radius: 16px;
   border: 1px solid @tn_border;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
 }
 
 .sidebar-inner {
@@ -129,45 +134,52 @@ headerbar togglebutton:active {
 }
 
 .sidebar-row:not(.sidebar-section) {
-  margin: 1px 14px;
-  padding: 3px 14px;
-  min-height: 24px;
-  border-radius: 10px;
+  margin: 1px 10px;
+  padding: 3px 10px;
+  min-height: 22px;
+  border-radius: 8px;
   background-color: transparent;
   border: none;
   transition:
-    background-color 200ms linear,
-    transform 200ms cubic-bezier(0.1, 0.7, 0.1, 1);
+    background-color 150ms ease,
+    transform 150ms cubic-bezier(0.1, 0.7, 0.1, 1),
+    box-shadow 150ms ease;
   color: alpha(@theme_fg_color, 0.85);
 }
 
 .sidebar-row:not(.sidebar-section) label {
   color: alpha(@theme_fg_color, 0.85);
   font-family: var(--font-main);
-  font-size: 9.5pt;
-  letter-spacing: 0px;
+  font-size: 9pt;
 }
 
 .sidebar-row:not(.sidebar-section):hover:not(:selected) {
-  background-color: rgba(255, 255, 255, 0.06);
-  transform: translateX(4px);
+  background-color: rgba(255, 255, 255, 0.07);
+  transform: translateX(3px);
+  color: #ffffff;
 }
 
 .sidebar-row:not(.sidebar-section):selected {
-  background-color: @accent_bg_color;
-  box-shadow: 0 4px 12px var(--shadow);
-  transform: translateX(6px);
+  background: linear-gradient(
+    135deg,
+    alpha(@accent_color, 0.3),
+    alpha(@tn_purple, 0.2)
+  );
+  border: 1px solid alpha(@accent_color, 0.4);
+  box-shadow: 0 4px 16px var(--glow-accent);
+  transform: translateX(5px);
 }
 
 .sidebar-row:not(.sidebar-section):selected label {
-  color: #1a1b26;
-  font-weight: bold;
+  color: @tn_accent_hover;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(122, 162, 247, 0.4);
 }
 
 .sidebar-section {
-  margin-top: 6px;
-  margin-bottom: 1px;
-  padding: 6px 12px 3px 12px;
+  margin-top: 4px;
+  margin-bottom: 0px;
+  padding: 2px 8px 1px 8px;
   min-height: 0px;
   background: transparent;
   border-radius: 0px;
@@ -181,45 +193,58 @@ headerbar togglebutton:active {
   transform: none;
 }
 
+/* Tokyo Night Harmonized Section Labels with Accent Gradient Stripe */
 .sidebar-section-label {
   font-family: var(--font-main);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: @tn_purple;
-  background: transparent;
+  background: linear-gradient(
+    90deg,
+    alpha(@tn_purple, 0.15),
+    alpha(@tn_cyan, 0.05),
+    transparent
+  );
   border: none;
-  box-shadow: none;
-  margin-left: 26px;
+  border-left: 3px solid @tn_purple;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  padding: 3px 8px;
+  margin-left: 10px;
+  margin-right: 10px;
   margin-top: 6px;
+  margin-bottom: 2px;
+  text-shadow: 0 0 10px rgba(187, 154, 247, 0.3);
 }
 
 .sidebar-mount {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.025);
   border: 1px solid @tn_border;
-  border-bottom-color: rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   min-height: 22px;
   padding: 1px 6px;
-  margin: 1px 14px;
-  transition: all 0.15s ease;
+  margin: 1px 10px;
+  transition: all 0.2s ease;
+}
+
+.sidebar-mount:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: @tn_border_active;
 }
 
 button.eject-button {
   background: transparent;
   border: none;
   box-shadow: none;
-  padding: 1px 3px;
+  padding: 2px 4px;
   min-height: 0;
   min-width: 0;
-  border-radius: 4px;
+  border-radius: 6px;
   color: alpha(@theme_fg_color, 0.45);
   opacity: 0.7;
-  transition:
-    opacity 150ms ease,
-    background-color 150ms ease,
-    color 150ms ease;
+  transition: all 150ms ease;
 }
 
 button.eject-button image {
@@ -228,85 +253,93 @@ button.eject-button image {
 }
 
 button.eject-button:hover {
-  background-color: alpha(@tn_red, 0.2);
+  background-color: alpha(@tn_red, 0.25);
   color: @tn_red;
   opacity: 1;
+  box-shadow: 0 0 10px rgba(247, 118, 142, 0.3);
 }
 
 button.eject-button:active {
-  background-color: alpha(@tn_red, 0.35);
+  background-color: alpha(@tn_red, 0.4);
   color: @tn_red;
 }
 
 .sidebar-row:not(.sidebar-section):selected button.eject-button {
-  color: #1a1b26;
+  color: @tn_text;
   opacity: 0.9;
 }
 
 .sidebar-row:not(.sidebar-section):selected button.eject-button:hover {
-  background-color: rgba(26, 27, 38, 0.2);
-  color: #1a1b26;
-  opacity: 1;
+  background-color: alpha(@tn_red, 0.3);
+  color: #ffffff;
 }
 
 /* ── Grid & List Item Views ── */
 gridview,
 listview {
   background-color: transparent;
-  padding: 16px 24px;
+  padding: 18px 26px;
 }
 
 gridview child {
-  padding: 2px;
+  padding: 3px;
   margin: 0px;
 }
 
-/* ── Flux Cards (Translucent for Niri Blur) ── */
+/* ── Flux Cards (Translucent Glassmorphism) ── */
 .flux-card {
   background-color: @card_bg_color;
-  border-radius: 18px;
-  padding: 12px;
+  border-radius: 20px;
+  padding: 14px;
   margin: 6px;
   border: 1px solid @tn_border;
   box-shadow:
-    0 8px 32px 0 rgba(0, 0, 0, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    0 10px 30px 0 rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition:
-    background-color 200ms ease,
-    box-shadow 200ms ease,
-    transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    background-color 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .flux-card:hover {
-  background-color: rgba(41, 46, 66, 0.6);
+  background-color: rgba(41, 46, 66, 0.65);
   box-shadow:
-    0 0 0 1px alpha(@accent_color, 0.4),
-    0 12px 28px 0 rgba(0, 0, 0, 0.4);
-  transform: translateY(-4px);
+    0 0 0 1.5px @tn_accent,
+    0 16px 36px 0 rgba(0, 0, 0, 0.45),
+    0 0 20px var(--glow-accent);
+  transform: translateY(-5px);
 }
 
 .flux-label {
   color: @theme_fg_color;
   font-family: var(--font-main);
-  font-size: 10pt;
-  letter-spacing: 0px;
+  font-size: 9.5pt;
+  font-weight: 500;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
 
 gridview child:selected .flux-card {
-  background-color: rgba(122, 162, 247, 0.2);
+  background-color: rgba(122, 162, 247, 0.18);
+  border-color: alpha(@accent_color, 0.6);
   box-shadow:
     0 0 0 2px @accent_color,
-    0 8px 24px alpha(@accent_color, 0.3);
-  transform: translateY(-2px);
+    0 10px 30px alpha(@accent_color, 0.35),
+    inset 0 0 15px alpha(@accent_color, 0.15);
+  transform: translateY(-3px);
 }
 
 gridview child:selected .flux-label {
-  color: @tn_accent;
+  color: @tn_accent_hover;
   font-weight: 700;
+  text-shadow: 0 0 10px rgba(122, 162, 247, 0.5);
 }
 
 .flux-card--restricted {
-  border-left: 2px solid @tn_yellow;
+  border-left: 3px solid @tn_yellow;
+  box-shadow:
+    -2px 0 12px rgba(224, 175, 104, 0.2),
+    0 10px 30px 0 rgba(0, 0, 0, 0.3);
 }
 
 .flux-lock-badge {
@@ -319,112 +352,115 @@ gridview child:selected .flux-label {
   font-size: 8.5pt;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.01em;
-  padding: 2px 10px;
+  padding: 3px 12px;
   min-width: 170px;
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: rgba(255, 255, 255, 0.05);
   border: 1px solid @tn_border;
   border-radius: 99px;
-  color: alpha(@theme_fg_color, 0.7);
-  transition:
-    background-color 150ms ease,
-    border-color 150ms ease,
-    color 150ms ease;
+  color: alpha(@theme_fg_color, 0.75);
+  transition: all 180ms ease;
 }
 
 gridview child:hover .flux-list-info {
-  background-color: rgba(255, 255, 255, 0.08);
-  border-color: rgba(122, 162, 247, 0.3);
-  color: alpha(@theme_fg_color, 0.9);
+  background-color: rgba(255, 255, 255, 0.09);
+  border-color: @tn_border_active;
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(122, 162, 247, 0.15);
 }
 
 gridview child:selected .flux-list-info {
-  background-color: alpha(@accent_color, 0.25);
-  border-color: alpha(@accent_color, 0.5);
-  color: #ffffff;
+  background-color: alpha(@accent_color, 0.28);
+  border-color: alpha(@accent_color, 0.6);
+  color: @tn_accent_hover;
   font-weight: 600;
+  box-shadow: 0 0 12px var(--glow-accent);
 }
 
 entry.flux-rename-entry {
-  background-color: rgba(26, 27, 38, 0.8);
+  background-color: rgba(26, 27, 38, 0.85);
   border: 1px solid @accent_color;
-  box-shadow: 0 0 0 2px alpha(@accent_color, 0.3);
-  padding: 2px 8px;
+  border-radius: 8px;
+  box-shadow: 0 0 16px var(--glow-accent);
+  padding: 4px 10px;
   font-size: 9.5pt;
-  min-height: 24px;
+  min-height: 28px;
 }
 
 /* ── Drag & Drop States ── */
 .sidebar-dragging {
-  opacity: 0.45;
+  opacity: 0.4;
 }
 
 .sidebar-drop-hover {
   background-color: alpha(@accent_color, 0.25);
-  box-shadow: inset 0 0 0 1px @accent_color;
+  box-shadow:
+    inset 0 0 0 2px @accent_color,
+    0 0 15px var(--glow-accent);
+  border-radius: 8px;
 }
 
-/* ── Breadcrumb Navigation ── */
+/* ── Breadcrumb Navigation (Pill Capsule Chain) ── */
 button.breadcrumb-btn {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.05);
   border: 1px solid @tn_border;
-  padding: 3px 10px;
+  padding: 4px 12px;
   margin: 1px;
   font-weight: 500;
-  transition: all 0.12s ease;
+  transition: all 180ms ease;
   color: alpha(@theme_fg_color, 0.8);
   font-family: var(--font-main);
   font-size: 0.9em;
 }
 
 button.breadcrumb-btn:first-child {
-  border-top-left-radius: 16px;
-  border-bottom-left-radius: 16px;
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
   border-right-width: 0px;
-  padding-left: 12px;
+  padding-left: 14px;
 }
 
 button.breadcrumb-btn:last-child {
-  border-top-right-radius: 16px;
-  border-bottom-right-radius: 16px;
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
   border-right-width: 1px;
-  background: @accent_bg_color;
+  background: linear-gradient(135deg, @accent_bg_color, @tn_cyan);
   border-color: @accent_bg_color;
   color: @accent_fg_color;
   box-shadow:
-    0 2px 8px alpha(@accent_color, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  font-weight: 600;
-  padding: 3px 14px;
+    0 4px 16px alpha(@accent_color, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  font-weight: 700;
+  padding: 4px 16px;
 }
 
 button.breadcrumb-btn:last-child label {
   color: @accent_fg_color;
-  font-weight: 600;
+  font-weight: 700;
+  text-shadow: none;
 }
 
 button.breadcrumb-btn:last-child:hover {
-  background: @tn_accent_hover;
-  box-shadow: 0 4px 12px alpha(@accent_color, 0.4);
+  background: linear-gradient(135deg, @tn_accent_hover, @tn_cyan);
+  box-shadow: 0 6px 20px alpha(@accent_color, 0.6);
 }
 
 button.breadcrumb-btn:hover:not(:last-child) {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(122, 162, 247, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: @tn_border_active;
   color: @theme_fg_color;
 }
 
 button.breadcrumb-btn:active:not(:last-child) {
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
   transform: translateY(1px);
 }
 
 button.breadcrumb-btn label {
   color: inherit;
   font-family: var(--font-main);
-  letter-spacing: 0px;
 }
 
-/* ── Popovers & Context Menus (Glass Shell) ── */
+/* ── Popovers & Context Menus (Strict Compact Aligned Grid) ── */
 popover,
 popover.background,
 popover.menu {
@@ -441,8 +477,10 @@ popover.background contents {
   background-color: @popover_bg_color;
   border: 1px solid @tn_border;
   outline: none;
-  border-radius: 12px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+  border-radius: 14px;
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(26, 27, 38, 0.8);
   padding: 4px;
 }
 
@@ -452,49 +490,60 @@ popover.menu modelbutton {
   box-shadow: none;
   color: @popover_fg_color;
   border-radius: 6px;
-  padding: 4px 8px;
-  min-height: 28px;
+  /* Reduced vertical padding to eliminate the massive gaps */
+  padding: 3px 10px;
+  min-height: 24px;
+  font-family: var(--font-main);
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
 }
 
 popover.menu modelbutton label {
   color: @popover_fg_color;
-  letter-spacing: 0px;
   font-weight: 500;
+  text-align: left;
+  xalign: 0;
+}
+
+popover.menu modelbutton image {
+  min-width: 16px;
+  margin-right: 12px;
 }
 
 popover.menu modelbutton label:disabled,
 popover.menu modelbutton accelerator,
 popover.menu modelbutton .accelerator {
-  color: alpha(@theme_fg_color, 0.55);
+  color: alpha(@theme_fg_color, 0.45);
 }
 
-popover.menu modelbutton image,
-popover.menu modelbutton arrow,
-popover.menu modelbutton arrow.right,
-popover.menu modelbutton arrow.left {
+popover.menu modelbutton arrow {
   color: @accent_color;
 }
 
 popover.menu modelbutton:hover {
   background-color: @accent_bg_color;
   color: @accent_fg_color;
+  box-shadow: 0 0 12px var(--glow-accent);
 }
 
-popover.menu modelbutton:hover label,
+popover.menu modelbutton:hover label {
+  color: @accent_fg_color;
+  font-weight: 500;
+}
+
 popover.menu modelbutton:hover label:disabled,
 popover.menu modelbutton:hover accelerator,
 popover.menu modelbutton:hover .accelerator,
 popover.menu modelbutton:hover image,
-popover.menu modelbutton:hover arrow,
-popover.menu modelbutton:hover arrow.right,
-popover.menu modelbutton:hover arrow.left {
+popover.menu modelbutton:hover arrow {
   color: @accent_fg_color;
 }
 
 popover.menu > contents separator {
   background-color: @tn_border;
   min-height: 1px;
-  margin: 4px 8px;
+  margin: 3px 6px;
 }
 
 /* ── Text Entries & Inputs ── */
@@ -504,20 +553,20 @@ passwordentry,
 entry text,
 searchentry text,
 passwordentry text {
-  background-color: rgba(26, 27, 38, 0.5);
+  background-color: rgba(26, 27, 38, 0.6);
   border: 1px solid @tn_border;
-  border-radius: 22px;
-  padding: 4px 12px;
+  border-radius: 24px;
+  padding: 6px 14px;
   color: @theme_fg_color;
   caret-color: @accent_color;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
-  letter-spacing: 0px;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: all 180ms ease;
 }
 
 entry placeholder,
 searchentry placeholder,
 passwordentry placeholder {
-  color: alpha(@theme_fg_color, 0.45);
+  color: alpha(@theme_fg_color, 0.4);
 }
 
 entry:focus,
@@ -528,8 +577,9 @@ searchentry:focus-within,
 passwordentry:focus-within {
   border-color: @accent_color;
   box-shadow:
-    0 0 0 3px alpha(@accent_color, 0.3),
-    inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    0 0 0 3px alpha(@accent_color, 0.25),
+    0 0 15px var(--glow-accent),
+    inset 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 entry image,
@@ -538,12 +588,6 @@ searchentry image,
 searchentry image.clear,
 passwordentry image,
 passwordentry image.clear,
-entry image.left,
-entry image.right,
-searchentry image.left,
-searchentry image.right,
-passwordentry image.left,
-passwordentry image.right,
 entry button,
 entry button.image-button,
 entry button.clear,
@@ -560,7 +604,7 @@ passwordentry button.close {
   background-color: transparent;
   box-shadow: none;
   border: none;
-  opacity: 0.75;
+  opacity: 0.8;
 }
 
 entry image:hover,
@@ -582,7 +626,7 @@ passwordentry button.image-button:hover,
 passwordentry button.clear:hover,
 passwordentry button.close:hover {
   color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: rgba(255, 255, 255, 0.1);
   opacity: 1;
 }
 
@@ -595,17 +639,17 @@ textview text {
 
 /* ── Status Bar & Transfers (Glass Capsule Style) ── */
 .selection-status {
-  background-color: rgba(36, 40, 59, 0.75);
+  background-color: rgba(36, 40, 59, 0.8);
   border: 1px solid @tn_border;
-  border-radius: 12px;
-  padding: 6px 16px;
-  min-height: 28px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  margin-bottom: 8px;
+  border-radius: 14px;
+  padding: 8px 18px;
+  min-height: 32px;
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+  margin-bottom: 10px;
 }
 
 .selection-status label.caption {
-  color: alpha(@theme_fg_color, 0.82);
+  color: alpha(@theme_fg_color, 0.85);
   font-family: var(--font-mono);
   font-size: 8.5pt;
   letter-spacing: -0.01em;
@@ -626,32 +670,33 @@ textview text {
   border: 1px solid @tn_border;
   border-radius: 99px;
   min-height: 6px;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .selection-status progressbar progress {
   background-color: @accent_bg_color;
   border-radius: 99px;
   min-height: 6px;
-  box-shadow: 0 0 8px alpha(@accent_color, 0.5);
+  box-shadow: 0 0 12px var(--glow-accent);
 }
 
 .selection-status button.flat {
-  background-color: rgba(255, 255, 255, 0.04);
-  color: alpha(@theme_fg_color, 0.85);
+  background-color: rgba(255, 255, 255, 0.06);
+  color: alpha(@theme_fg_color, 0.88);
   border: 1px solid @tn_border;
   border-radius: 6px;
-  padding: 2px 8px;
-  min-height: 20px;
+  padding: 3px 10px;
+  min-height: 22px;
   font-size: 8pt;
   font-family: var(--font-mono);
   transition: all 150ms ease;
 }
 
 .selection-status button.flat:hover {
-  background-color: alpha(@accent_color, 0.2);
-  border-color: alpha(@accent_color, 0.4);
+  background-color: alpha(@accent_color, 0.25);
+  border-color: alpha(@accent_color, 0.5);
   color: @accent_color;
+  box-shadow: 0 0 10px var(--glow-accent);
 }
 
 .selection-status button.flat:active {
@@ -660,23 +705,24 @@ textview text {
 }
 
 .selection-status button.destructive-action {
-  background-color: alpha(@tn_red, 0.15);
-  border: 1px solid alpha(@tn_red, 0.3);
+  background-color: alpha(@tn_red, 0.2);
+  border: 1px solid alpha(@tn_red, 0.4);
   border-radius: 6px;
   color: @tn_red;
-  padding: 2px 7px;
-  min-height: 20px;
+  padding: 3px 9px;
+  min-height: 22px;
   font-size: 8pt;
   font-family: var(--font-mono);
 }
 
 .selection-status button.destructive-action:hover {
-  background-color: alpha(@tn_red, 0.3);
+  background-color: alpha(@tn_red, 0.35);
   color: #ffffff;
+  box-shadow: 0 0 12px rgba(247, 118, 142, 0.4);
 }
 
 window:backdrop .selection-status {
-  background-color: rgba(26, 27, 38, 0.5);
+  background-color: rgba(26, 27, 38, 0.55);
 }
 
 window:backdrop .selection-status label {
@@ -696,31 +742,31 @@ window:backdrop .selection-status label {
 }
 
 .quick-panel {
-  background: rgba(36, 40, 59, 0.75);
+  background: rgba(36, 40, 59, 0.8);
   border: 1px solid @tn_border;
-  border-radius: 12px;
-  padding: 4px 6px;
+  border-radius: 14px;
+  padding: 6px 8px;
   box-shadow:
-    0 12px 36px 0 rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    0 16px 48px 0 rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .quick-panel button,
 .quick-panel-tab {
-  min-width: 82px;
-  min-height: 26px;
-  padding: 3px 14px;
-  border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.05);
+  min-width: 86px;
+  min-height: 28px;
+  padding: 4px 16px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.06);
   border: 1px solid @tn_border;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  color: alpha(@theme_fg_color, 0.88);
-  transition: all 150ms ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  color: alpha(@theme_fg_color, 0.9);
+  transition: all 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .quick-panel button label,
 .quick-panel-tab label {
-  color: alpha(@theme_fg_color, 0.88);
+  color: alpha(@theme_fg_color, 0.9);
   font-family: var(--font-main);
   font-size: 9.5pt;
   font-weight: 500;
@@ -729,8 +775,9 @@ window:backdrop .selection-status label {
 
 .quick-panel button:hover:not(:checked):not(:active):not(.suggested-action),
 .quick-panel-tab:hover:not(:checked):not(:active):not(.suggested-action) {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(122, 162, 247, 0.3);
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: @tn_border_active;
+  box-shadow: 0 4px 12px var(--glow-accent);
 }
 
 .quick-panel
@@ -746,9 +793,9 @@ window:backdrop .selection-status label {
 .quick-panel-tab:active,
 .quick-panel-tab:checked,
 .quick-panel-tab.suggested-action {
-  background-color: @accent_bg_color;
-  border: 1px solid alpha(@accent_color, 0.5);
-  box-shadow: 0 0 12px alpha(@accent_color, 0.4);
+  background: linear-gradient(135deg, @accent_bg_color, @tn_cyan);
+  border: 1px solid alpha(@accent_color, 0.6);
+  box-shadow: 0 0 16px alpha(@accent_color, 0.5);
   color: #1a1b26;
 }
 
@@ -764,84 +811,85 @@ window:backdrop .selection-status label {
 
 /* ── Standard Buttons & Actions ── */
 .suggested-action {
-  background-color: @accent_bg_color;
+  background: linear-gradient(135deg, @accent_bg_color, @tn_cyan);
   color: @accent_fg_color;
   border: none;
-  border-radius: 8px;
-  padding: 6px 18px;
+  border-radius: 10px;
+  padding: 8px 20px;
   font-weight: bold;
-  box-shadow: 0 0 12px alpha(@accent_color, 0.35);
+  box-shadow: 0 0 16px alpha(@accent_color, 0.45);
+  transition: all 180ms ease;
 }
 
 .suggested-action label {
   color: @accent_fg_color;
+  font-weight: 700;
 }
 
 .suggested-action:hover {
-  background-color: @tn_accent_hover;
-  box-shadow: 0 0 20px alpha(@accent_color, 0.6);
+  background: linear-gradient(135deg, @tn_accent_hover, @tn_cyan);
+  box-shadow: 0 0 24px alpha(@accent_color, 0.7);
+  transform: translateY(-1px);
 }
 
 .destructive-action {
-  background-color: alpha(@tn_red, 0.15);
+  background-color: alpha(@tn_red, 0.2);
   color: @tn_red;
-  border: 1px solid alpha(@tn_red, 0.3);
-  border-radius: 8px;
-  padding: 8px 16px;
+  border: 1px solid alpha(@tn_red, 0.4);
+  border-radius: 10px;
+  padding: 8px 18px;
   font-weight: bold;
-  letter-spacing: 0px;
+  transition: all 180ms ease;
 }
 
 .destructive-action label {
   color: @tn_red;
+  font-weight: 700;
 }
 
 .destructive-action:hover {
-  background-color: alpha(@tn_red, 0.3);
-  box-shadow: 0 0 12px alpha(@tn_red, 0.4);
+  background-color: alpha(@tn_red, 0.35);
+  box-shadow: 0 0 16px rgba(247, 118, 142, 0.5);
+  color: #ffffff;
 }
 
 /* ── Form Controls & Widgets ── */
 check,
 radio {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.06);
   border: 1px solid @tn_border;
-  border-radius: 4px;
-  min-height: 16px;
-  min-width: 16px;
+  border-radius: 6px;
+  min-height: 18px;
+  min-width: 18px;
+  transition: all 150ms ease;
 }
 
 check:checked,
 radio:checked {
   background-color: @accent_bg_color;
   border-color: @accent_bg_color;
-  box-shadow: 0 0 8px alpha(@accent_color, 0.5);
+  box-shadow: 0 0 10px var(--glow-accent);
 }
 
 check:hover,
 radio:hover {
-  border-color: @accent_bg_color;
-}
-
-check:disabled,
-radio:disabled {
-  opacity: 0.4;
+  border-color: @tn_border_active;
 }
 
 spinbutton,
 spinbutton text {
-  background-color: rgba(26, 27, 38, 0.4);
+  background-color: rgba(26, 27, 38, 0.5);
   border: 1px solid @tn_border;
-  border-radius: 8px;
+  border-radius: 10px;
   color: @theme_fg_color;
   caret-color: @accent_color;
-  padding: 0 4px;
-  min-height: 28px;
+  padding: 0 6px;
+  min-height: 30px;
 }
 
 spinbutton:focus-within {
   border-color: @accent_bg_color;
-  box-shadow: 0 0 8px alpha(@accent_color, 0.3);
+  box-shadow: 0 0 12px var(--glow-accent);
 }
 
 spinbutton > button {
@@ -856,11 +904,11 @@ spinbutton > button:hover {
 
 dropdown,
 combobox {
-  background-color: rgba(26, 27, 38, 0.4);
+  background-color: rgba(26, 27, 38, 0.5);
   border: 1px solid @tn_border;
-  border-radius: 8px;
+  border-radius: 10px;
   color: @theme_fg_color;
-  min-height: 28px;
+  min-height: 30px;
 }
 
 dropdown button,
@@ -873,60 +921,58 @@ combobox button {
 dropdown:focus-within,
 combobox:focus-within {
   border-color: @accent_bg_color;
-  box-shadow: 0 0 8px alpha(@accent_color, 0.3);
-}
-
-dropdown label {
-  letter-spacing: 0px;
+  box-shadow: 0 0 12px var(--glow-accent);
 }
 
 scale trough {
   background: rgba(255, 255, 255, 0.08);
   border-radius: 10px;
-  min-height: 4px;
+  min-height: 6px;
 }
 
 scale highlight {
   background: @accent_bg_color;
-  box-shadow: 0 0 8px alpha(@accent_color, 0.5);
+  box-shadow: 0 0 10px var(--glow-accent);
 }
 
 scale slider {
   background: @accent_color;
   border: 2px solid #1a1b26;
-  box-shadow: 0 0 8px alpha(@accent_color, 0.8);
+  box-shadow: 0 0 12px alpha(@accent_color, 0.8);
   border-radius: 50%;
-  min-width: 16px;
-  min-height: 16px;
+  min-width: 18px;
+  min-height: 18px;
 }
 
 levelbar block {
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 levelbar block.low {
   background: @tn_red;
+  box-shadow: 0 0 8px rgba(247, 118, 142, 0.4);
 }
 
 levelbar block.high {
   background: @accent_color;
-  box-shadow: 0 0 8px alpha(@accent_color, 0.5);
+  box-shadow: 0 0 10px var(--glow-accent);
 }
 
 levelbar block.full {
   background: @tn_green;
-  box-shadow: 0 0 8px alpha(@tn_green, 0.5);
+  box-shadow: 0 0 10px rgba(158, 206, 106, 0.4);
 }
 
 progressbar {
   background-color: rgba(255, 255, 255, 0.05);
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 progressbar progress {
   background-color: @accent_bg_color;
-  border-radius: 4px;
-  min-height: 4px;
+  border-radius: 6px;
+  min-height: 6px;
+  box-shadow: 0 0 10px var(--glow-accent);
 }
 
 scrollbar {
@@ -936,11 +982,12 @@ scrollbar {
 scrollbar slider {
   background-color: rgba(255, 255, 255, 0.15);
   border-radius: 10px;
+  transition: background-color 150ms ease;
 }
 
 scrollbar slider:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 0 8px alpha(@accent_color, 0.4);
+  background-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0 10px var(--glow-accent);
 }
 
 notebook > header {
@@ -951,34 +998,38 @@ notebook > header {
 notebook > header > tabs > tab {
   background: transparent;
   color: alpha(@theme_fg_color, 0.7);
-  padding: 4px 12px;
+  padding: 6px 14px;
   border: none;
   border-bottom: 2px solid transparent;
+  transition: all 150ms ease;
 }
 
 notebook > header > tabs > tab:checked {
-  color: @accent_color;
+  color: @tn_accent_hover;
   border-bottom-color: @accent_color;
-  text-shadow: 0 0 8px alpha(@accent_color, 0.5);
+  text-shadow: 0 0 12px var(--glow-accent);
+  font-weight: 600;
 }
 
 /* ── Cards, Lists & Frames ── */
 .card {
   background: @card_bg_color;
-  border-radius: 12px;
+  border-radius: 14px;
   border: 1px solid @tn_border;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 .frame {
   border: 1px solid @tn_border;
-  border-radius: 8px;
+  border-radius: 10px;
   background: transparent;
 }
 
 .boxed-list {
-  background: rgba(36, 40, 59, 0.35);
-  border-radius: 12px;
+  background: rgba(36, 40, 59, 0.4);
+  border-radius: 14px;
   border: 1px solid @tn_border;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
 }
 
 list,
@@ -990,11 +1041,12 @@ listview {
 row {
   background: transparent;
   color: @theme_fg_color;
+  transition: background-color 150ms ease;
 }
 
 row:selected {
-  background: alpha(@accent_bg_color, 0.15);
-  color: @accent_color;
+  background: alpha(@accent_bg_color, 0.2);
+  color: @tn_accent_hover;
 }
 
 .view {
@@ -1003,20 +1055,16 @@ row:selected {
 }
 
 .view:selected {
-  background: alpha(@accent_bg_color, 0.15);
-  color: @accent_color;
+  background: alpha(@accent_bg_color, 0.2);
+  color: @tn_accent_hover;
 }
 
 .property {
   background: transparent;
   border-bottom: 1px solid @tn_border;
-  padding: 6px 0px;
+  padding: 8px 0px;
   color: @theme_fg_color;
   font-size: 9.5pt;
-}
-
-.property label {
-  color: @theme_fg_color;
 }
 
 /* ── Settings & Libadwaita Preferences ── */
@@ -1026,47 +1074,13 @@ adwpreferenceswindow,
   letter-spacing: 0px;
 }
 
-window.settings-window headerbar label,
-adwpreferenceswindow headerbar label,
-.settings-window headerbar label,
-viewswitcher label,
-adwviewswitcher label,
-viewswitchertitle label,
-adwviewswitchertitle label,
-viewswitcherbar label,
-adwviewswitcherbar label,
-viewswitcher button label,
-adwviewswitcher button label {
-  font-weight: 500;
-  text-transform: none;
-  font-size: 9pt;
-}
-
-viewswitcher button,
-adwviewswitcher button {
-  padding-left: 4px;
-  padding-right: 4px;
-  min-width: 60px;
-}
-
-.settings-row label {
-  letter-spacing: 0px;
-}
-
 adwpreferencesgroup > box > label {
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-weight: 700;
-  opacity: 0.7;
-}
-
-adwactionrow,
-adwactionrow label,
-adwpreferencesrow,
-adwpreferencesrow label,
-adwpreferencespage,
-adwpreferencespage label {
-  color: @theme_fg_color;
+  font-weight: 800;
+  color: @tn_purple;
+  opacity: 0.95;
+  text-shadow: 0 0 8px rgba(187, 154, 247, 0.3);
 }
 
 adwactionrow .title,
@@ -1086,30 +1100,33 @@ adwpreferencesrow label.subtitle,
 adwpreferencesgroup .description,
 adwpreferencesgroup label.description,
 .subtitle {
-  color: alpha(@theme_fg_color, 0.65);
+  color: alpha(@theme_fg_color, 0.6);
 }
 
 /* ── Utilities, Tooltips & Status States ── */
 tooltip.background {
-  background-color: rgba(36, 40, 59, 0.85);
-  border: 1px solid @tn_border;
-  border-radius: 8px;
-  color: @accent_color;
-  padding: 6px 12px;
-  box-shadow: 0 0 16px rgba(0, 0, 0, 0.4);
+  background-color: rgba(26, 27, 38, 0.92);
+  border: 1px solid @tn_border_active;
+  border-radius: 10px;
+  color: @tn_accent_hover;
+  padding: 8px 14px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 0 15px var(--glow-accent);
 }
 
 toast label {
-  color: @accent_color;
+  color: @tn_accent_hover;
   letter-spacing: 0.4px;
+  font-weight: 600;
 }
 
 .dim-label {
-  color: alpha(@theme_fg_color, 0.65);
+  color: alpha(@theme_fg_color, 0.6);
 }
 
 .caption {
-  color: alpha(@theme_fg_color, 0.65);
+  color: alpha(@theme_fg_color, 0.6);
 }
 
 .numeric {
@@ -1134,14 +1151,18 @@ toast label {
 
 .error {
   border: 1px solid @tn_red;
-  background: alpha(@tn_red, 0.1);
+  background: alpha(@tn_red, 0.15);
   color: @tn_red;
+  border-radius: 8px;
+  padding: 4px 8px;
 }
 
 .warning {
   border: 1px solid @tn_yellow;
-  background: alpha(@tn_yellow, 0.1);
+  background: alpha(@tn_yellow, 0.15);
   color: @tn_yellow;
+  border-radius: 8px;
+  padding: 4px 8px;
 }
 
 /* ── Window Controls ── */
@@ -1149,37 +1170,36 @@ windowcontrols button {
   background-color: transparent;
   border: none;
   border-color: transparent;
-  border-radius: 0;
-  padding: 6px 6px;
-  min-width: 24px;
-  min-height: 24px;
+  border-radius: 6px;
+  padding: 6px;
+  min-width: 26px;
+  min-height: 26px;
   color: @headerbar_fg_color;
-  transition:
-    background-color 150ms ease,
-    color 150ms ease;
+  transition: all 150ms ease;
 }
 
 windowcontrols button:hover {
-  background-color: alpha(@headerbar_fg_color, 0.12);
+  background-color: alpha(@headerbar_fg_color, 0.15);
 }
 
 windowcontrols button:active {
-  background-color: alpha(@headerbar_fg_color, 0.2);
+  background-color: alpha(@headerbar_fg_color, 0.25);
 }
 
 windowcontrols button.close:hover {
-  background-color: alpha(@tn_red, 0.25);
+  background-color: alpha(@tn_red, 0.3);
   color: @tn_red;
+  box-shadow: 0 0 10px rgba(247, 118, 142, 0.4);
 }
 
 windowcontrols button.close:active {
-  background-color: alpha(@tn_red, 0.4);
+  background-color: alpha(@tn_red, 0.5);
   color: @tn_red;
 }
 
 windowcontrols button.minimize:hover,
 windowcontrols button.maximize:hover {
-  background-color: alpha(@headerbar_fg_color, 0.15);
+  background-color: alpha(@headerbar_fg_color, 0.2);
 }
 
 /* Position toasts cleanly above the floating dock capsule */
@@ -1189,7 +1209,7 @@ toastoverlay.quick-dock-active toast {
 
 /* ── Empty Folder & Symlink Dynamic Theme Styling ── */
 .flux-card.flux-card--empty {
-  border-left: 2.5px solid alpha(@theme_fg_color, 0.45);
+  border-left: 3px solid alpha(@theme_fg_color, 0.5);
 }
 
 .flux-card.flux-card--empty .flux-label {
@@ -1197,7 +1217,10 @@ toastoverlay.quick-dock-active toast {
 }
 
 .flux-card.flux-card--symlink {
-  border-right: 2.5px solid alpha(@accent_color, 0.75);
+  border-right: 3px solid alpha(@accent_color, 0.85);
+  box-shadow:
+    2px 0 12px var(--glow-accent),
+    0 10px 30px 0 rgba(0, 0, 0, 0.3);
 }
 
 .flux-card.flux-card--symlink .flux-label {
@@ -1206,7 +1229,10 @@ toastoverlay.quick-dock-active toast {
 }
 
 .flux-card.flux-card--broken-symlink {
-  border-right: 2.5px solid @tn_red;
+  border-right: 3px solid @tn_red;
+  box-shadow:
+    2px 0 12px rgba(247, 118, 142, 0.3),
+    0 10px 30px 0 rgba(0, 0, 0, 0.3);
 }
 
 .flux-card.flux-card--broken-symlink .flux-label {
