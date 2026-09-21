@@ -501,8 +501,6 @@ popover.menu modelbutton {
 popover.menu modelbutton label {
   color: @popover_fg_color;
   font-weight: 500;
-  text-align: left;
-  xalign: 0;
 }
 
 popover.menu modelbutton image {
