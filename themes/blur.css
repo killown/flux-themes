@@ -4,7 +4,7 @@
 
 /* ── Blur & Translucent Color Ramp ── */
 @define-color tr_bg           rgba(15, 17, 23, 0.65);
-@define-color tr_surface      rgba(22, 26, 35, 0.45); /* Adjusted for card translucency */
+@define-color tr_surface      rgba(22, 26, 35, 0.45);
 @define-color tr_raised       rgba(30, 36, 48, 0.4);
 @define-color tr_overlay      rgba(40, 48, 64, 0.35);
 @define-color tr_text         #f8fafc;
@@ -51,7 +51,7 @@ window > box,
   color: @window_fg_color;
 }
 
-/* ── HeaderBar & Navigation (Blended Transparent) ── */
+/* ── HeaderBar & Navigation ── */
 headerbar {
   background-color: transparent;
   padding: 4px 12px;
@@ -74,38 +74,33 @@ headerbar label {
 }
 
 headerbar button {
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: transparent;
   color: @headerbar_fg_color;
-  border: 1px solid @tr_border;
+  border: none;
   box-shadow: none;
   border-radius: 6px;
   padding: 4px 10px;
-  transition: all 150ms ease;
 }
 
 headerbar button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.25);
-  color: @accent_color;
+  background-color: alpha(@headerbar_fg_color, 0.08);
 }
 
 headerbar togglebutton {
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: transparent;
   color: @headerbar_fg_color;
-  border: 1px solid @tr_border;
+  border: none;
   border-radius: 6px;
   padding: 4px 8px;
 }
 
 headerbar togglebutton:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: @accent_color;
+  background-color: alpha(@headerbar_fg_color, 0.08);
 }
 
 headerbar togglebutton:checked,
 headerbar togglebutton:active {
-  background-color: alpha(@accent_color, 0.25);
-  border-color: alpha(@accent_color, 0.5);
+  background-color: alpha(@accent_color, 0.2);
   color: @accent_color;
 }
 
@@ -312,7 +307,6 @@ gridview child:selected .flux-label {
   color: @tr_yellow;
 }
 
-/* HIG-Compliant Metadata Capsule */
 .flux-list-info {
   font-family: var(--font-mono);
   font-size: 8.5pt;
@@ -1181,7 +1175,6 @@ windowcontrols button.maximize:hover {
   background-color: alpha(@headerbar_fg_color, 0.15);
 }
 
-/* Position toasts cleanly above the floating dock capsule */
 toastoverlay.quick-dock-active toast {
   margin-bottom: 60px;
 }
