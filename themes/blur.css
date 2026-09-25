@@ -51,6 +51,11 @@ window > box,
   color: @window_fg_color;
 }
 
+/* ── ToolbarView Integration ── */
+toolbarview {
+  background-color: transparent;
+}
+
 /* ── HeaderBar & Navigation ── */
 headerbar {
   background-color: transparent;
@@ -143,8 +148,13 @@ headerbar togglebutton:active {
 }
 
 .sidebar-row:not(.sidebar-section):hover:not(:selected) {
-  background-color: rgba(255, 255, 255, 0.06);
+  background-color: rgba(255, 255, 255, 0.12);
+  color: @theme_fg_color;
   transform: translateX(4px);
+}
+
+.sidebar-row:not(.sidebar-section):hover:not(:selected) label {
+  color: @theme_fg_color;
 }
 
 .sidebar-row:not(.sidebar-section):selected {
@@ -247,7 +257,7 @@ button.eject-button:active {
 gridview,
 listview {
   background-color: transparent;
-  padding: 16px 24px;
+  padding: 0px 24px 16px 24px; /* Reduced top padding to 0px */
 }
 
 gridview child {
@@ -1185,7 +1195,7 @@ toastoverlay.quick-dock-active toast {
 }
 
 .flux-card.flux-card--empty .flux-label {
-  color: alpha(@theme_fg_color, 0.65);
+  color: alpha(@theme_fg_color, `0.65`);
 }
 
 .flux-card.flux-card--symlink {
