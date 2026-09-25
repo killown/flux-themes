@@ -1,44 +1,43 @@
 /* ============================================================
-   Flux - B L U R   G R U V B O X   D A R K (Glassmorphism)
+   Flux - B L U R  (Glassmorphism Ready)
    ============================================================ */
 
-/* ── Gruvbox Dark Blur Color Ramp ── */
-@define-color gb_tr_bg           rgba(40, 40, 40, 0.7);
-@define-color gb_tr_surface      rgba(60, 56, 54, 0.45);
-@define-color gb_tr_raised       rgba(80, 73, 69, 0.4);
-@define-color gb_tr_overlay      rgba(102, 92, 84, 0.35);
-@define-color gb_tr_text         #ebdbb2;
-@define-color gb_tr_text_dim     rgba(235, 219, 178, 0.65);
-@define-color gb_tr_accent       #fabd2f;
-@define-color gb_tr_accent_hover  #fe8019;
-@define-color gb_tr_border       rgba(250, 189, 47, 0.18);
-@define-color gb_tr_red          #fb4934;
-@define-color gb_tr_green        #b8bb26;
-@define-color gb_tr_yellow       #fabd2f;
-@define-color gb_tr_orange       #fe8019;
+/* ── Blur & Translucent Color Ramp ── */
+@define-color tr_bg           rgba(15, 17, 23, 0.65);
+@define-color tr_surface      rgba(22, 26, 35, 0.45);
+@define-color tr_raised       rgba(30, 36, 48, 0.4);
+@define-color tr_overlay      rgba(40, 48, 64, 0.35);
+@define-color tr_text         #f8fafc;
+@define-color tr_text_dim     rgba(248, 250, 252, 0.65);
+@define-color tr_accent       #38bdf8;
+@define-color tr_accent_hover  #7dd3fc;
+@define-color tr_border       rgba(255, 255, 255, 0.12);
+@define-color tr_red          #f87171;
+@define-color tr_green        #4ade80;
+@define-color tr_yellow       #facc15;
 
 /* ── Libadwaita Palette Mapping ── */
-@define-color window_bg_color     @gb_tr_bg;
-@define-color window_fg_color     @gb_tr_text;
+@define-color window_bg_color     @tr_bg;
+@define-color window_fg_color     @tr_text;
 @define-color headerbar_bg_color  transparent;
-@define-color headerbar_fg_color  @gb_tr_accent;
-@define-color card_bg_color       @gb_tr_surface;
-@define-color card_fg_color       @gb_tr_text;
-@define-color popover_bg_color    rgba(60, 56, 54, 0.85);
-@define-color popover_fg_color    @gb_tr_text;
-@define-color accent_color        @gb_tr_accent;
-@define-color accent_bg_color     @gb_tr_accent;
-@define-color accent_fg_color     #282828;
-@define-color destructive_color   @gb_tr_red;
-@define-color destructive_bg_color @gb_tr_red;
+@define-color headerbar_fg_color  @tr_text;
+@define-color card_bg_color       @tr_surface;
+@define-color card_fg_color       @tr_text;
+@define-color popover_bg_color    rgba(22, 26, 35, 0.85);
+@define-color popover_fg_color    @tr_text;
+@define-color accent_color        @tr_accent;
+@define-color accent_bg_color     @tr_accent;
+@define-color accent_fg_color     #0f172a;
+@define-color destructive_color   @tr_red;
+@define-color destructive_bg_color @tr_red;
 @define-color destructive_fg_color #ffffff;
-@define-color theme_fg_color      @gb_tr_text;
+@define-color theme_fg_color      @tr_text;
 
 /* ── Theme Root Variables ── */
 :root {
-  --accent-color: #fabd2f;
-  --shadow: rgba(0, 0, 0, 0.4);
-  --shadow-hover: rgba(0, 0, 0, 0.55);
+  --accent-color: #38bdf8;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-hover: rgba(0, 0, 0, 0.45);
   --font-main: "Inter", "Helvetica Neue", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
   letter-spacing: 0px;
@@ -52,7 +51,12 @@ window > box,
   color: @window_fg_color;
 }
 
-/* ── HeaderBar & Navigation (Blended Transparent) ── */
+/* ── ToolbarView Integration ── */
+toolbarview {
+  background-color: transparent;
+}
+
+/* ── HeaderBar & Navigation ── */
 headerbar {
   background-color: transparent;
   padding: 4px 12px;
@@ -75,46 +79,41 @@ headerbar label {
 }
 
 headerbar button {
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: transparent;
   color: @headerbar_fg_color;
-  border: 1px solid @gb_tr_border;
+  border: none;
   box-shadow: none;
   border-radius: 6px;
   padding: 4px 10px;
-  transition: all 150ms ease;
 }
 
 headerbar button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(250, 189, 47, 0.35);
-  color: @accent_color;
+  background-color: alpha(@headerbar_fg_color, 0.08);
 }
 
 headerbar togglebutton {
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: transparent;
   color: @headerbar_fg_color;
-  border: 1px solid @gb_tr_border;
+  border: none;
   border-radius: 6px;
   padding: 4px 8px;
 }
 
 headerbar togglebutton:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: @accent_color;
+  background-color: alpha(@headerbar_fg_color, 0.08);
 }
 
 headerbar togglebutton:checked,
 headerbar togglebutton:active {
-  background-color: alpha(@accent_color, 0.25);
-  border-color: alpha(@accent_color, 0.5);
+  background-color: alpha(@accent_color, 0.2);
   color: @accent_color;
 }
 
 /* ── Sidebar & Navigation Tree (Glass Pane) ── */
 .sidebar {
-  background-color: rgba(40, 40, 40, 0.45);
+  background-color: rgba(18, 22, 30, 0.4);
   border-radius: 14px;
-  border: 1px solid @gb_tr_border;
+  border: 1px solid @tr_border;
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
@@ -149,8 +148,13 @@ headerbar togglebutton:active {
 }
 
 .sidebar-row:not(.sidebar-section):hover:not(:selected) {
-  background-color: rgba(255, 255, 255, 0.06);
+  background-color: alpha(@theme_fg_color, 0.12);
+  color: @theme_fg_color;
   transform: translateX(4px);
+}
+
+.sidebar-row:not(.sidebar-section):hover:not(:selected) label {
+  color: @theme_fg_color;
 }
 
 .sidebar-row:not(.sidebar-section):selected {
@@ -160,7 +164,7 @@ headerbar togglebutton:active {
 }
 
 .sidebar-row:not(.sidebar-section):selected label {
-  color: #282828;
+  color: #0f172a;
   font-weight: bold;
 }
 
@@ -185,9 +189,9 @@ headerbar togglebutton:active {
   font-family: var(--font-main);
   font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: @gb_tr_yellow;
+  color: alpha(@theme_fg_color, 0.45);
   background: transparent;
   border: none;
   box-shadow: none;
@@ -197,7 +201,7 @@ headerbar togglebutton:active {
 
 .sidebar-mount {
   background: rgba(255, 255, 255, 0.02);
-  border: 1px solid @gb_tr_border;
+  border: 1px solid @tr_border;
   border-bottom-color: rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   min-height: 22px;
@@ -228,24 +232,24 @@ button.eject-button image {
 }
 
 button.eject-button:hover {
-  background-color: alpha(@gb_tr_red, 0.2);
-  color: @gb_tr_red;
+  background-color: alpha(@tr_red, 0.2);
+  color: @tr_red;
   opacity: 1;
 }
 
 button.eject-button:active {
-  background-color: alpha(@gb_tr_red, 0.35);
-  color: @gb_tr_red;
+  background-color: alpha(@tr_red, 0.35);
+  color: @tr_red;
 }
 
 .sidebar-row:not(.sidebar-section):selected button.eject-button {
-  color: #282828;
+  color: #0f172a;
   opacity: 0.9;
 }
 
 .sidebar-row:not(.sidebar-section):selected button.eject-button:hover {
-  background-color: rgba(40, 40, 40, 0.2);
-  color: #282828;
+  background-color: rgba(15, 23, 42, 0.2);
+  color: #0f172a;
   opacity: 1;
 }
 
@@ -253,7 +257,7 @@ button.eject-button:active {
 gridview,
 listview {
   background-color: transparent;
-  padding: 16px 24px;
+  padding: 0px 24px 16px 24px;
 }
 
 gridview child {
@@ -267,7 +271,7 @@ gridview child {
   border-radius: 18px;
   padding: 12px;
   margin: 6px;
-  border: 1px solid @gb_tr_border;
+  border: 1px solid @tr_border;
   box-shadow:
     0 8px 32px 0 rgba(0, 0, 0, 0.25),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -278,7 +282,7 @@ gridview child {
 }
 
 .flux-card:hover {
-  background-color: rgba(80, 73, 69, 0.6);
+  background-color: rgba(30, 36, 48, 0.6);
   box-shadow:
     0 0 0 1px alpha(@accent_color, 0.4),
     0 12px 28px 0 rgba(0, 0, 0, 0.4);
@@ -293,7 +297,7 @@ gridview child {
 }
 
 gridview child:selected .flux-card {
-  background-color: rgba(250, 189, 47, 0.2);
+  background-color: rgba(56, 189, 248, 0.2);
   box-shadow:
     0 0 0 2px @accent_color,
     0 8px 24px alpha(@accent_color, 0.3);
@@ -301,19 +305,18 @@ gridview child:selected .flux-card {
 }
 
 gridview child:selected .flux-label {
-  color: @gb_tr_accent;
+  color: @accent_color;
   font-weight: 700;
 }
 
 .flux-card--restricted {
-  border-left: 2px solid @gb_tr_orange;
+  border-left: 2px solid @tr_yellow;
 }
 
 .flux-lock-badge {
-  color: @gb_tr_orange;
+  color: @tr_yellow;
 }
 
-/* HIG-Compliant Metadata Capsule */
 .flux-list-info {
   font-family: var(--font-mono);
   font-size: 8.5pt;
@@ -322,7 +325,7 @@ gridview child:selected .flux-label {
   padding: 2px 10px;
   min-width: 170px;
   background-color: rgba(255, 255, 255, 0.04);
-  border: 1px solid @gb_tr_border;
+  border: 1px solid @tr_border;
   border-radius: 99px;
   color: alpha(@theme_fg_color, 0.7);
   transition:
@@ -333,7 +336,7 @@ gridview child:selected .flux-label {
 
 gridview child:hover .flux-list-info {
   background-color: rgba(255, 255, 255, 0.08);
-  border-color: rgba(250, 189, 47, 0.3);
+  border-color: rgba(255, 255, 255, 0.2);
   color: alpha(@theme_fg_color, 0.9);
 }
 
@@ -345,7 +348,7 @@ gridview child:selected .flux-list-info {
 }
 
 entry.flux-rename-entry {
-  background-color: rgba(40, 40, 40, 0.8);
+  background-color: rgba(15, 17, 23, 0.8);
   border: 1px solid @accent_color;
   box-shadow: 0 0 0 2px alpha(@accent_color, 0.3);
   padding: 2px 8px;
@@ -366,7 +369,7 @@ entry.flux-rename-entry {
 /* ── Breadcrumb Navigation ── */
 button.breadcrumb-btn {
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid @gb_tr_border;
+  border: 1px solid @tr_border;
   padding: 3px 10px;
   margin: 1px;
   font-weight: 500;
@@ -403,13 +406,13 @@ button.breadcrumb-btn:last-child label {
 }
 
 button.breadcrumb-btn:last-child:hover {
-  background: @gb_tr_accent_hover;
+  background: @tr_accent_hover;
   box-shadow: 0 4px 12px alpha(@accent_color, 0.4);
 }
 
 button.breadcrumb-btn:hover:not(:last-child) {
   background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(250, 189, 47, 0.3);
+  border-color: rgba(255, 255, 255, 0.2);
   color: @theme_fg_color;
 }
 
@@ -439,7 +442,7 @@ popover.menu {
 popover.menu contents,
 popover.background contents {
   background-color: @popover_bg_color;
-  border: 1px solid @gb_tr_border;
+  border: 1px solid @tr_border;
   outline: none;
   border-radius: 12px;
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
@@ -492,7 +495,7 @@ popover.menu modelbutton:hover arrow.left {
 }
 
 popover.menu > contents separator {
-  background-color: @gb_tr_border;
+  background-color: @tr_border;
   min-height: 1px;
   margin: 4px 8px;
 }
@@ -504,8 +507,8 @@ passwordentry,
 entry text,
 searchentry text,
 passwordentry text {
-  background-color: rgba(40, 40, 40, 0.5);
-  border: 1px solid @gb_tr_border;
+  background-color: rgba(15, 17, 23, 0.5);
+  border: 1px solid @tr_border;
   border-radius: 22px;
   padding: 4px 12px;
   color: @theme_fg_color;
@@ -595,8 +598,8 @@ textview text {
 
 /* ── Status Bar & Transfers (Glass Capsule Style) ── */
 .selection-status {
-  background-color: rgba(60, 56, 54, 0.75);
-  border: 1px solid @gb_tr_border;
+  background-color: rgba(18, 22, 30, 0.75);
+  border: 1px solid @tr_border;
   border-radius: 12px;
   padding: 6px 16px;
   min-height: 28px;
@@ -623,7 +626,7 @@ textview text {
 
 .selection-status progressbar trough {
   background-color: rgba(255, 255, 255, 0.08);
-  border: 1px solid @gb_tr_border;
+  border: 1px solid @tr_border;
   border-radius: 99px;
   min-height: 6px;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
@@ -639,7 +642,7 @@ textview text {
 .selection-status button.flat {
   background-color: rgba(255, 255, 255, 0.04);
   color: alpha(@theme_fg_color, 0.85);
-  border: 1px solid @gb_tr_border;
+  border: 1px solid @tr_border;
   border-radius: 6px;
   padding: 2px 8px;
   min-height: 20px;
@@ -656,14 +659,14 @@ textview text {
 
 .selection-status button.flat:active {
   background-color: @accent_bg_color;
-  color: #282828;
+  color: #0f172a;
 }
 
 .selection-status button.destructive-action {
-  background-color: alpha(@gb_tr_red, 0.15);
-  border: 1px solid alpha(@gb_tr_red, 0.3);
+  background-color: alpha(@tr_red, 0.15);
+  border: 1px solid alpha(@tr_red, 0.3);
   border-radius: 6px;
-  color: @gb_tr_red;
+  color: @tr_red;
   padding: 2px 7px;
   min-height: 20px;
   font-size: 8pt;
@@ -671,12 +674,12 @@ textview text {
 }
 
 .selection-status button.destructive-action:hover {
-  background-color: alpha(@gb_tr_red, 0.3);
+  background-color: alpha(@tr_red, 0.3);
   color: #ffffff;
 }
 
 window:backdrop .selection-status {
-  background-color: rgba(40, 40, 40, 0.5);
+  background-color: rgba(15, 17, 23, 0.5);
 }
 
 window:backdrop .selection-status label {
@@ -696,8 +699,8 @@ window:backdrop .selection-status label {
 }
 
 .quick-panel {
-  background: rgba(60, 56, 54, 0.75);
-  border: 1px solid @gb_tr_border;
+  background: rgba(18, 22, 30, 0.75);
+  border: 1px solid @tr_border;
   border-radius: 12px;
   padding: 4px 6px;
   box-shadow:
@@ -712,7 +715,7 @@ window:backdrop .selection-status label {
   padding: 3px 14px;
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid @gb_tr_border;
+  border: 1px solid @tr_border;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   color: alpha(@theme_fg_color, 0.88);
   transition: all 150ms ease;
@@ -730,7 +733,7 @@ window:backdrop .selection-status label {
 .quick-panel button:hover:not(:checked):not(:active):not(.suggested-action),
 .quick-panel-tab:hover:not(:checked):not(:active):not(.suggested-action) {
   background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(250, 189, 47, 0.3);
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
 .quick-panel
@@ -749,7 +752,7 @@ window:backdrop .selection-status label {
   background-color: @accent_bg_color;
   border: 1px solid alpha(@accent_color, 0.5);
   box-shadow: 0 0 12px alpha(@accent_color, 0.4);
-  color: #282828;
+  color: #0f172a;
 }
 
 .quick-panel button:active label,
@@ -758,7 +761,7 @@ window:backdrop .selection-status label {
 .quick-panel-tab:active label,
 .quick-panel-tab:checked label,
 .quick-panel-tab.suggested-action label {
-  color: #282828;
+  color: #0f172a;
   font-weight: 700;
 }
 
@@ -778,14 +781,14 @@ window:backdrop .selection-status label {
 }
 
 .suggested-action:hover {
-  background-color: @gb_tr_accent_hover;
+  background-color: @tr_accent_hover;
   box-shadow: 0 0 20px alpha(@accent_color, 0.6);
 }
 
 .destructive-action {
-  background-color: alpha(@gb_tr_red, 0.15);
-  color: @gb_tr_red;
-  border: 1px solid alpha(@gb_tr_red, 0.3);
+  background-color: alpha(@tr_red, 0.15);
+  color: @tr_red;
+  border: 1px solid alpha(@tr_red, 0.3);
   border-radius: 8px;
   padding: 8px 16px;
   font-weight: bold;
@@ -793,19 +796,19 @@ window:backdrop .selection-status label {
 }
 
 .destructive-action label {
-  color: @gb_tr_red;
+  color: @tr_red;
 }
 
 .destructive-action:hover {
-  background-color: alpha(@gb_tr_red, 0.3);
-  box-shadow: 0 0 12px alpha(@gb_tr_red, 0.4);
+  background-color: alpha(@tr_red, 0.3);
+  box-shadow: 0 0 12px alpha(@tr_red, 0.4);
 }
 
 /* ── Form Controls & Widgets ── */
 check,
 radio {
   background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid @gb_tr_border;
+  border: 1px solid @tr_border;
   border-radius: 4px;
   min-height: 16px;
   min-width: 16px;
@@ -830,8 +833,8 @@ radio:disabled {
 
 spinbutton,
 spinbutton text {
-  background-color: rgba(40, 40, 40, 0.4);
-  border: 1px solid @gb_tr_border;
+  background-color: rgba(15, 17, 23, 0.4);
+  border: 1px solid @tr_border;
   border-radius: 8px;
   color: @theme_fg_color;
   caret-color: @accent_color;
@@ -856,8 +859,8 @@ spinbutton > button:hover {
 
 dropdown,
 combobox {
-  background-color: rgba(40, 40, 40, 0.4);
-  border: 1px solid @gb_tr_border;
+  background-color: rgba(15, 17, 23, 0.4);
+  border: 1px solid @tr_border;
   border-radius: 8px;
   color: @theme_fg_color;
   min-height: 28px;
@@ -893,7 +896,7 @@ scale highlight {
 
 scale slider {
   background: @accent_color;
-  border: 2px solid #282828;
+  border: 2px solid #0f172a;
   box-shadow: 0 0 8px alpha(@accent_color, 0.8);
   border-radius: 50%;
   min-width: 16px;
@@ -905,7 +908,7 @@ levelbar block {
 }
 
 levelbar block.low {
-  background: @gb_tr_red;
+  background: @tr_red;
 }
 
 levelbar block.high {
@@ -914,8 +917,8 @@ levelbar block.high {
 }
 
 levelbar block.full {
-  background: @gb_tr_green;
-  box-shadow: 0 0 8px alpha(@gb_tr_green, 0.5);
+  background: @tr_green;
+  box-shadow: 0 0 8px alpha(@tr_green, 0.5);
 }
 
 progressbar {
@@ -966,19 +969,19 @@ notebook > header > tabs > tab:checked {
 .card {
   background: @card_bg_color;
   border-radius: 12px;
-  border: 1px solid @gb_tr_border;
+  border: 1px solid @tr_border;
 }
 
 .frame {
-  border: 1px solid @gb_tr_border;
+  border: 1px solid @tr_border;
   border-radius: 8px;
   background: transparent;
 }
 
 .boxed-list {
-  background: rgba(60, 56, 54, 0.35);
+  background: rgba(22, 26, 35, 0.35);
   border-radius: 12px;
-  border: 1px solid @gb_tr_border;
+  border: 1px solid @tr_border;
 }
 
 list,
@@ -1009,7 +1012,7 @@ row:selected {
 
 .property {
   background: transparent;
-  border-bottom: 1px solid @gb_tr_border;
+  border-bottom: 1px solid @tr_border;
   padding: 6px 0px;
   color: @theme_fg_color;
   font-size: 9.5pt;
@@ -1054,7 +1057,7 @@ adwviewswitcher button {
 }
 
 adwpreferencesgroup > box > label {
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   font-weight: 700;
   opacity: 0.7;
@@ -1091,8 +1094,8 @@ adwpreferencesgroup label.description,
 
 /* ── Utilities, Tooltips & Status States ── */
 tooltip.background {
-  background-color: rgba(60, 56, 54, 0.85);
-  border: 1px solid @gb_tr_border;
+  background-color: rgba(18, 22, 30, 0.85);
+  border: 1px solid @tr_border;
   border-radius: 8px;
   color: @accent_color;
   padding: 6px 12px;
@@ -1133,15 +1136,15 @@ toast label {
 }
 
 .error {
-  border: 1px solid @gb_tr_red;
-  background: alpha(@gb_tr_red, 0.1);
-  color: @gb_tr_red;
+  border: 1px solid @tr_red;
+  background: alpha(@tr_red, 0.1);
+  color: @tr_red;
 }
 
 .warning {
-  border: 1px solid @gb_tr_yellow;
-  background: alpha(@gb_tr_yellow, 0.1);
-  color: @gb_tr_yellow;
+  border: 1px solid @tr_yellow;
+  background: alpha(@tr_yellow, 0.1);
+  color: @tr_yellow;
 }
 
 /* ── Window Controls ── */
@@ -1168,13 +1171,13 @@ windowcontrols button:active {
 }
 
 windowcontrols button.close:hover {
-  background-color: alpha(@gb_tr_red, 0.25);
-  color: @gb_tr_red;
+  background-color: alpha(@tr_red, 0.25);
+  color: @tr_red;
 }
 
 windowcontrols button.close:active {
-  background-color: alpha(@gb_tr_red, 0.4);
-  color: @gb_tr_red;
+  background-color: alpha(@tr_red, 0.4);
+  color: @tr_red;
 }
 
 windowcontrols button.minimize:hover,
@@ -1182,7 +1185,6 @@ windowcontrols button.maximize:hover {
   background-color: alpha(@headerbar_fg_color, 0.15);
 }
 
-/* Position toasts cleanly above the floating dock capsule */
 toastoverlay.quick-dock-active toast {
   margin-bottom: 60px;
 }
@@ -1206,11 +1208,11 @@ toastoverlay.quick-dock-active toast {
 }
 
 .flux-card.flux-card--broken-symlink {
-  border-right: 2.5px solid @gb_tr_red;
+  border-right: 2.5px solid @tr_red;
 }
 
 .flux-card.flux-card--broken-symlink .flux-label {
-  color: @gb_tr_red;
+  color: @tr_red;
   text-decoration-line: line-through;
 }
 

@@ -1,5 +1,5 @@
 /* ============================================================
-   Flux - B L U R   T O K Y O   N I G H T   (Glassmorphism v7)
+   Flux - BLUR  TOKYO  NIGHT  (Glassmorphism v7)
    ============================================================ */
 
 /* ── Tokyo Night Blur Color Ramp ── */
@@ -21,21 +21,21 @@
 @define-color tn_magenta       #f7768e;
 
 /* ── Libadwaita Palette Mapping ── */
-@define-color window_bg_color        @tn_bg;
-@define-color window_fg_color        @tn_text;
-@define-color headerbar_bg_color     transparent;
-@define-color headerbar_fg_color     @tn_text;
-@define-color card_bg_color          @tn_surface;
-@define-color card_fg_color          @tn_text;
-@define-color popover_bg_color       rgba(26, 27, 38, 0.88);
-@define-color popover_fg_color       @tn_text;
-@define-color accent_color           @tn_accent;
-@define-color accent_bg_color        @tn_accent;
-@define-color accent_fg_color        #1a1b26;
-@define-color destructive_color      @tn_red;
-@define-color destructive_bg_color   @tn_red;
-@define-color destructive_fg_color   #ffffff;
-@define-color theme_fg_color         @tn_text;
+@define-color window_bg_color         @tn_bg;
+@define-color window_fg_color         @tn_text;
+@define-color headerbar_bg_color      transparent;
+@define-color headerbar_fg_color      @tn_text;
+@define-color card_bg_color           @tn_surface;
+@define-color card_fg_color           @tn_text;
+@define-color popover_bg_color        rgba(26, 27, 38, 0.88);
+@define-color popover_fg_color        @tn_text;
+@define-color accent_color            @tn_accent;
+@define-color accent_bg_color         @tn_accent;
+@define-color accent_fg_color         #1a1b26;
+@define-color destructive_color       @tn_red;
+@define-color destructive_bg_color    @tn_red;
+@define-color destructive_fg_color    #ffffff;
+@define-color theme_fg_color          @tn_text;
 
 /* ── Theme Root Variables ── */
 :root {
@@ -54,6 +54,11 @@ window > box,
 .background {
   background-color: @window_bg_color;
   color: @window_fg_color;
+}
+
+/* ── ToolbarView Integration ── */
+toolbarview {
+  background-color: transparent;
 }
 
 /* ── HeaderBar & Navigation (Blended Transparent) ── */
@@ -154,9 +159,13 @@ headerbar togglebutton:active {
 }
 
 .sidebar-row:not(.sidebar-section):hover:not(:selected) {
-  background-color: rgba(255, 255, 255, 0.07);
+  background-color: alpha(@theme_fg_color, 0.12);
+  color: @theme_fg_color;
   transform: translateX(3px);
-  color: #ffffff;
+}
+
+.sidebar-row:not(.sidebar-section):hover:not(:selected) label {
+  color: @theme_fg_color;
 }
 
 .sidebar-row:not(.sidebar-section):selected {
@@ -193,7 +202,6 @@ headerbar togglebutton:active {
   transform: none;
 }
 
-/* Tokyo Night Harmonized Section Labels with Accent Gradient Stripe */
 .sidebar-section-label {
   font-family: var(--font-main);
   font-size: 0.7rem;
@@ -278,7 +286,7 @@ button.eject-button:active {
 gridview,
 listview {
   background-color: transparent;
-  padding: 18px 26px;
+  padding: 0px 26px 16px 26px;
 }
 
 gridview child {

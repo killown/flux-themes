@@ -60,6 +60,11 @@ window > box,
   color: @window_fg_color;
 }
 
+/* ── ToolbarView Integration ── */
+toolbarview {
+  background-color: transparent;
+}
+
 /* ── HeaderBar & Navigation (Blended Transparent) ── */
 headerbar {
   background-color: transparent;
@@ -269,7 +274,7 @@ button.eject-button:active {
 gridview,
 listview {
   background-color: @window_bg_color;
-  padding: 16px 24px;
+  padding: 0px 24px 16px 24px;
 }
 
 gridview child {
