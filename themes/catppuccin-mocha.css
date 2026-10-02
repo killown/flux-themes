@@ -632,19 +632,20 @@ textview text {
 
 /* ── Status Bar & Transfers (Floating Card Style) ── */
 .selection-status {
+  font-size: 1em;
   background-color: color-mix(in srgb, @window_bg_color 85%, @cp_mantle 15%);
   border: 1px solid alpha(@cp_surface1, 0.4);
-  border-radius: 12px;
-  padding: 6px 16px;
-  min-height: 28px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  margin-bottom: 8px;
+  border-radius: 0.9em;
+  padding: 0.45em 1.2em;
+  min-height: 2.2em;
+  box-shadow: 0 0.3em 1.2em rgba(0, 0, 0, 0.3);
+  margin-bottom: 0.6em;
 }
 
 .selection-status label.caption {
   color: alpha(@theme_fg_color, 0.82);
   font-family: var(--font-mono);
-  font-size: 8.5pt;
+  font-size: 0.85em;
   letter-spacing: -0.01em;
 }
 
@@ -654,15 +655,15 @@ textview text {
 
 .selection-status progressbar {
   background-color: transparent;
-  min-height: 6px;
-  border-radius: 99px;
+  min-height: 0.45em;
+  border-radius: 999px;
 }
 
 .selection-status progressbar trough {
   background-color: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 99px;
-  min-height: 6px;
+  border-radius: 999px;
+  min-height: 0.45em;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 
@@ -673,9 +674,9 @@ textview text {
     rgba(255, 255, 255, 0.22) 0%,
     rgba(0, 0, 0, 0.15) 100%
   );
-  border-radius: 99px;
-  min-height: 6px;
-  box-shadow: 0 0 6px alpha(@accent_color, 0.4);
+  border-radius: 999px;
+  min-height: 0.45em;
+  box-shadow: 0 0 0.45em alpha(@accent_color, 0.4);
 }
 
 .selection-status button.flat {
@@ -683,10 +684,10 @@ textview text {
   color: alpha(@theme_fg_color, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-top-color: rgba(255, 255, 255, 0.14);
-  border-radius: 6px;
-  padding: 2px 8px;
-  min-height: 20px;
-  font-size: 8pt;
+  border-radius: 0.45em;
+  padding: 0.15em 0.6em;
+  min-height: 1.6em;
+  font-size: 0.8em;
   font-family: var(--font-mono);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
   transition:
@@ -709,11 +710,11 @@ textview text {
 .selection-status button.destructive-action {
   background-color: rgba(255, 59, 48, 0.14);
   border: 1px solid rgba(255, 59, 48, 0.25);
-  border-radius: 6px;
+  border-radius: 0.45em;
   color: @cp_red;
-  padding: 2px 7px;
-  min-height: 20px;
-  font-size: 8pt;
+  padding: 0.15em 0.5em;
+  min-height: 1.6em;
+  font-size: 0.8em;
   font-family: var(--font-mono);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
   transition:
@@ -746,7 +747,7 @@ window:backdrop .selection-status button.destructive-action {
   opacity: 0.6;
 }
 
-/* ── Quick Panel (Floating Dock) ── */
+/* quick panel */
 .quick-panel-scroll {
   background: none;
   border: none;
@@ -761,19 +762,19 @@ window:backdrop .selection-status button.destructive-action {
 .quick-panel {
   background: color-mix(in srgb, @window_bg_color 80%, @cp_mantle 20%);
   border: 1px solid alpha(@cp_surface1, 0.4);
-  border-radius: 12px;
-  padding: 4px 6px;
+  border-radius: 0.9em;
+  padding: 0.3em 0.5em;
   box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.45),
+    0 0.6em 1.8em rgba(0, 0, 0, 0.45),
     inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
 
 .quick-panel button,
 .quick-panel-tab {
-  min-width: 82px;
-  min-height: 26px;
-  padding: 3px 14px;
-  border-radius: 8px;
+  min-width: 6.5em;
+  min-height: 2.1em;
+  padding: 0.25em 1.1em;
+  border-radius: 0.6em;
   background-color: rgba(255, 255, 255, 0.07);
   background-image: linear-gradient(
     to bottom,
@@ -796,7 +797,7 @@ window:backdrop .selection-status button.destructive-action {
 .quick-panel-tab label {
   color: alpha(@theme_fg_color, 0.88);
   font-family: var(--font-main);
-  font-size: 9.5pt;
+  font-size: 0.95em;
   font-weight: 500;
   letter-spacing: -0.01em;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
@@ -834,7 +835,7 @@ window:backdrop .selection-status button.destructive-action {
   border: 1px solid alpha(@accent_color, 0.5);
   border-top-color: rgba(255, 255, 255, 0.4);
   box-shadow:
-    0 2px 8px alpha(@accent_color, 0.45),
+    0 0.15em 0.6em alpha(@accent_color, 0.45),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
   color: @cp_base;
 }
@@ -850,13 +851,34 @@ window:backdrop .selection-status button.destructive-action {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* ── Standard Buttons & Actions ── */
+/* general buttons and actions */
+.flat {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.circular {
+  border-radius: 9999px;
+  padding: 0.35em;
+}
+
+.circular image {
+  -gtk-icon-size: 1.15em;
+  min-width: 1.15em;
+  min-height: 1.15em;
+}
+
+.pill {
+  border-radius: 999px;
+  padding: 0.4em 1.2em;
+}
+
 .suggested-action {
   background-color: @accent_bg_color;
   color: @accent_fg_color;
   border: none;
-  border-radius: 8px;
-  padding: 6px 18px;
+  border-radius: 0.6em;
+  padding: 0.45em 1.3em;
   font-weight: bold;
 }
 
@@ -871,8 +893,8 @@ window:backdrop .selection-status button.destructive-action {
 .destructive-action {
   background-color: alpha(@cp_red, 0.1);
   color: @cp_red;
-  border-radius: 8px;
-  padding: 8px 16px;
+  border-radius: 0.6em;
+  padding: 0.5em 1.2em;
   font-weight: bold;
   letter-spacing: 0px;
 }
@@ -885,14 +907,28 @@ window:backdrop .selection-status button.destructive-action {
   background-color: alpha(@cp_red, 0.2);
 }
 
-/* ── Form Controls & Widgets ── */
+.linked > button {
+  border-radius: 0;
+}
+
+.linked > button:first-child {
+  border-top-left-radius: 0.5em;
+  border-bottom-left-radius: 0.5em;
+}
+
+.linked > button:last-child {
+  border-top-right-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+}
+
+/* form controls and widgets */
 check,
 radio {
   background-color: alpha(@theme_fg_color, 0.08);
   border: 1px solid alpha(@cp_surface1, 0.4);
-  border-radius: 4px;
-  min-height: 16px;
-  min-width: 16px;
+  border-radius: 0.3em;
+  min-height: 1.2em;
+  min-width: 1.2em;
 }
 
 check:checked,
@@ -915,11 +951,11 @@ spinbutton,
 spinbutton text {
   background-color: alpha(@theme_fg_color, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
+  border-radius: 0.6em;
   color: @theme_fg_color;
   caret-color: @theme_fg_color;
-  padding: 0 4px;
-  min-height: 28px;
+  padding: 0 0.3em;
+  min-height: 2.1em;
 }
 
 spinbutton:focus-within {
@@ -940,9 +976,9 @@ dropdown,
 combobox {
   background-color: alpha(@theme_fg_color, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
+  border-radius: 0.6em;
   color: @theme_fg_color;
-  min-height: 28px;
+  min-height: 2.1em;
 }
 
 dropdown button,
@@ -963,8 +999,8 @@ dropdown label {
 
 scale trough {
   background: alpha(@theme_fg_color, 0.1);
-  border-radius: 10px;
-  min-height: 4px;
+  border-radius: 0.75em;
+  min-height: 0.3em;
 }
 
 scale highlight {
@@ -975,12 +1011,12 @@ scale slider {
   background: @theme_fg_color;
   border: 2px solid @accent_bg_color;
   border-radius: 50%;
-  min-width: 16px;
-  min-height: 16px;
+  min-width: 1.2em;
+  min-height: 1.2em;
 }
 
 levelbar block {
-  border-radius: 4px;
+  border-radius: 0.3em;
 }
 
 levelbar block.low {
@@ -997,22 +1033,23 @@ levelbar block.full {
 
 progressbar {
   background-color: alpha(@theme_fg_color, 0.05);
-  border-radius: 4px;
+  border-radius: 0.3em;
 }
 
 progressbar progress {
   background-color: @accent_bg_color;
-  border-radius: 4px;
-  min-height: 4px;
+  border-radius: 0.3em;
+  min-height: 0.3em;
 }
 
+/* scrollbars */
 scrollbar {
   background: transparent;
 }
 
 scrollbar slider {
   background-color: alpha(@theme_fg_color, 0.2);
-  border-radius: 10px;
+  border-radius: 0.75em;
 }
 
 scrollbar slider:hover {
@@ -1027,7 +1064,7 @@ notebook > header {
 notebook > header > tabs > tab {
   background: transparent;
   color: @theme_fg_color;
-  padding: 4px 12px;
+  padding: 0.3em 0.9em;
   border: none;
   border-bottom: 2px solid transparent;
 }
@@ -1037,22 +1074,22 @@ notebook > header > tabs > tab:checked {
   border-bottom-color: @accent_color;
 }
 
-/* ── Cards, Lists & Frames ── */
+/* cards lists and frames */
 .card {
   background: @card_bg_color;
-  border-radius: 12px;
+  border-radius: 0.9em;
   border: 1px solid alpha(@cp_surface1, 0.4);
 }
 
 .frame {
   border: 1px solid alpha(@cp_surface1, 0.4);
-  border-radius: 8px;
+  border-radius: 0.6em;
   background: transparent;
 }
 
 .boxed-list {
   background: @card_bg_color;
-  border-radius: 12px;
+  border-radius: 0.9em;
   border: 1px solid alpha(@cp_surface1, 0.4);
 }
 
@@ -1085,16 +1122,16 @@ row:selected {
 .property {
   background: transparent;
   border-bottom: 1px solid alpha(@cp_surface1, 0.4);
-  padding: 6px 0px;
+  padding: 0.45em 0px;
   color: @theme_fg_color;
-  font-size: 9.5pt;
+  font-size: 0.95em;
 }
 
 .property label {
   color: @theme_fg_color;
 }
 
-/* ── Settings & Libadwaita Preferences ── */
+/* settings and preferences */
 window.settings-window,
 adwpreferenceswindow,
 .settings-window {
@@ -1114,14 +1151,14 @@ viewswitcher button label,
 adwviewswitcher button label {
   font-weight: 500;
   text-transform: none;
-  font-size: 9pt;
+  font-size: 0.9em;
 }
 
 viewswitcher button,
 adwviewswitcher button {
-  padding-left: 4px;
-  padding-right: 4px;
-  min-width: 60px;
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+  min-width: 4.5em;
 }
 
 .settings-row label {
@@ -1164,18 +1201,13 @@ adwpreferencesgroup label.description,
   color: alpha(@theme_fg_color, 0.65);
 }
 
-/* ── Utilities, Tooltips & Status States ── */
+/* general typography and labels */
 tooltip.background {
   background-color: alpha(@window_bg_color, 0.95);
   border: 1px solid alpha(@cp_surface1, 0.4);
-  border-radius: 8px;
+  border-radius: 0.6em;
   color: @theme_fg_color;
-  padding: 6px 12px;
-}
-
-toast label {
-  color: @theme_fg_color;
-  letter-spacing: 0.4px;
+  padding: 0.45em 0.9em;
 }
 
 .dim-label {
@@ -1183,7 +1215,22 @@ toast label {
 }
 
 .caption {
+  font-size: 0.85em;
   color: alpha(@theme_fg_color, 0.65);
+}
+
+.body {
+  font-size: 1em;
+}
+
+.title-1 {
+  font-size: 1.6em;
+  font-weight: 800;
+}
+
+.title-3 {
+  font-size: 1.2em;
+  font-weight: 700;
 }
 
 .numeric {
@@ -1203,13 +1250,20 @@ toast label {
 }
 
 .monospace {
-  font-family: var(--font-mono);
+  font-family: var(--font-mono), monospace;
 }
 
+/* status feedback indicators */
 .error {
   border: 1px solid @cp_red;
   background: alpha(@cp_red, 0.08);
   color: @cp_red;
+}
+
+.error image {
+  -gtk-icon-size: 1.15em;
+  min-width: 1.15em;
+  min-height: 1.15em;
 }
 
 .warning {
@@ -1218,87 +1272,322 @@ toast label {
   color: @cp_peach;
 }
 
-/* ── Window Controls ── */
-windowcontrols button {
-  background-color: transparent;
+.warning image {
+  -gtk-icon-size: 1.15em;
+  min-width: 1.15em;
+  min-height: 1.15em;
+}
+
+.success {
+  color: @cp_green;
+}
+
+/* tabbar */
+tabbar,
+tabbar.inline {
   border: none;
-  border-color: transparent;
-  border-radius: 0;
-  padding: 6px 6px;
-  min-width: 24px;
-  min-height: 24px;
-  color: @headerbar_fg_color;
+  background: transparent;
+  box-shadow: none;
+}
+
+tabbar scrollbar {
+  opacity: 0;
+  min-width: 0px;
+  min-height: 0px;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+tabbar undershoot,
+tabbar undershoot.left,
+tabbar undershoot.right {
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+tabbar tab {
+  min-height: 1.8em;
+  padding: 0.15em 0.8em;
+  margin: 0 0.15em;
+  border-radius: 0.6em;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: none;
   transition:
-    background-color 150ms ease,
-    color 150ms ease;
+    background-color 120ms ease,
+    border-color 120ms ease;
 }
 
-windowcontrols button:hover {
-  background-color: alpha(@headerbar_fg_color, 0.12);
+tabbar tab:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.22);
 }
 
-windowcontrols button:active {
-  background-color: alpha(@headerbar_fg_color, 0.2);
+tabbar tab:checked,
+tabbar tab:selected,
+tabbar tab.selected {
+  background-color: #007aff;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  border: 1px solid rgba(0, 122, 255, 0.8);
+  border-top-color: rgba(255, 255, 255, 0.4);
+  box-shadow:
+    0 0.15em 0.6em rgba(0, 122, 255, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
-windowcontrols button.close:hover {
-  background-color: alpha(@cp_red, 0.25);
-  color: @cp_red;
+tabbar tab:checked:hover,
+tabbar tab:selected:hover,
+tabbar tab.selected:hover {
+  background-color: #1a8cff;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.32) 0%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
 }
 
-windowcontrols button.close:active {
-  background-color: alpha(@cp_red, 0.4);
-  color: @cp_red;
-}
-
-windowcontrols button.minimize:hover,
-windowcontrols button.maximize:hover {
-  background-color: alpha(@headerbar_fg_color, 0.15);
-}
-
-/* Position toasts cleanly above the floating dock capsule */
-toastoverlay.quick-dock-active toast {
-  margin-bottom: 60px;
-}
-
-/* ── Empty Folder & Symlink Dynamic Theme Styling ── */
-.flux-card.flux-card--empty {
-  border-left: 2.5px solid alpha(@theme_fg_color, 0.45);
-}
-
-.flux-card.flux-card--empty .flux-label {
+tabbar tab label {
+  font-family: var(--font-main);
+  font-size: 0.9em;
+  font-weight: 500;
   color: alpha(@theme_fg_color, 0.65);
 }
 
-.flux-card.flux-card--symlink {
-  border-right: 2.5px solid alpha(@accent_color, 0.75);
+tabbar tab:hover label {
+  color: @theme_fg_color;
 }
 
-.flux-card.flux-card--symlink .flux-label {
+tabbar tab:checked label,
+tabbar tab:selected label,
+tabbar tab.selected label {
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+tabbar tab button.flat {
+  min-height: 1.2em;
+  min-width: 1.2em;
+  padding: 1px;
+  border-radius: 50%;
+  color: alpha(@theme_fg_color, 0.6);
+  opacity: 0.6;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transition:
+    opacity 120ms ease,
+    background-color 120ms ease;
+}
+
+tabbar tab:hover button.flat {
+  opacity: 1;
   color: @theme_fg_color;
+}
+
+tabbar tab:checked button.flat,
+tabbar tab:selected button.flat,
+tabbar tab.selected button.flat {
+  color: #ffffff;
+  opacity: 0.9;
+}
+
+tabbar tab button.flat:hover {
+  background-color: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+}
+
+tabbar tab:checked button.flat:hover,
+tabbar tab:selected button.flat:hover,
+tabbar tab.selected button.flat:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+}
+
+/* toast notifications */
+toastoverlay.quick-dock-active toast {
+  margin-bottom: 4.5em;
+}
+
+toast {
+  font-size: 1em;
+  background-color: alpha(@window_bg_color, 0.95);
+  border: 1px solid alpha(@window_fg_color, 0.1);
+  border-radius: 0.9em;
+  box-shadow: 0 0.3em 1.2em alpha(black, 0.15);
+}
+
+toast label {
+  color: @window_fg_color;
+  letter-spacing: 0.4px;
+}
+
+toast label.flux-toast-label {
   font-weight: 500;
 }
 
-.flux-card.flux-card--broken-symlink {
-  border-right: 2.5px solid @cp_red;
+toast button {
+  color: alpha(@window_fg_color, 0.75);
+  background-color: transparent;
+  border-radius: 0.45em;
+  padding: 0.15em 0.45em;
+  min-height: 1.6em;
 }
 
-.flux-card.flux-card--broken-symlink .flux-label {
-  color: @cp_red;
-  text-decoration-line: line-through;
+toast button:hover {
+  background-color: alpha(@window_fg_color, 0.12);
+  color: @window_fg_color;
 }
 
-.flux-card.flux-card--cut {
-  background-color: alpha(#ff9500, 0.1);
-  box-shadow: inset 0 0 0 1.5px alpha(#ff9500, 0.45);
-  opacity: 0.6;
+toast button:active {
+  background-color: alpha(@window_fg_color, 0.2);
+  color: @window_fg_color;
 }
 
-.flux-card.flux-card--cut .flux-label {
-  color: alpha(@theme_fg_color, 0.65);
-  font-style: italic;
+toast button image {
+  color: inherit;
+  -gtk-icon-size: 1.15em;
 }
 
-.flux-card--copy {
-  opacity: 0.6;
+/* git badges and headers */
+.flux-git-badge {
+  font-family: "Symbols Nerd Font", "JetBrains Mono", var(--font-mono);
+  font-size: 0.8em;
+  font-weight: 700;
+  border-radius: 0.3em;
+  padding: 0.1em 0.35em;
+  min-height: 1.2em;
+  min-width: 1.2em;
+  margin-top: 0.7em;
+  margin-right: 0.7em;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.flux-git-untracked {
+  background-color: alpha(#8e8e93, 0.25);
+  color: #8e8e93;
+}
+
+.flux-git-added {
+  background-color: alpha(#34c759, 0.25);
+  color: #34c759;
+}
+
+.flux-git-modified,
+.flux-git-mixed {
+  background-color: alpha(#007aff, 0.25);
+  color: #007aff;
+}
+
+.flux-git-staged {
+  background-color: alpha(#5856d6, 0.25);
+  color: #5856d6;
+}
+
+.flux-git-deleted {
+  background-color: alpha(#ff3b30, 0.25);
+  color: #ff3b30;
+}
+
+.flux-git-conflict {
+  background-color: alpha(#ff9500, 0.35);
+  color: #ff9500;
+}
+
+.flux-header-git-btn {
+  background-color: @accent_bg_color;
+  color: @accent_fg_color;
+  border: none;
+  border-radius: 0.6em;
+  padding: 0.45em 1.4em;
+  font-weight: bold;
+}
+
+.flux-header-git-btn:hover {
+  background-color: alpha(@accent_bg_color, 0.8);
+}
+
+.flux-header-git-label {
+  color: @accent_fg_color;
+  font-family: var(--font-main);
+  font-weight: bold;
+  letter-spacing: 0px;
+}
+
+/* diff panel */
+.diff-view {
+  font-size: 0.85em;
+  font-family: monospace;
+}
+
+/* keyboard shortcuts */
+.keycap {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.8em;
+  background-color: alpha(@window_fg_color, 0.08);
+  border: 1px solid alpha(@window_fg_color, 0.15);
+  border-radius: 0.3em;
+  padding: 0.1em 0.4em;
+  box-shadow: 0 1px 0 alpha(black, 0.2);
+}
+
+/* background sync */
+.flux-bg-sync {
+  transition: none;
+}
+
+/* advanced search selectors scaling */
+adw-combo-row,
+dropdown {
+  font-size: 1em;
+  min-height: 2.2em;
+  padding: 0.2em 0.6em;
+}
+
+adw-combo-row button,
+dropdown button {
+  min-height: 2em;
+  padding: 0.2em 0.5em;
+}
+
+adw-combo-row image,
+dropdown image {
+  -gtk-icon-size: 1.15em;
+  min-width: 1.15em;
+  min-height: 1.15em;
+}
+
+/* ── Sidebar Panels & Tag Navigator Icon Scaling ── */
+.sidebar button,
+.sidebar menuitem,
+.sidebar popover modelbutton {
+  min-height: 2em;
+  min-width: 2em;
+}
+
+.sidebar button image,
+.sidebar popover image,
+.sidebar modelbutton image {
+  -gtk-icon-size: 1.15em;
+  min-width: 1.15em;
+  min-height: 1.15em;
+}
+
+.sidebar popover contents {
+  font-size: 1em;
+}
+
+/* tag navigator search entry icon scaling */
+.tag-search-entry image,
+.tag-search-entry text,
+.tag-search-entry image.search {
+  -gtk-icon-size: 1.15em;
+  min-width: 1.15em;
+  min-height: 1.15em;
 }
