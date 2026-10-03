@@ -310,7 +310,6 @@ gridview child:selected .flux-card {
 
 gridview child:selected .flux-label {
   color: @cp_text;
-  font-weight: 700;
 }
 
 .flux-card--restricted {
