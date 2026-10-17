@@ -699,17 +699,23 @@ entry.flux-rename-entry {
 }
 
 /* popovers and context menus */
-popover.menu {
+popover.menu,
+popover.menu > contents,
+popover.menu > contents > .background,
+popover.menu > contents > box,
+popover.menu > arrow {
   border: none;
   outline: none;
   box-shadow: none;
+  background: none;
 }
 
-popover.menu contents {
+popover.menu > contents {
   background-color: @window_bg_color;
   border: none;
   outline: none;
   border-radius: 0.9em;
+  padding: 0.3em;
   box-shadow: 0 0.6em 1.8em var(--shadow);
 }
 
@@ -718,6 +724,9 @@ popover.menu modelbutton {
   min-height: 2.1em;
   padding: 0.3em 0.6em;
   border-radius: 0.45em;
+  background: none;
+  border: none;
+  box-shadow: none;
 }
 
 popover.menu modelbutton label {

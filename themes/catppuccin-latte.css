@@ -1,8 +1,3 @@
-/* ============================================================
-   Flux - C A T P P U C C I N   L A T T E
-   ============================================================ */
-
-/* ── Catppuccin Latte Color Ramp ── */
 @define-color cp_rosewater  #dc8a78;
 @define-color cp_flamingo   #dd7878;
 @define-color cp_pink       #ea76cb;
@@ -30,7 +25,6 @@
 @define-color cp_mantle     #e6e9ef;
 @define-color cp_crust      #dce0e8;
 
-/* ── Libadwaita Palette Mapping ── */
 @define-color window_bg_color     @cp_base;
 @define-color window_fg_color     @cp_text;
 @define-color headerbar_bg_color  transparent;
@@ -47,7 +41,6 @@
 @define-color destructive_fg_color #ffffff;
 @define-color theme_fg_color      @cp_text;
 
-/* ── Theme Root Variables ── */
 :root {
   --accent-color: #8839ef;
   --shadow: rgba(76, 79, 105, 0.08);
@@ -57,7 +50,6 @@
   letter-spacing: 0px;
 }
 
-/* ── Global Base ── */
 window,
 window > box,
 .background {
@@ -65,12 +57,10 @@ window > box,
   color: @window_fg_color;
 }
 
-/* ── ToolbarView Integration ── */
 toolbarview {
   background-color: transparent;
 }
 
-/* ── HeaderBar & Navigation (Blended Transparent) ── */
 headerbar {
   background-color: transparent;
   padding: 4px 12px;
@@ -123,7 +113,6 @@ headerbar togglebutton:active {
   color: @accent_color;
 }
 
-/* ── Sidebar & Navigation Tree (Light) ── */
 .sidebar {
   background-color: color-mix(in srgb, @window_bg_color 20%, @cp_mantle 80%);
   border-radius: 14px;
@@ -267,7 +256,6 @@ button.eject-button:active {
   opacity: 1;
 }
 
-/* ── Grid & List Item Views ── */
 gridview,
 listview {
   background-color: @window_bg_color;
@@ -329,7 +317,6 @@ gridview child:selected .flux-label {
   color: @cp_peach;
 }
 
-/* HIG-Compliant Light Mode Metadata Capsule for List Mode */
 .flux-list-info {
   font-family: var(--font-mono);
   font-size: 8.5pt;
@@ -370,7 +357,6 @@ entry.flux-rename-entry {
   min-height: 24px;
 }
 
-/* ── Drag & Drop States ── */
 .sidebar-dragging {
   opacity: 0.45;
 }
@@ -380,7 +366,6 @@ entry.flux-rename-entry {
   box-shadow: inset 0 0 0 1px @accent_color;
 }
 
-/* ── Breadcrumb Navigation ── */
 button.breadcrumb-btn {
   background: linear-gradient(
     to bottom,
@@ -456,7 +441,6 @@ button.breadcrumb-btn label {
   letter-spacing: 0px;
 }
 
-/* ── Popovers & Context Menus (Clean & Borderless Outer Shell) ── */
 popover,
 popover.background,
 popover.menu {
@@ -476,6 +460,18 @@ popover.background contents {
   border-radius: 12px;
   box-shadow: 0 8px 24px var(--shadow);
   padding: 4px;
+}
+
+popover.menu > contents > .background,
+popover.menu > contents > box,
+popover.background > contents > .background,
+popover.background > contents > box,
+popover.menu > arrow,
+popover.background > arrow {
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
 }
 
 popover.menu modelbutton {
@@ -529,7 +525,6 @@ popover.menu > contents separator {
   margin: 4px 8px;
 }
 
-/* ── Text Entries & Inputs ── */
 entry,
 searchentry,
 passwordentry,
@@ -644,7 +639,6 @@ textview text {
   caret-color: @window_fg_color;
 }
 
-/* ── Status Bar & Transfers (Floating Card Style) ── */
 .selection-status {
   background-color: color-mix(in srgb, @window_bg_color 90%, #ffffff 10%);
   border: 1px solid alpha(@cp_surface0, 0.6);
@@ -727,7 +721,6 @@ window:backdrop .selection-status label {
   color: alpha(@theme_fg_color, 0.35);
 }
 
-/* ── Quick Panel (Floating Dock) ── */
 .quick-panel-scroll {
   background: none;
   border: none;
@@ -813,7 +806,6 @@ window:backdrop .selection-status label {
   text-shadow: none;
 }
 
-/* ── Standard Buttons & Actions ── */
 .suggested-action {
   background-color: @accent_bg_color;
   color: #ffffff;
@@ -848,7 +840,6 @@ window:backdrop .selection-status label {
   background-color: rgba(210, 15, 57, 0.2);
 }
 
-/* ── Form Controls & Widgets ── */
 check,
 radio {
   background-color: rgba(76, 79, 105, 0.04);
@@ -1007,7 +998,6 @@ notebook > header > tabs > tab:checked {
   border-bottom-color: @accent_color;
 }
 
-/* ── Cards, Lists & Frames ── */
 .card {
   background: rgba(76, 79, 105, 0.02);
   border-radius: 12px;
@@ -1075,7 +1065,6 @@ row:selected {
   color: @window_fg_color;
 }
 
-/* ── Settings & Libadwaita Preferences ── */
 window.settings-window,
 adwpreferenceswindow,
 .settings-window {
@@ -1164,7 +1153,6 @@ adwpreferencesgroup label.description,
   color: @cp_red;
 }
 
-/* ── Utilities, Tooltips & Status States ── */
 tooltip.background {
   background-color: rgba(255, 255, 255, 0.95);
   border: 1px solid alpha(@cp_surface0, 0.4);
@@ -1225,7 +1213,6 @@ adwtoast button label {
   color: @cp_peach;
 }
 
-/* ── Window Controls ── */
 windowcontrols {
   font-size: 1em;
 }
@@ -1279,12 +1266,10 @@ windowcontrols button.maximize:hover {
   background-color: alpha(@headerbar_fg_color, 0.15);
 }
 
-/* Position toasts cleanly above the floating dock capsule */
 toastoverlay.quick-dock-active toast {
   margin-bottom: 60px;
 }
 
-/* ── Empty Folder & Symlink Dynamic Theme Styling (Latte) ── */
 .flux-card.flux-card--empty {
   border-left: 2.5px solid alpha(@theme_fg_color, 0.4);
 }
@@ -1324,4 +1309,326 @@ toastoverlay.quick-dock-active toast {
 
 .flux-card--copy {
   opacity: 0.6;
+}
+
+tabbar,
+tabbar.inline {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+tabbar scrollbar {
+  opacity: 0;
+  min-width: 0px;
+  min-height: 0px;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+tabbar undershoot,
+tabbar undershoot.left,
+tabbar undershoot.right {
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+tabbar tab {
+  min-height: 24px;
+  padding: 2px 10px;
+  margin: 0 2px;
+  border-radius: 8px;
+  background-color: rgba(76, 79, 105, 0.04);
+  border: 1px solid alpha(@cp_surface0, 0.6);
+  box-shadow: none;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease;
+}
+
+tabbar tab:hover {
+  background-color: rgba(76, 79, 105, 0.08);
+  border-color: alpha(@cp_surface0, 0.8);
+}
+
+tabbar tab:checked,
+tabbar tab:selected,
+tabbar tab.selected {
+  background-color: @accent_bg_color;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(0, 0, 0, 0.06) 100%
+  );
+  border: 1px solid alpha(@accent_color, 0.8);
+  border-top-color: rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 2px 6px alpha(@accent_color, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+tabbar tab:checked:hover,
+tabbar tab:selected:hover,
+tabbar tab.selected:hover {
+  background-color: color-mix(in srgb, @accent_bg_color, #000 8%);
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(0, 0, 0, 0.04) 100%
+  );
+}
+
+tabbar tab label {
+  font-family: var(--font-main);
+  font-size: 9pt;
+  font-weight: 500;
+  color: alpha(@window_fg_color, 0.7);
+}
+
+tabbar tab:hover label {
+  color: @window_fg_color;
+}
+
+tabbar tab:checked label,
+tabbar tab:selected label,
+tabbar tab.selected label {
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+tabbar tab button.flat {
+  min-height: 16px;
+  min-width: 16px;
+  padding: 1px;
+  border-radius: 50%;
+  color: alpha(@window_fg_color, 0.5);
+  opacity: 0.6;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transition:
+    opacity 120ms ease,
+    background-color 120ms ease;
+}
+
+tabbar tab button.flat image {
+  -gtk-icon-size: 0.9em;
+  min-width: 0.9em;
+  min-height: 0.9em;
+}
+
+tabbar tab:hover button.flat {
+  opacity: 1;
+  color: @window_fg_color;
+}
+
+tabbar tab:checked button.flat,
+tabbar tab:selected button.flat,
+tabbar tab.selected button.flat {
+  color: #ffffff;
+  opacity: 0.9;
+}
+
+tabbar tab button.flat:hover {
+  background-color: rgba(76, 79, 105, 0.1);
+  color: @window_fg_color;
+}
+
+tabbar tab:checked button.flat:hover,
+tabbar tab:selected button.flat:hover,
+tabbar tab.selected button.flat:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+}
+
+toast {
+  font-size: 1em;
+  background-color: rgba(255, 255, 255, 0.98);
+  border: 1px solid alpha(@cp_surface0, 0.6);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(76, 79, 105, 0.12);
+}
+
+toast label {
+  color: @window_fg_color;
+}
+
+toast label.flux-toast-label {
+  font-weight: 500;
+}
+
+toast button {
+  color: alpha(@window_fg_color, 0.7);
+  background-color: transparent;
+  border-radius: 6px;
+  padding: 2px 8px;
+  min-height: 20px;
+}
+
+toast button:hover {
+  background-color: alpha(@window_fg_color, 0.06);
+  color: @window_fg_color;
+}
+
+toast button:active {
+  background-color: alpha(@window_fg_color, 0.12);
+  color: @window_fg_color;
+}
+
+toast button image {
+  color: inherit;
+  -gtk-icon-size: 1.15em;
+}
+
+.flux-git-badge {
+  font-family: "Symbols Nerd Font", "JetBrains Mono", var(--font-mono);
+  font-size: 8pt;
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 1px 4px;
+  min-height: 14px;
+  min-width: 14px;
+  margin-top: 10px;
+  margin-right: 10px;
+  box-shadow: 0 1px 3px rgba(76, 79, 105, 0.15);
+}
+
+.flux-git-untracked {
+  background-color: alpha(@cp_overlay2, 0.18);
+  color: @cp_subtext0;
+}
+
+.flux-git-added {
+  background-color: alpha(@cp_green, 0.18);
+  color: @cp_green;
+}
+
+.flux-git-modified,
+.flux-git-mixed {
+  background-color: alpha(@cp_blue, 0.18);
+  color: @cp_blue;
+}
+
+.flux-git-staged {
+  background-color: alpha(@cp_mauve, 0.18);
+  color: @cp_mauve;
+}
+
+.flux-git-deleted {
+  background-color: alpha(@cp_red, 0.18);
+  color: @cp_red;
+}
+
+.flux-git-conflict {
+  background-color: alpha(@cp_peach, 0.22);
+  color: @cp_peach;
+}
+
+.flux-header-git-btn {
+  background-color: @accent_bg_color;
+  color: @accent_fg_color;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 18px;
+  font-weight: bold;
+}
+
+.flux-header-git-btn:hover {
+  background-color: color-mix(in srgb, @accent_bg_color, #000 8%);
+}
+
+.flux-header-git-btn:hover label {
+  color: @accent_fg_color;
+}
+
+.flux-header-git-label {
+  color: @accent_fg_color;
+  font-family: var(--font-main);
+  font-weight: bold;
+  letter-spacing: 0px;
+}
+
+.diff-view {
+  font-size: 0.85em;
+  font-family: monospace;
+}
+
+.keycap {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.8em;
+  background-color: alpha(@window_fg_color, 0.08);
+  border: 1px solid alpha(@cp_surface0, 0.6);
+  border-radius: 4px;
+  padding: 1px 6px;
+  box-shadow: 0 1px 0 rgba(76, 79, 105, 0.15);
+}
+
+.keycap label {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+.flux-bg-sync {
+  transition: none;
+}
+
+adw-combo-row,
+dropdown {
+  font-size: 1em;
+  min-height: 2.2em;
+  padding: 0.2em 0.6em;
+}
+
+adw-combo-row button,
+dropdown button {
+  min-height: 2em;
+  padding: 0.2em 0.5em;
+}
+
+adw-combo-row image,
+dropdown image {
+  -gtk-icon-size: 1.15em;
+  min-width: 1.15em;
+  min-height: 1.15em;
+}
+
+.search-panel-icon {
+  -gtk-icon-size: 1.25em;
+  min-width: 1.25em;
+  min-height: 1.25em;
+}
+
+.search-panel-icon image {
+  -gtk-icon-size: 1.25em;
+}
+
+.sidebar button,
+.sidebar menuitem,
+.sidebar popover modelbutton {
+  min-height: 2em;
+  min-width: 2em;
+}
+
+.sidebar button image,
+.sidebar popover image,
+.sidebar modelbutton image {
+  -gtk-icon-size: 1.15em;
+  min-width: 1.15em;
+  min-height: 1.15em;
+}
+
+.sidebar popover contents {
+  font-size: 1em;
+}
+
+.tag-search-entry image,
+.tag-search-entry text,
+.tag-search-entry image.search {
+  -gtk-icon-size: 1.15em;
+  min-width: 1.15em;
+  min-height: 1.15em;
 }
