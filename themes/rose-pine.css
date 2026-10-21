@@ -1,0 +1,100 @@
+/* Flux - Rosé Pine theme
+ * Loaded on top of src/ui/style.css. Palette: Rosé Pine (main). */
+
+/* ── Rosé Pine palette ── */
+@define-color rp_base       #191724;
+@define-color rp_surface    #1f1d2e;
+@define-color rp_overlay    #26233a;
+@define-color rp_muted      #6e6a86;
+@define-color rp_subtle     #908caa;
+@define-color rp_text       #e0def4;
+@define-color rp_love       #eb6f92;
+@define-color rp_gold       #f6c177;
+@define-color rp_rose       #ebbcba;
+@define-color rp_pine       #31748f;
+@define-color rp_foam       #9ccfd8;
+@define-color rp_iris       #c4a7e7;
+@define-color rp_highlight_low  #21202e;
+@define-color rp_highlight_med  #403d52;
+@define-color rp_highlight_high #524f67;
+
+/* ── Libadwaita named colors ── */
+@define-color window_bg_color      @rp_base;
+@define-color window_fg_color      @rp_text;
+@define-color view_bg_color        @rp_base;
+@define-color view_fg_color        @rp_text;
+@define-color headerbar_bg_color   transparent;
+@define-color headerbar_fg_color   @rp_text;
+@define-color sidebar_bg_color     @rp_surface;
+@define-color sidebar_fg_color     @rp_text;
+@define-color card_bg_color        @rp_overlay;
+@define-color card_fg_color        @rp_text;
+@define-color dialog_bg_color      @rp_overlay;
+@define-color dialog_fg_color      @rp_text;
+@define-color popover_bg_color     @rp_overlay;
+@define-color popover_fg_color     @rp_text;
+@define-color theme_fg_color       @rp_text;
+@define-color theme_bg_color       @rp_base;
+@define-color theme_base_color     @rp_overlay;
+@define-color theme_text_color     @rp_text;
+
+@define-color accent_color         @rp_iris;
+@define-color accent_bg_color      @rp_iris;
+@define-color accent_fg_color      @rp_base;
+
+@define-color destructive_color    @rp_love;
+@define-color destructive_bg_color @rp_love;
+@define-color destructive_fg_color @rp_base;
+
+/* ── Flux palette variables ── */
+:root {
+  --border-color: alpha(@rp_text, 0.1);
+  --disabled-opacity: 0.4;
+  --shadow: rgba(25, 23, 36, 0.6);
+  --shadow-hover: rgba(25, 23, 36, 0.75);
+  --font-main: "Inter", "Helvetica Neue", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  --color-fg: @rp_text;
+  --color-window-bg: @rp_base;
+  --color-window-fg: @rp_text;
+  --color-card-bg: @rp_overlay;
+  --color-sidebar-bg: @rp_surface;
+  --color-popover-bg: @rp_overlay;
+  --color-popover-fg: @rp_text;
+  --color-headerbar-bg: @rp_base;
+  --color-headerbar-fg: @rp_text;
+
+  --color-accent: @rp_iris;
+  --color-accent-fg: @rp_base;
+  --color-accent-text: @rp_iris;
+
+  --color-danger: @rp_love;
+  --color-warn: @rp_gold;
+  --color-success: @rp_foam;
+  --color-git-mod: @rp_pine;
+  --color-git-staged: @rp_iris;
+  --color-git-untracked: @rp_muted;
+
+  letter-spacing: 0px;
+}
+
+/* ── os-dark slot remaps ── */
+@define-color red_3     @rp_love;
+@define-color orange_3  @rp_gold;
+@define-color green_4   @rp_foam;
+@define-color blue_3    @rp_pine;
+@define-color purple_3  @rp_iris;
+@define-color dark_2    @rp_muted;
+
+/* ── Structural overrides ── */
+headerbar {
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  border: none;
+}
+
+.selection-status {
+  background-color: @rp_overlay;
+}

@@ -1,0 +1,103 @@
+/* Flux - GitHub Dark theme
+ * Loaded on top of src/ui/style.css. Palette: GitHub Primer (dark). */
+
+/* ── GitHub palette ── */
+@define-color gh_canvas_default  #0d1117;
+@define-color gh_canvas_subtle   #161b22;
+@define-color gh_canvas_inset    #010409;
+@define-color gh_canvas_overlay  #161b22;
+@define-color gh_border_default  #30363d;
+@define-color gh_border_muted    #21262d;
+@define-color gh_fg_default      #e6edf3;
+@define-color gh_fg_muted        #7d8590;
+@define-color gh_fg_subtle       #6e7681;
+@define-color gh_accent_fg       #2f81f7;
+@define-color gh_accent_emphasis #1f6feb;
+@define-color gh_success_fg      #3fb950;
+@define-color gh_attention_fg    #d29922;
+@define-color gh_danger_fg       #f85149;
+@define-color gh_done_fg         #a371f7;
+@define-color gh_btn_bg          #21262d;
+@define-color gh_btn_hover       #30363d;
+
+/* ── Libadwaita named colors ── */
+@define-color window_bg_color      @gh_canvas_default;
+@define-color window_fg_color      @gh_fg_default;
+@define-color view_bg_color        @gh_canvas_default;
+@define-color view_fg_color        @gh_fg_default;
+@define-color headerbar_bg_color   transparent;
+@define-color headerbar_fg_color   @gh_fg_default;
+@define-color sidebar_bg_color     @gh_canvas_subtle;
+@define-color sidebar_fg_color     @gh_fg_default;
+@define-color card_bg_color        @gh_canvas_subtle;
+@define-color card_fg_color        @gh_fg_default;
+@define-color dialog_bg_color      @gh_canvas_subtle;
+@define-color dialog_fg_color      @gh_fg_default;
+@define-color popover_bg_color     @gh_canvas_subtle;
+@define-color popover_fg_color     @gh_fg_default;
+@define-color theme_fg_color       @gh_fg_default;
+@define-color theme_bg_color       @gh_canvas_default;
+@define-color theme_base_color     @gh_canvas_subtle;
+@define-color theme_text_color     @gh_fg_default;
+
+@define-color accent_color         @gh_accent_emphasis;
+@define-color accent_bg_color      @gh_accent_emphasis;
+@define-color accent_fg_color      @gh_canvas_default;
+
+@define-color destructive_color    @gh_danger_fg;
+@define-color destructive_bg_color @gh_danger_fg;
+@define-color destructive_fg_color @gh_canvas_default;
+
+/* ── Flux palette variables ── */
+:root {
+  --border-color: @gh_border_default;
+  --disabled-opacity: 0.4;
+  --shadow: rgba(1, 4, 9, 0.6);
+  --shadow-hover: rgba(1, 4, 9, 0.75);
+  --font-main: -apple-system, "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "SFMono-Regular", "JetBrains Mono", "Fira Code", monospace;
+
+  --color-fg: @gh_fg_default;
+  --color-window-bg: @gh_canvas_default;
+  --color-window-fg: @gh_fg_default;
+  --color-card-bg: @gh_canvas_subtle;
+  --color-sidebar-bg: @gh_canvas_subtle;
+  --color-popover-bg: @gh_canvas_subtle;
+  --color-popover-fg: @gh_fg_default;
+  --color-headerbar-bg: @gh_canvas_default;
+  --color-headerbar-fg: @gh_fg_default;
+
+  --color-accent: @gh_accent_emphasis;
+  --color-accent-fg: @gh_canvas_default;
+  --color-accent-text: @gh_accent_fg;
+
+  --color-danger: @gh_danger_fg;
+  --color-warn: @gh_attention_fg;
+  --color-success: @gh_success_fg;
+  --color-git-mod: @gh_accent_fg;
+  --color-git-staged: @gh_done_fg;
+  --color-git-untracked: @gh_fg_subtle;
+
+  letter-spacing: 0px;
+}
+
+/* ── os-dark slot remaps ── */
+@define-color red_3     @gh_danger_fg;
+@define-color orange_3  @gh_attention_fg;
+@define-color green_4   @gh_success_fg;
+@define-color blue_3    @gh_accent_emphasis;
+@define-color purple_3  @gh_done_fg;
+@define-color dark_2    @gh_fg_subtle;
+
+/* ── Structural overrides ── */
+headerbar {
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  border: 1px solid @gh_border_muted;
+}
+
+.selection-status {
+  background-color: @gh_canvas_subtle;
+  border-top: 1px solid @gh_border_default;
+}

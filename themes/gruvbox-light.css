@@ -1,0 +1,113 @@
+/* Flux - Gruvbox Light theme
+ * Loaded on top of src/ui/style.css. Palette: Gruvbox (light, medium). */
+
+/* ── Gruvbox palette ── */
+@define-color gb_bg_hard #f9f5d7;
+@define-color gb_bg      #fbf1c7;
+@define-color gb_bg_soft #f2e5bc;
+@define-color gb_bg1     #ebdbb2;
+@define-color gb_bg2     #d5c4a1;
+@define-color gb_bg3     #bdae93;
+@define-color gb_bg4     #a89984;
+@define-color gb_gray    #928374;
+@define-color gb_fg4     #7c6f64;
+@define-color gb_fg3     #665c54;
+@define-color gb_fg2     #504945;
+@define-color gb_fg1     #3c3836;
+@define-color gb_fg0     #282828;
+
+@define-color gb_red_dark    #cc241d;
+@define-color gb_red         #9d0006;
+@define-color gb_orange_dark #d65d0e;
+@define-color gb_orange      #af3a03;
+@define-color gb_yellow_dark #d79921;
+@define-color gb_yellow      #b57614;
+@define-color gb_green_dark  #98971a;
+@define-color gb_green       #79740e;
+@define-color gb_aqua_dark   #689d6a;
+@define-color gb_aqua        #427b58;
+@define-color gb_blue_dark   #458588;
+@define-color gb_blue        #076678;
+@define-color gb_purple_dark #b16286;
+@define-color gb_purple      #8f3f71;
+
+/* ── Libadwaita named colors ── */
+@define-color window_bg_color      @gb_bg;
+@define-color window_fg_color      @gb_fg1;
+@define-color view_bg_color        @gb_bg;
+@define-color view_fg_color        @gb_fg1;
+@define-color headerbar_bg_color   transparent;
+@define-color headerbar_fg_color   @gb_fg1;
+@define-color sidebar_bg_color     @gb_bg_soft;
+@define-color sidebar_fg_color     @gb_fg1;
+@define-color card_bg_color        @gb_bg1;
+@define-color card_fg_color        @gb_fg1;
+@define-color dialog_bg_color      @gb_bg;
+@define-color dialog_fg_color      @gb_fg1;
+@define-color popover_bg_color     @gb_bg;
+@define-color popover_fg_color     @gb_fg1;
+@define-color theme_fg_color       @gb_fg1;
+@define-color theme_bg_color       @gb_bg;
+@define-color theme_base_color     @gb_bg;
+@define-color theme_text_color     @gb_fg1;
+
+@define-color accent_color         @gb_orange;
+@define-color accent_bg_color      @gb_orange;
+@define-color accent_fg_color      @gb_bg;
+
+@define-color destructive_color    @gb_red;
+@define-color destructive_bg_color @gb_red;
+@define-color destructive_fg_color @gb_bg;
+
+/* ── Flux palette variables ── */
+:root {
+  --border-color: alpha(@gb_fg1, 0.12);
+  --disabled-opacity: 0.4;
+  --shadow: rgba(60, 56, 54, 0.2);
+  --shadow-hover: rgba(60, 56, 54, 0.3);
+  --font-main: "Inter", "Helvetica Neue", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  --color-fg: @gb_fg1;
+  --color-window-bg: @gb_bg;
+  --color-window-fg: @gb_fg1;
+  --color-card-bg: @gb_bg1;
+  --color-sidebar-bg: @gb_bg_soft;
+  --color-popover-bg: @gb_bg;
+  --color-popover-fg: @gb_fg1;
+  --color-headerbar-bg: @gb_bg;
+  --color-headerbar-fg: @gb_fg1;
+
+  --color-accent: @gb_orange;
+  --color-accent-fg: @gb_bg;
+  --color-accent-text: @gb_orange;
+
+  --color-danger: @gb_red;
+  --color-warn: @gb_yellow;
+  --color-success: @gb_green;
+  --color-git-mod: @gb_blue;
+  --color-git-staged: @gb_purple;
+  --color-git-untracked: @gb_gray;
+
+  letter-spacing: 0px;
+}
+
+/* ── os-dark slot remaps ── */
+@define-color red_3     @gb_red;
+@define-color orange_3  @gb_orange;
+@define-color green_4   @gb_green;
+@define-color blue_3    @gb_blue;
+@define-color purple_3  @gb_purple;
+@define-color dark_2    @gb_gray;
+
+/* ── Structural overrides ── */
+headerbar {
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  border: none;
+}
+
+.selection-status {
+  background-color: @gb_bg1;
+}

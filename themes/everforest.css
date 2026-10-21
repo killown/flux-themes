@@ -1,0 +1,105 @@
+/* Flux - Everforest theme
+ * Loaded on top of src/ui/style.css. Palette: Everforest (dark, medium). */
+
+/* ── Everforest palette ── */
+@define-color ef_bg_dim      #232a2e;
+@define-color ef_bg0         #2d353b;
+@define-color ef_bg1         #343f44;
+@define-color ef_bg2         #3d484d;
+@define-color ef_bg3         #475258;
+@define-color ef_bg4         #4f585e;
+@define-color ef_bg5         #56635f;
+
+@define-color ef_fg          #d3c6aa;
+@define-color ef_red         #e67e80;
+@define-color ef_orange      #e69875;
+@define-color ef_yellow      #dbbc7f;
+@define-color ef_green       #a7c080;
+@define-color ef_aqua        #83c092;
+@define-color ef_blue        #7fbbb3;
+@define-color ef_purple      #d699b6;
+
+@define-color ef_gray0       #7a8478;
+@define-color ef_gray1       #859289;
+@define-color ef_gray2       #9da9a0;
+
+/* ── Libadwaita named colors ── */
+@define-color window_bg_color      @ef_bg0;
+@define-color window_fg_color      @ef_fg;
+@define-color view_bg_color        @ef_bg0;
+@define-color view_fg_color        @ef_fg;
+@define-color headerbar_bg_color   transparent;
+@define-color headerbar_fg_color   @ef_fg;
+@define-color sidebar_bg_color     @ef_bg_dim;
+@define-color sidebar_fg_color     @ef_fg;
+@define-color card_bg_color        @ef_bg1;
+@define-color card_fg_color        @ef_fg;
+@define-color dialog_bg_color      @ef_bg1;
+@define-color dialog_fg_color      @ef_fg;
+@define-color popover_bg_color     @ef_bg1;
+@define-color popover_fg_color     @ef_fg;
+@define-color theme_fg_color       @ef_fg;
+@define-color theme_bg_color       @ef_bg0;
+@define-color theme_base_color     @ef_bg1;
+@define-color theme_text_color     @ef_fg;
+
+@define-color accent_color         @ef_green;
+@define-color accent_bg_color      @ef_green;
+@define-color accent_fg_color      @ef_bg_dim;
+
+@define-color destructive_color    @ef_red;
+@define-color destructive_bg_color @ef_red;
+@define-color destructive_fg_color @ef_bg_dim;
+
+/* ── Flux palette variables ── */
+:root {
+  --border-color: alpha(@ef_fg, 0.1);
+  --disabled-opacity: 0.4;
+  --shadow: rgba(35, 42, 46, 0.6);
+  --shadow-hover: rgba(35, 42, 46, 0.75);
+  --font-main: "Inter", "Helvetica Neue", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  --color-fg: @ef_fg;
+  --color-window-bg: @ef_bg0;
+  --color-window-fg: @ef_fg;
+  --color-card-bg: @ef_bg1;
+  --color-sidebar-bg: @ef_bg_dim;
+  --color-popover-bg: @ef_bg1;
+  --color-popover-fg: @ef_fg;
+  --color-headerbar-bg: @ef_bg0;
+  --color-headerbar-fg: @ef_fg;
+
+  --color-accent: @ef_green;
+  --color-accent-fg: @ef_bg_dim;
+  --color-accent-text: @ef_green;
+
+  --color-danger: @ef_red;
+  --color-warn: @ef_yellow;
+  --color-success: @ef_aqua;
+  --color-git-mod: @ef_blue;
+  --color-git-staged: @ef_purple;
+  --color-git-untracked: @ef_gray0;
+
+  letter-spacing: 0px;
+}
+
+/* ── os-dark slot remaps ── */
+@define-color red_3     @ef_red;
+@define-color orange_3  @ef_orange;
+@define-color green_4   @ef_green;
+@define-color blue_3    @ef_blue;
+@define-color purple_3  @ef_purple;
+@define-color dark_2    @ef_gray0;
+
+/* ── Structural overrides ── */
+headerbar {
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  border: none;
+}
+
+.selection-status {
+  background-color: @ef_bg1;
+}
