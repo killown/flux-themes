@@ -1,76 +1,86 @@
 /* ============================================================
-   Flux - Solarized Dark Theme (neutral accent)
-   os-dark.css skeleton, Solarized color layer.
+   Flux - Catppuccin Mocha Theme (neutral accent)
+   os-dark.css skeleton, Catppuccin Mocha color layer.
    ============================================================ */
 
-/* ── Solarized Palette ── */
-@define-color sol_base03  #002b36;
-@define-color sol_base02  #073642;
-@define-color sol_base01  #586e75;
-@define-color sol_base00  #657b83;
-@define-color sol_base0   #839496;
-@define-color sol_base1   #93a1a1;
-@define-color sol_base2   #eee8d5;
-@define-color sol_base3   #fdf6e3;
-@define-color sol_yellow   #b58900;
-@define-color sol_orange   #cb4b16;
-@define-color sol_red      #dc322f;
-@define-color sol_magenta  #d33682;
-@define-color sol_violet   #6c71c4;
-@define-color sol_blue     #268bd2;
-@define-color sol_cyan     #2aa198;
-@define-color sol_green    #859900;
+/* ── Catppuccin Mocha Palette ── */
+@define-color cp_rosewater #f5e0dc;
+@define-color cp_flamingo  #f2cdcd;
+@define-color cp_pink      #f5c2e7;
+@define-color cp_mauve     #cba6f7;
+@define-color cp_red       #f38ba8;
+@define-color cp_maroon    #eba0ac;
+@define-color cp_peach     #fab387;
+@define-color cp_yellow    #f9e2af;
+@define-color cp_green     #a6e3a1;
+@define-color cp_teal      #94e2d5;
+@define-color cp_sky       #89dceb;
+@define-color cp_sapphire  #74c7ec;
+@define-color cp_blue      #89b4fa;
+@define-color cp_lavender  #b4befe;
+@define-color cp_text      #cdd6f4;
+@define-color cp_subtext1  #bac2de;
+@define-color cp_subtext0  #a6adc8;
+@define-color cp_overlay2  #9399b2;
+@define-color cp_overlay1  #7f849c;
+@define-color cp_overlay0  #6c7086;
+@define-color cp_surface2  #585b70;
+@define-color cp_surface1  #45475a;
+@define-color cp_surface0  #313244;
+@define-color cp_base      #1e1e2e;
+@define-color cp_mantle    #181825;
+@define-color cp_crust     #11111b;
 
-/* ── Derived tints for UI states (Solarized based) ── */
-@define-color sol_base03_light #0a3f4b;
-@define-color sol_base03_dark  #001f28;
-@define-color sol_base01_light #6b8289;
-@define-color sol_base01_dark  #455a61;
+/* ── Derived tints for UI states (Catppuccin based) ── */
+@define-color cp_overlay1_light #8b91a8;
+@define-color cp_overlay1_dark  #6c7086;
+@define-color cp_surface1_light #50536a;
+@define-color cp_surface1_dark  #3a3c50;
 
 /* ── Neutrals ── */
-@define-color sol_white        #ffffff;
-@define-color sol_off_white    #fdf6e3;
-@define-color sol_gray_100     #eee8d5;
-@define-color sol_gray_200     #93a1a1;
-@define-color sol_gray_300     #839496;
-@define-color sol_gray_400     #657b83;
-@define-color sol_gray_500     #586e75;
-@define-color sol_gray_600     #073642;
-@define-color sol_gray_700     #002b36;
-@define-color sol_gray_800     #001f28;
-@define-color sol_black        #001419;
+@define-color cp_white        #ffffff;
+@define-color cp_off_white    #cdd6f4;
+@define-color cp_gray_100     #bac2de;
+@define-color cp_gray_200     #a6adc8;
+@define-color cp_gray_300     #9399b2;
+@define-color cp_gray_400     #7f849c;
+@define-color cp_gray_500     #6c7086;
+@define-color cp_gray_600     #585b70;
+@define-color cp_gray_700     #45475a;
+@define-color cp_gray_800     #313244;
+@define-color cp_black        #11111b;
 
 /* ── Libadwaita aliases ── */
-@define-color window_bg_color      @sol_base03;
-@define-color window_fg_color      @sol_base0;
+@define-color window_bg_color      @cp_base;
+@define-color window_fg_color      @cp_text;
 @define-color headerbar_bg_color   transparent;
-@define-color headerbar_fg_color   @sol_base0;
-@define-color card_bg_color        @sol_base02;
-@define-color card_fg_color        @sol_base0;
-@define-color popover_bg_color     @sol_base02;
-@define-color popover_fg_color     @sol_base0;
-@define-color sidebar_bg_color     @sol_base03_dark;
-@define-color accent_color         @sol_base01;
-@define-color accent_bg_color      @sol_base01;
-@define-color accent_fg_color      @sol_base3;
-@define-color destructive_color    @sol_red;
-@define-color destructive_bg_color @sol_red;
-@define-color destructive_fg_color @sol_base3;
-@define-color theme_fg_color       @sol_base0;
+@define-color headerbar_fg_color   @cp_text;
+@define-color card_bg_color        @cp_surface0;
+@define-color card_fg_color        @cp_text;
+@define-color popover_bg_color     @cp_surface0;
+@define-color popover_fg_color     @cp_text;
+@define-color sidebar_bg_color     @cp_mantle;
+@define-color accent_color         @cp_overlay1;
+@define-color accent_bg_color      @cp_overlay1;
+@define-color accent_fg_color      @cp_base;
+@define-color destructive_color    @cp_red;
+@define-color destructive_bg_color @cp_red;
+@define-color destructive_fg_color @cp_white;
+@define-color theme_fg_color       @cp_text;
 
-/* ── Solarized palette mapped onto os-dark's fixed slots ── */
-@define-color red_3     @sol_red;
-@define-color orange_3  @sol_orange;
-@define-color green_4   @sol_green;
-@define-color blue_3    @sol_blue;
-@define-color purple_3  @sol_violet;
-@define-color dark_2    @sol_base01;
+/* ── Catppuccin palette mapped onto os-dark's fixed slots ── */
+@define-color red_3     @cp_red;
+@define-color orange_3  @cp_peach;
+@define-color green_4   @cp_green;
+@define-color blue_3    @cp_blue;
+@define-color purple_3  @cp_mauve;
+@define-color dark_2    @cp_overlay0;
 
 /* ── Theme root ── */
 :root {
-  --accent-color: #586e75;
-  --shadow: rgba(0, 20, 25, 0.6);
-  --shadow-hover: rgba(0, 20, 25, 0.75);
+  --accent-color: #7f849c;
+  --shadow: rgba(17, 17, 27, 0.6);
+  --shadow-hover: rgba(17, 17, 27, 0.75);
   --font-main: "Inter", "Helvetica Neue", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
   letter-spacing: 0px;
@@ -221,13 +231,13 @@ windowcontrols button:active {
 }
 
 windowcontrols button.close:hover {
-  background-color: alpha(@sol_red, 0.25);
-  color: @sol_red;
+  background-color: alpha(@cp_red, 0.25);
+  color: @cp_red;
 }
 
 windowcontrols button.close:active {
-  background-color: alpha(@sol_red, 0.4);
-  color: @sol_red;
+  background-color: alpha(@cp_red, 0.4);
+  color: @cp_red;
 }
 
 windowcontrols button.minimize:hover,
@@ -578,11 +588,11 @@ gridview child:selected .flux-label {
 }
 
 .flux-card--restricted {
-  border-left: 2px solid @sol_orange;
+  border-left: 2px solid @cp_peach;
 }
 
 .flux-lock-badge {
-  color: @sol_orange;
+  color: @cp_peach;
   -gtk-icon-size: 1em;
 }
 
@@ -643,17 +653,17 @@ entry.flux-rename-entry {
 }
 
 .flux-card.flux-card--broken-symlink {
-  border-right: 2.5px solid @sol_red;
+  border-right: 2.5px solid @cp_red;
 }
 
 .flux-card.flux-card--broken-symlink .flux-label {
-  color: @sol_red;
+  color: @cp_red;
   text-decoration-line: line-through;
 }
 
 .flux-card.flux-card--cut {
-  background-color: alpha(@sol_orange, 0.1);
-  box-shadow: inset 0 0 0 1.5px alpha(@sol_orange, 0.45);
+  background-color: alpha(@cp_peach, 0.1);
+  box-shadow: inset 0 0 0 1.5px alpha(@cp_peach, 0.45);
   opacity: 0.6;
 }
 
@@ -963,10 +973,10 @@ textview text {
 }
 
 .selection-status button.destructive-action {
-  background-color: alpha(@sol_red, 0.14);
-  border: 1px solid alpha(@sol_red, 0.25);
+  background-color: alpha(@cp_red, 0.14);
+  border: 1px solid alpha(@cp_red, 0.25);
   border-radius: 0.45em;
-  color: @sol_red;
+  color: @cp_red;
   padding: 0.15em 0.5em;
   min-height: 1.6em;
   font-size: 0.8em;
@@ -978,13 +988,13 @@ textview text {
 }
 
 .selection-status button.destructive-action:hover {
-  background-color: alpha(@sol_red, 0.25);
-  border-color: alpha(@sol_red, 0.45);
+  background-color: alpha(@cp_red, 0.25);
+  border-color: alpha(@cp_red, 0.45);
   color: @accent_fg_color;
 }
 
 .selection-status button.destructive-action:active {
-  background-color: @sol_red;
+  background-color: @cp_red;
   color: @accent_fg_color;
 }
 
@@ -1146,8 +1156,8 @@ window:backdrop .selection-status button.destructive-action {
 }
 
 .destructive-action {
-  background-color: alpha(@sol_red, 0.1);
-  color: @sol_red;
+  background-color: alpha(@cp_red, 0.1);
+  color: @cp_red;
   border-radius: 0.6em;
   padding: 0.5em 1.2em;
   font-weight: bold;
@@ -1155,11 +1165,11 @@ window:backdrop .selection-status button.destructive-action {
 }
 
 .destructive-action label {
-  color: @sol_red;
+  color: @cp_red;
 }
 
 .destructive-action:hover {
-  background-color: alpha(@sol_red, 0.2);
+  background-color: alpha(@cp_red, 0.2);
 }
 
 .linked > button {
@@ -1275,7 +1285,7 @@ levelbar block {
 }
 
 levelbar block.low {
-  background: @sol_red;
+  background: @cp_red;
 }
 
 levelbar block.high {
@@ -1283,7 +1293,7 @@ levelbar block.high {
 }
 
 levelbar block.full {
-  background: @sol_green;
+  background: @cp_green;
 }
 
 progressbar {
@@ -1471,9 +1481,9 @@ tooltip.background {
 
 /* ── Status feedback indicators ── */
 .error {
-  border: 1px solid @sol_red;
-  background: alpha(@sol_red, 0.08);
-  color: @sol_red;
+  border: 1px solid @cp_red;
+  background: alpha(@cp_red, 0.08);
+  color: @cp_red;
 }
 
 .error image {
@@ -1483,9 +1493,9 @@ tooltip.background {
 }
 
 .warning {
-  border: 1px solid @sol_orange;
-  background: alpha(@sol_orange, 0.08);
-  color: @sol_orange;
+  border: 1px solid @cp_peach;
+  background: alpha(@cp_peach, 0.08);
+  color: @cp_peach;
 }
 
 .warning image {
@@ -1495,7 +1505,7 @@ tooltip.background {
 }
 
 .success {
-  color: @sol_green;
+  color: @cp_green;
 }
 
 /* ── Tabbar ── */
@@ -1686,34 +1696,34 @@ toast button image {
 }
 
 .flux-git-untracked {
-  background-color: alpha(@sol_base01, 0.25);
-  color: @sol_base01;
+  background-color: alpha(@cp_overlay0, 0.25);
+  color: @cp_overlay0;
 }
 
 .flux-git-added {
-  background-color: alpha(@sol_green, 0.25);
-  color: @sol_green;
+  background-color: alpha(@cp_green, 0.25);
+  color: @cp_green;
 }
 
 .flux-git-modified,
 .flux-git-mixed {
-  background-color: alpha(@sol_blue, 0.25);
-  color: @sol_blue;
+  background-color: alpha(@cp_blue, 0.25);
+  color: @cp_blue;
 }
 
 .flux-git-staged {
-  background-color: alpha(@sol_violet, 0.25);
-  color: @sol_violet;
+  background-color: alpha(@cp_mauve, 0.25);
+  color: @cp_mauve;
 }
 
 .flux-git-deleted {
-  background-color: alpha(@sol_red, 0.25);
-  color: @sol_red;
+  background-color: alpha(@cp_red, 0.25);
+  color: @cp_red;
 }
 
 .flux-git-conflict {
-  background-color: alpha(@sol_orange, 0.35);
-  color: @sol_orange;
+  background-color: alpha(@cp_peach, 0.35);
+  color: @cp_peach;
 }
 
 .flux-header-git-btn {
