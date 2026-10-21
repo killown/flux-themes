@@ -1,64 +1,87 @@
 /* ============================================================
-   Flux - S O L A R I Z E D   D A R K (Full Theme)
+   Flux - Solarized Dark Theme (neutral accent)
+   os-dark.css skeleton, Solarized color layer.
    ============================================================ */
 
-/* ── Solarized Dark Color Ramp ── */
-@define-color sol_base03    #002b36;
-@define-color sol_base02    #073642;
-@define-color sol_base01    #586e75;
-@define-color sol_base00    #657b83;
-@define-color sol_base0     #839496;
-@define-color sol_base1     #93a1a1;
-@define-color sol_yellow    #b58900;
-@define-color sol_orange    #cb4b16;
-@define-color sol_red       #dc322f;
-@define-color sol_magenta   #d33682;
-@define-color sol_violet    #6c71c4;
-@define-color sol_blue      #268bd2;
-@define-color sol_cyan      #2aa198;
-@define-color sol_green     #859900;
+/* ── Solarized Palette ── */
+@define-color sol_base03  #002b36;
+@define-color sol_base02  #073642;
+@define-color sol_base01  #586e75;
+@define-color sol_base00  #657b83;
+@define-color sol_base0   #839496;
+@define-color sol_base1   #93a1a1;
+@define-color sol_base2   #eee8d5;
+@define-color sol_base3   #fdf6e3;
+@define-color sol_yellow   #b58900;
+@define-color sol_orange   #cb4b16;
+@define-color sol_red      #dc322f;
+@define-color sol_magenta  #d33682;
+@define-color sol_violet   #6c71c4;
+@define-color sol_blue     #268bd2;
+@define-color sol_cyan     #2aa198;
+@define-color sol_green    #859900;
 
-/* ── Libadwaita Palette Mapping ── */
-@define-color window_bg_color     @sol_base03;
-@define-color window_fg_color     @sol_base0;
-@define-color headerbar_bg_color  transparent;
-@define-color headerbar_fg_color  @sol_cyan;
-@define-color card_bg_color       @sol_base02;
-@define-color card_fg_color       @sol_base0;
-@define-color popover_bg_color    @sol_base02;
-@define-color popover_fg_color    @sol_base0;
-@define-color accent_color        @sol_cyan;
-@define-color accent_bg_color     @sol_cyan;
-@define-color accent_fg_color     @sol_base03;
-@define-color destructive_color   @sol_red;
+/* ── Derived tints for UI states (Solarized based) ── */
+@define-color sol_base03_light #0a3f4b;
+@define-color sol_base03_dark  #001f28;
+@define-color sol_base01_light #6b8289;
+@define-color sol_base01_dark  #455a61;
+
+/* ── Neutrals ── */
+@define-color sol_white        #ffffff;
+@define-color sol_off_white    #fdf6e3;
+@define-color sol_gray_100     #eee8d5;
+@define-color sol_gray_200     #93a1a1;
+@define-color sol_gray_300     #839496;
+@define-color sol_gray_400     #657b83;
+@define-color sol_gray_500     #586e75;
+@define-color sol_gray_600     #073642;
+@define-color sol_gray_700     #002b36;
+@define-color sol_gray_800     #001f28;
+@define-color sol_black        #001419;
+
+/* ── Libadwaita aliases ── */
+@define-color window_bg_color      @sol_base03;
+@define-color window_fg_color      @sol_base0;
+@define-color headerbar_bg_color   transparent;
+@define-color headerbar_fg_color   @sol_base0;
+@define-color card_bg_color        @sol_base02;
+@define-color card_fg_color        @sol_base0;
+@define-color popover_bg_color     @sol_base02;
+@define-color popover_fg_color     @sol_base0;
+@define-color sidebar_bg_color     @sol_base03_dark;
+@define-color accent_color         @sol_base01;
+@define-color accent_bg_color      @sol_base01;
+@define-color accent_fg_color      @sol_base3;
+@define-color destructive_color    @sol_red;
 @define-color destructive_bg_color @sol_red;
-@define-color destructive_fg_color #ffffff;
-@define-color theme_fg_color      @sol_base0;
+@define-color destructive_fg_color @sol_base3;
+@define-color theme_fg_color       @sol_base0;
 
-/* ── Theme Root Variables ── */
+/* ── Solarized palette mapped onto os-dark's fixed slots ── */
+@define-color red_3     @sol_red;
+@define-color orange_3  @sol_orange;
+@define-color green_4   @sol_green;
+@define-color blue_3    @sol_blue;
+@define-color purple_3  @sol_violet;
+@define-color dark_2    @sol_base01;
+
+/* ── Theme root ── */
 :root {
-  --accent-color: #2aa198;
-  --shadow: rgba(0, 43, 54, 0.7);
-  --shadow-hover: rgba(0, 43, 54, 0.85);
+  --accent-color: #586e75;
+  --shadow: rgba(0, 20, 25, 0.6);
+  --shadow-hover: rgba(0, 20, 25, 0.75);
   --font-main: "Inter", "Helvetica Neue", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
   letter-spacing: 0px;
 }
 
-/* ── Global Base ── */
-window,
-window > box,
-.background {
-  background-color: @window_bg_color;
-  color: @window_fg_color;
-}
-
-/* ── ToolbarView Integration ── */
+/* ── ToolbarView integration ── */
 toolbarview {
   background-color: transparent;
 }
 
-/* ── HeaderBar & Navigation ── */
+/* ── HeaderBar and navigation ── */
 headerbar {
   font-size: 1em;
   background-color: transparent;
@@ -118,6 +141,10 @@ headerbar togglebutton:active {
   color: @accent_color;
 }
 
+headerbar .suggested-action {
+  padding: 0.3em 1em;
+}
+
 .sort-container image {
   color: @headerbar_fg_color;
 }
@@ -154,7 +181,7 @@ headerbar togglebutton:active {
   color: @accent_fg_color;
 }
 
-/* ── Window Controls ── */
+/* ── Window controls ── */
 windowcontrols {
   font-size: 1em;
 }
@@ -166,8 +193,6 @@ windowcontrols button {
   border-radius: 9999px;
   padding: 0;
   margin: 0 0.15em;
-  width: 1.8em;
-  height: 1.8em;
   min-width: 1.8em;
   min-height: 1.8em;
   color: @headerbar_fg_color;
@@ -210,12 +235,12 @@ windowcontrols button.maximize:hover {
   background-color: alpha(@headerbar_fg_color, 0.15);
 }
 
-/* ── Sidebar & Navigation Tree (Dark) ── */
+/* ── Sidebar ── */
 .sidebar {
   font-size: 1em;
-  background-color: color-mix(in srgb, @window_bg_color 20%, @sol_base02 80%);
+  background-color: @sidebar_bg_color;
   border-radius: 1.1em;
-  border: 1px solid alpha(@sol_base01, 0.4);
+  border: 1px solid alpha(@theme_fg_color, 0.08);
   box-shadow: 0 0.3em 1.5em rgba(0, 0, 0, 0.4);
 }
 
@@ -254,7 +279,7 @@ windowcontrols button.maximize:hover {
   background-color: transparent;
   border: none;
   transition:
-    background-color 200ms linear,
+    background-color 200ms ease,
     transform 200ms cubic-bezier(0.1, 0.7, 0.1, 1);
   color: alpha(@theme_fg_color, 0.85);
 }
@@ -278,7 +303,7 @@ windowcontrols button.maximize:hover {
 }
 
 .sidebar-row:not(.sidebar-section):selected label {
-  color: @sol_base03;
+  color: @accent_fg_color;
   font-weight: bold;
 }
 
@@ -305,7 +330,7 @@ windowcontrols button.maximize:hover {
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: @sol_blue;
+  color: alpha(@theme_fg_color, 0.45);
   background: transparent;
   border: none;
   box-shadow: none;
@@ -315,8 +340,8 @@ windowcontrols button.maximize:hover {
 
 .sidebar-mount {
   background: transparent;
-  border: 1px solid alpha(@sol_base01, 0.4);
-  border-bottom-color: rgba(0, 0, 0, 0.12);
+  border: 1px solid alpha(@theme_fg_color, 0.06);
+  border-bottom-color: alpha(black, 0.12);
   border-radius: 0.65em;
   min-height: 1.8em;
   padding: 0.1em 0.5em;
@@ -348,28 +373,28 @@ button.eject-button image {
 }
 
 button.eject-button:hover {
-  background-color: alpha(@sol_red, 0.15);
-  color: @sol_red;
+  background-color: alpha(@theme_fg_color, 0.08);
+  color: @theme_fg_color;
   opacity: 1;
 }
 
 button.eject-button:active {
-  background-color: alpha(@sol_red, 0.25);
-  color: @sol_red;
+  background-color: alpha(@theme_fg_color, 0.15);
+  color: @theme_fg_color;
 }
 
 .sidebar-row:not(.sidebar-section):selected button.eject-button {
-  color: @sol_base03;
+  color: @accent_fg_color;
   opacity: 0.9;
 }
 
 .sidebar-row:not(.sidebar-section):selected button.eject-button:hover {
-  background-color: alpha(@sol_base03, 0.2);
-  color: @sol_base03;
+  background-color: alpha(@accent_fg_color, 0.2);
+  color: @accent_fg_color;
   opacity: 1;
 }
 
-/* sidebar pin zone and drag drop */
+/* ── Sidebar pin zone & drag drop ── */
 .sidebar-dragging {
   opacity: 0.45;
 }
@@ -424,7 +449,7 @@ button.eject-button:active {
   border-top: 2px solid @accent_color;
 }
 
-/* breadcrumb navigation */
+/* ── Breadcrumb navigation ── */
 button.breadcrumb-btn {
   background: linear-gradient(
     to bottom,
@@ -495,7 +520,7 @@ button.breadcrumb-btn label {
   letter-spacing: 0px;
 }
 
-/* grid and list views */
+/* ── Grid & list views ── */
 gridview,
 listview {
   background-color: @window_bg_color;
@@ -514,7 +539,7 @@ gridview child {
   margin: 0.45em;
   border: none;
   box-shadow:
-    0 0 0 1px alpha(@sol_base01, 0.4),
+    0 0 0 1px alpha(@theme_fg_color, 0.12),
     0 2px 8px var(--shadow);
   transition:
     background-color 200ms ease,
@@ -549,7 +574,7 @@ gridview child:selected .flux-card {
 }
 
 gridview child:selected .flux-label {
-  color: @sol_cyan;
+  color: @accent_fg_color;
 }
 
 .flux-card--restricted {
@@ -585,9 +610,9 @@ gridview child:hover .flux-list-info {
 }
 
 gridview child:selected .flux-list-info {
-  background-color: alpha(@sol_base1, 0.22);
-  border-color: alpha(@sol_base1, 0.35);
-  color: @sol_base1;
+  background-color: alpha(@accent_fg_color, 0.22);
+  border-color: alpha(@accent_fg_color, 0.35);
+  color: @accent_fg_color;
   font-weight: 600;
 }
 
@@ -627,8 +652,8 @@ entry.flux-rename-entry {
 }
 
 .flux-card.flux-card--cut {
-  background-color: alpha(#ff9500, 0.1);
-  box-shadow: inset 0 0 0 1.5px alpha(#ff9500, 0.45);
+  background-color: alpha(@sol_orange, 0.1);
+  box-shadow: inset 0 0 0 1.5px alpha(@sol_orange, 0.45);
   opacity: 0.6;
 }
 
@@ -641,7 +666,7 @@ entry.flux-rename-entry {
   opacity: 0.6;
 }
 
-/* filter bar */
+/* ── Filter bar ── */
 .flux-filter-bar {
   background-color: alpha(@accent_bg_color, 0.08);
   border-bottom: 1px solid alpha(@window_fg_color, 0.1);
@@ -672,7 +697,7 @@ entry.flux-rename-entry {
   opacity: 1;
 }
 
-/* search panel */
+/* ── Search panel ── */
 .search-panel-icon {
   -gtk-icon-size: 1.25em;
   min-width: 1.25em;
@@ -683,7 +708,7 @@ entry.flux-rename-entry {
   -gtk-icon-size: 1.25em;
 }
 
-/* popovers and context menus */
+/* ── Popovers & context menus ── */
 popover.menu {
   border: none;
   outline: none;
@@ -745,7 +770,7 @@ popover.menu > contents separator {
   margin: 0.3em 0.6em;
 }
 
-/* text entries and inputs */
+/* ── Text entries & inputs ── */
 entry,
 searchentry,
 passwordentry,
@@ -758,7 +783,7 @@ passwordentry text {
   padding: 0.3em 0.9em;
   color: @theme_fg_color;
   caret-color: @theme_fg_color;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 1px alpha(@theme_fg_color, 0.05);
   letter-spacing: 0px;
 }
 
@@ -860,11 +885,11 @@ textview text {
   caret-color: @theme_fg_color;
 }
 
-/* status bar and transfers */
+/* ── Status bar & transfers ── */
 .selection-status {
   font-size: 1em;
-  background-color: color-mix(in srgb, @window_bg_color 85%, @sol_base02 15%);
-  border: 1px solid alpha(@sol_base01, 0.4);
+  background-color: @headerbar_bg_color;
+  border: 1px solid alpha(@theme_fg_color, 0.08);
   border-radius: 0.9em;
   padding: 0.45em 1.2em;
   min-height: 2.2em;
@@ -890,19 +915,19 @@ textview text {
 }
 
 .selection-status progressbar trough {
-  background-color: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: alpha(@theme_fg_color, 0.08);
+  border: 1px solid alpha(@theme_fg_color, 0.05);
   border-radius: 999px;
   min-height: 0.45em;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
+  box-shadow: inset 0 1px 2px alpha(black, 0.35);
 }
 
 .selection-status progressbar progress {
   background-color: @accent_bg_color;
   background-image: linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.22) 0%,
-    rgba(0, 0, 0, 0.15) 100%
+    alpha(@accent_fg_color, 0.22) 0%,
+    alpha(black, 0.15) 100%
   );
   border-radius: 999px;
   min-height: 0.45em;
@@ -910,16 +935,16 @@ textview text {
 }
 
 .selection-status button.flat {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: alpha(@theme_fg_color, 0.05);
   color: alpha(@theme_fg_color, 0.85);
-  border: 1px solid alpha(@sol_base01, 0.4);
-  border-top-color: rgba(255, 255, 255, 0.14);
+  border: 1px solid alpha(@theme_fg_color, 0.08);
+  border-top-color: alpha(@theme_fg_color, 0.14);
   border-radius: 0.45em;
   padding: 0.15em 0.6em;
   min-height: 1.6em;
   font-size: 0.8em;
   font-family: var(--font-mono);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 2px alpha(black, 0.25);
   transition:
     background-color 150ms ease,
     border-color 150ms ease,
@@ -934,38 +959,38 @@ textview text {
 
 .selection-status button.flat:active {
   background-color: @accent_bg_color;
-  color: @sol_base03;
+  color: @accent_fg_color;
 }
 
 .selection-status button.destructive-action {
-  background-color: rgba(220, 50, 47, 0.14);
-  border: 1px solid rgba(220, 50, 47, 0.25);
+  background-color: alpha(@sol_red, 0.14);
+  border: 1px solid alpha(@sol_red, 0.25);
   border-radius: 0.45em;
   color: @sol_red;
   padding: 0.15em 0.5em;
   min-height: 1.6em;
   font-size: 0.8em;
   font-family: var(--font-mono);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 2px alpha(black, 0.25);
   transition:
     background-color 150ms ease,
     border-color 150ms ease;
 }
 
 .selection-status button.destructive-action:hover {
-  background-color: rgba(220, 50, 47, 0.25);
-  border-color: rgba(220, 50, 47, 0.45);
-  color: #ffffff;
+  background-color: alpha(@sol_red, 0.25);
+  border-color: alpha(@sol_red, 0.45);
+  color: @accent_fg_color;
 }
 
 .selection-status button.destructive-action:active {
   background-color: @sol_red;
-  color: #ffffff;
+  color: @accent_fg_color;
 }
 
 window:backdrop .selection-status {
-  background-color: alpha(@window_bg_color, 0.95);
-  border-top-color: rgba(255, 255, 255, 0.04);
+  background-color: alpha(@headerbar_bg_color, 0.95);
+  border-top-color: alpha(@theme_fg_color, 0.04);
 }
 
 window:backdrop .selection-status label {
@@ -977,7 +1002,7 @@ window:backdrop .selection-status button.destructive-action {
   opacity: 0.6;
 }
 
-/* quick panel */
+/* ── Quick panel ── */
 .quick-panel-scroll {
   background: none;
   border: none;
@@ -990,13 +1015,13 @@ window:backdrop .selection-status button.destructive-action {
 }
 
 .quick-panel {
-  background: color-mix(in srgb, @window_bg_color 80%, @sol_base02 20%);
-  border: 1px solid alpha(@sol_base01, 0.4);
+  background: @popover_bg_color;
+  border: 1px solid alpha(@popover_fg_color, 0.14);
   border-radius: 0.9em;
   padding: 0.3em 0.5em;
   box-shadow:
-    0 0.6em 1.8em rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    0 0.6em 1.8em alpha(black, 0.45),
+    inset 0 1px 0 alpha(@popover_fg_color, 0.16);
 }
 
 .quick-panel button,
@@ -1005,17 +1030,17 @@ window:backdrop .selection-status button.destructive-action {
   min-height: 2.1em;
   padding: 0.25em 1.1em;
   border-radius: 0.6em;
-  background-color: rgba(255, 255, 255, 0.07);
+  background-color: alpha(@popover_fg_color, 0.07);
   background-image: linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.09) 0%,
-    rgba(255, 255, 255, 0.02) 100%
+    alpha(@popover_fg_color, 0.09) 0%,
+    alpha(@popover_fg_color, 0.02) 100%
   );
-  border: 1px solid alpha(@sol_base01, 0.4);
-  border-top-color: rgba(255, 255, 255, 0.22);
+  border: 1px solid alpha(@popover_fg_color, 0.12);
+  border-top-color: alpha(@popover_fg_color, 0.22);
   box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 1px 3px alpha(black, 0.35),
+    inset 0 1px 0 alpha(@popover_fg_color, 0.1);
   color: alpha(@theme_fg_color, 0.88);
   transition:
     background-color 150ms ease,
@@ -1030,24 +1055,24 @@ window:backdrop .selection-status button.destructive-action {
   font-size: 0.95em;
   font-weight: 500;
   letter-spacing: -0.01em;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 1px 2px alpha(black, 0.5);
 }
 
 .quick-panel button:hover:not(:checked):not(:active):not(.suggested-action),
 .quick-panel-tab:hover:not(:checked):not(:active):not(.suggested-action) {
-  background-color: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.22);
-  border-top-color: rgba(255, 255, 255, 0.35);
+  background-color: alpha(@popover_fg_color, 0.14);
+  border-color: alpha(@popover_fg_color, 0.22);
+  border-top-color: alpha(@popover_fg_color, 0.35);
   box-shadow:
-    0 2px 6px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    0 2px 6px alpha(black, 0.4),
+    inset 0 1px 0 alpha(@popover_fg_color, 0.2);
 }
 
 .quick-panel
   button:hover:not(:checked):not(:active):not(.suggested-action)
   label,
 .quick-panel-tab:hover:not(:checked):not(:active):not(.suggested-action) label {
-  color: #ffffff;
+  color: @theme_fg_color;
 }
 
 .quick-panel button:active,
@@ -1059,15 +1084,15 @@ window:backdrop .selection-status button.destructive-action {
   background-color: @accent_bg_color;
   background-image: linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.22) 0%,
-    rgba(0, 0, 0, 0.1) 100%
+    alpha(@accent_fg_color, 0.22) 0%,
+    alpha(black, 0.1) 100%
   );
   border: 1px solid alpha(@accent_color, 0.5);
-  border-top-color: rgba(255, 255, 255, 0.4);
+  border-top-color: alpha(@accent_fg_color, 0.4);
   box-shadow:
     0 0.15em 0.6em alpha(@accent_color, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  color: @sol_base03;
+    inset 0 1px 0 alpha(@accent_fg_color, 0.3);
+  color: @accent_fg_color;
 }
 
 .quick-panel button:active label,
@@ -1076,12 +1101,12 @@ window:backdrop .selection-status button.destructive-action {
 .quick-panel-tab:active label,
 .quick-panel-tab:checked label,
 .quick-panel-tab.suggested-action label {
-  color: @sol_base03;
+  color: @accent_fg_color;
   font-weight: 700;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 1px 2px alpha(black, 0.5);
 }
 
-/* general buttons and actions */
+/* ── General buttons & actions ── */
 .flat {
   background-color: transparent;
   box-shadow: none;
@@ -1151,11 +1176,11 @@ window:backdrop .selection-status button.destructive-action {
   border-bottom-right-radius: 0.5em;
 }
 
-/* form controls and widgets */
+/* ── Form controls & widgets ── */
 check,
 radio {
   background-color: alpha(@theme_fg_color, 0.08);
-  border: 1px solid alpha(@sol_base01, 0.4);
+  border: 1px solid alpha(@theme_fg_color, 0.1);
   border-radius: 0.3em;
   min-height: 1.2em;
   min-width: 1.2em;
@@ -1180,7 +1205,7 @@ radio:disabled {
 spinbutton,
 spinbutton text {
   background-color: alpha(@theme_fg_color, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid alpha(@theme_fg_color, 0.05);
   border-radius: 0.6em;
   color: @theme_fg_color;
   caret-color: @theme_fg_color;
@@ -1205,7 +1230,7 @@ spinbutton > button:hover {
 dropdown,
 combobox {
   background-color: alpha(@theme_fg_color, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid alpha(@theme_fg_color, 0.05);
   border-radius: 0.6em;
   color: @theme_fg_color;
   min-height: 2.1em;
@@ -1272,7 +1297,7 @@ progressbar progress {
   min-height: 0.3em;
 }
 
-/* scrollbars */
+/* ── Scrollbars ── */
 scrollbar {
   background: transparent;
 }
@@ -1286,41 +1311,11 @@ scrollbar slider:hover {
   background-color: alpha(@theme_fg_color, 0.4);
 }
 
-notebook > header {
-  background: transparent;
-  border: none;
-}
-
-notebook > header > tabs > tab {
-  background: transparent;
-  color: @theme_fg_color;
-  padding: 0.3em 0.9em;
-  border: none;
-  border-bottom: 2px solid transparent;
-}
-
-notebook > header > tabs > tab:checked {
-  color: @accent_color;
-  border-bottom-color: @accent_color;
-}
-
-/* cards lists and frames */
-.card {
-  background: alpha(@theme_fg_color, 0.03);
-  border-radius: 0.9em;
-  border: 1px solid alpha(@sol_base01, 0.4);
-}
-
+/* ── Cards, lists & frames ── */
 .frame {
-  border: 1px solid alpha(@sol_base01, 0.4);
+  border: 1px solid alpha(@theme_fg_color, 0.05);
   border-radius: 0.6em;
   background: transparent;
-}
-
-.boxed-list {
-  background: alpha(@theme_fg_color, 0.03);
-  border-radius: 0.9em;
-  border: 1px solid alpha(@sol_base01, 0.4);
 }
 
 list,
@@ -1351,7 +1346,7 @@ row:selected {
 
 .property {
   background: transparent;
-  border-bottom: 1px solid alpha(@sol_base01, 0.4);
+  border-bottom: 1px solid alpha(@theme_fg_color, 0.05);
   padding: 0.45em 0px;
   color: @theme_fg_color;
   font-size: 0.95em;
@@ -1361,7 +1356,7 @@ row:selected {
   color: @theme_fg_color;
 }
 
-/* settings and preferences */
+/* ── Settings & preferences ── */
 window.settings-window,
 adwpreferenceswindow,
 .settings-window {
@@ -1431,22 +1426,13 @@ adwpreferencesgroup label.description,
   color: alpha(@theme_fg_color, 0.65);
 }
 
-/* general typography and labels */
+/* ── Typography & labels ── */
 tooltip.background {
   background-color: alpha(@window_bg_color, 0.95);
-  border: 1px solid alpha(@sol_base01, 0.4);
+  border: 1px solid alpha(@theme_fg_color, 0.05);
   border-radius: 0.6em;
   color: @theme_fg_color;
   padding: 0.45em 0.9em;
-}
-
-.dim-label {
-  color: alpha(@theme_fg_color, 0.65);
-}
-
-.caption {
-  font-size: 0.85em;
-  color: alpha(@theme_fg_color, 0.65);
 }
 
 .body {
@@ -1483,7 +1469,7 @@ tooltip.background {
   font-family: var(--font-mono), monospace;
 }
 
-/* status feedback indicators */
+/* ── Status feedback indicators ── */
 .error {
   border: 1px solid @sol_red;
   background: alpha(@sol_red, 0.08);
@@ -1512,7 +1498,7 @@ tooltip.background {
   color: @sol_green;
 }
 
-/* tabbar */
+/* ── Tabbar ── */
 tabbar,
 tabbar.inline {
   border: none;
@@ -1542,8 +1528,8 @@ tabbar tab {
   padding: 0.15em 0.8em;
   margin: 0 0.15em;
   border-radius: 0.6em;
-  background-color: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background-color: alpha(@theme_fg_color, 0.04);
+  border: 1px solid alpha(@theme_fg_color, 0.06);
   box-shadow: none;
   transition:
     background-color 120ms ease,
@@ -1551,34 +1537,34 @@ tabbar tab {
 }
 
 tabbar tab:hover {
-  background-color: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.22);
+  background-color: alpha(@theme_fg_color, 0.12);
+  border-color: alpha(@theme_fg_color, 0.22);
 }
 
 tabbar tab:checked,
 tabbar tab:selected,
 tabbar tab.selected {
-  background-color: #007aff;
+  background-color: @accent_bg_color;
   background-image: linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.22) 0%,
-    rgba(0, 0, 0, 0.1) 100%
+    alpha(@accent_fg_color, 0.22) 0%,
+    alpha(black, 0.1) 100%
   );
-  border: 1px solid rgba(0, 122, 255, 0.8);
-  border-top-color: rgba(255, 255, 255, 0.4);
+  border: 1px solid alpha(@accent_color, 0.8);
+  border-top-color: alpha(@accent_fg_color, 0.4);
   box-shadow:
-    0 0.15em 0.6em rgba(0, 122, 255, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    0 0.15em 0.6em alpha(@accent_color, 0.45),
+    inset 0 1px 0 alpha(@accent_fg_color, 0.3);
 }
 
 tabbar tab:checked:hover,
 tabbar tab:selected:hover,
 tabbar tab.selected:hover {
-  background-color: #1a8cff;
+  background-color: alpha(@accent_bg_color, 0.85);
   background-image: linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.32) 0%,
-    rgba(0, 0, 0, 0.05) 100%
+    alpha(@accent_fg_color, 0.32) 0%,
+    alpha(black, 0.05) 100%
   );
 }
 
@@ -1596,9 +1582,9 @@ tabbar tab:hover label {
 tabbar tab:checked label,
 tabbar tab:selected label,
 tabbar tab.selected label {
-  color: #ffffff;
+  color: @accent_fg_color;
   font-weight: 700;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 1px 2px alpha(black, 0.5);
 }
 
 tabbar tab button.flat {
@@ -1624,23 +1610,23 @@ tabbar tab:hover button.flat {
 tabbar tab:checked button.flat,
 tabbar tab:selected button.flat,
 tabbar tab.selected button.flat {
-  color: #ffffff;
+  color: @accent_fg_color;
   opacity: 0.9;
 }
 
 tabbar tab button.flat:hover {
-  background-color: rgba(255, 255, 255, 0.18);
-  color: #ffffff;
+  background-color: alpha(@theme_fg_color, 0.18);
+  color: @theme_fg_color;
 }
 
 tabbar tab:checked button.flat:hover,
 tabbar tab:selected button.flat:hover,
 tabbar tab.selected button.flat:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-  color: #ffffff;
+  background-color: alpha(@accent_fg_color, 0.3);
+  color: @accent_fg_color;
 }
 
-/* toast notifications */
+/* ── Toast notifications ── */
 toastoverlay.quick-dock-active toast {
   margin-bottom: 4.5em;
 }
@@ -1685,7 +1671,7 @@ toast button image {
   -gtk-icon-size: 1.15em;
 }
 
-/* git badges and headers */
+/* ── Git badges & headers ── */
 .flux-git-badge {
   font-family: "Symbols Nerd Font", "JetBrains Mono", var(--font-mono);
   font-size: 0.8em;
@@ -1696,38 +1682,38 @@ toast button image {
   min-width: 1.2em;
   margin-top: 0.7em;
   margin-right: 0.7em;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 1px 3px alpha(black, 0.4);
 }
 
 .flux-git-untracked {
-  background-color: alpha(#8e8e93, 0.25);
-  color: #8e8e93;
+  background-color: alpha(@sol_base01, 0.25);
+  color: @sol_base01;
 }
 
 .flux-git-added {
-  background-color: alpha(#34c759, 0.25);
-  color: #34c759;
+  background-color: alpha(@sol_green, 0.25);
+  color: @sol_green;
 }
 
 .flux-git-modified,
 .flux-git-mixed {
-  background-color: alpha(#007aff, 0.25);
-  color: #007aff;
+  background-color: alpha(@sol_blue, 0.25);
+  color: @sol_blue;
 }
 
 .flux-git-staged {
-  background-color: alpha(#5856d6, 0.25);
-  color: #5856d6;
+  background-color: alpha(@sol_violet, 0.25);
+  color: @sol_violet;
 }
 
 .flux-git-deleted {
-  background-color: alpha(#ff3b30, 0.25);
-  color: #ff3b30;
+  background-color: alpha(@sol_red, 0.25);
+  color: @sol_red;
 }
 
 .flux-git-conflict {
-  background-color: alpha(#ff9500, 0.35);
-  color: #ff9500;
+  background-color: alpha(@sol_orange, 0.35);
+  color: @sol_orange;
 }
 
 .flux-header-git-btn {
@@ -1750,13 +1736,13 @@ toast button image {
   letter-spacing: 0px;
 }
 
-/* diff panel */
+/* ── Diff panel ── */
 .diff-view {
   font-size: 0.85em;
   font-family: monospace;
 }
 
-/* keyboard shortcuts */
+/* ── Keyboard shortcuts ── */
 .keycap {
   font-family: var(--font-mono), monospace;
   font-size: 0.8em;
@@ -1767,12 +1753,12 @@ toast button image {
   box-shadow: 0 1px 0 alpha(black, 0.2);
 }
 
-/* background sync */
+/* ── Background sync ── */
 .flux-bg-sync {
   transition: none;
 }
 
-/* advanced search selectors scaling */
+/* ── Advanced search selectors scaling ── */
 adw-combo-row,
 dropdown {
   font-size: 1em;
@@ -1793,7 +1779,7 @@ dropdown image {
   min-height: 1.15em;
 }
 
-/* ── Sidebar Panels & Tag Navigator Icon Scaling ── */
+/* ── Sidebar panels & tag navigator icon scaling ── */
 .sidebar button,
 .sidebar menuitem,
 .sidebar popover modelbutton {
@@ -1813,7 +1799,7 @@ dropdown image {
   font-size: 1em;
 }
 
-/* tag navigator search entry icon scaling */
+/* ── Tag navigator search entry icon scaling ── */
 .tag-search-entry image,
 .tag-search-entry text,
 .tag-search-entry image.search {
