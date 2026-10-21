@@ -1,67 +1,76 @@
 /* ============================================================
-   Flux - Catppuccin Latte (neutral accent)
-   os-dark.css skeleton, Catppuccin Latte color layer.
+   Flux - Solarized Dark Theme (neutral accent)
+   os-dark.css skeleton, Solarized color layer.
    ============================================================ */
 
-/* ── Catppuccin Latte Ramp ── */
-@define-color cp_rosewater #dc8a78;
-@define-color cp_flamingo  #dd7878;
-@define-color cp_pink      #ea76cb;
-@define-color cp_mauve     #8839ef;
-@define-color cp_red       #d20f39;
-@define-color cp_maroon    #e64553;
-@define-color cp_peach     #fe640b;
-@define-color cp_yellow    #df8e1d;
-@define-color cp_green     #40a02b;
-@define-color cp_teal      #179299;
-@define-color cp_sky       #04a5e5;
-@define-color cp_sapphire  #209fb5;
-@define-color cp_blue      #1e66f5;
-@define-color cp_lavender  #7287fd;
-@define-color cp_text      #4c4f69;
-@define-color cp_subtext1  #5c5f77;
-@define-color cp_subtext0  #6c6f85;
-@define-color cp_overlay2  #7c7f93;
-@define-color cp_overlay1  #8c8fa1;
-@define-color cp_overlay0  #9ca0b0;
-@define-color cp_surface2  #acb0be;
-@define-color cp_surface1  #bcc0cc;
-@define-color cp_surface0  #ccd0da;
-@define-color cp_base      #eff1f5;
-@define-color cp_mantle    #e6e9ef;
-@define-color cp_crust     #dce0e8;
+/* ── Solarized Palette ── */
+@define-color sol_base03  #002b36;
+@define-color sol_base02  #073642;
+@define-color sol_base01  #586e75;
+@define-color sol_base00  #657b83;
+@define-color sol_base0   #839496;
+@define-color sol_base1   #93a1a1;
+@define-color sol_base2   #eee8d5;
+@define-color sol_base3   #fdf6e3;
+@define-color sol_yellow   #b58900;
+@define-color sol_orange   #cb4b16;
+@define-color sol_red      #dc322f;
+@define-color sol_magenta  #d33682;
+@define-color sol_violet   #6c71c4;
+@define-color sol_blue     #268bd2;
+@define-color sol_cyan     #2aa198;
+@define-color sol_green    #859900;
+
+/* ── Derived tints for UI states (Solarized based) ── */
+@define-color sol_base03_light #0a3f4b;
+@define-color sol_base03_dark  #001f28;
+@define-color sol_base01_light #6b8289;
+@define-color sol_base01_dark  #455a61;
+
+/* ── Neutrals ── */
+@define-color sol_white        #ffffff;
+@define-color sol_off_white    #fdf6e3;
+@define-color sol_gray_100     #eee8d5;
+@define-color sol_gray_200     #93a1a1;
+@define-color sol_gray_300     #839496;
+@define-color sol_gray_400     #657b83;
+@define-color sol_gray_500     #586e75;
+@define-color sol_gray_600     #073642;
+@define-color sol_gray_700     #002b36;
+@define-color sol_gray_800     #001f28;
+@define-color sol_black        #001419;
 
 /* ── Libadwaita aliases ── */
-@define-color window_bg_color      @cp_base;
-@define-color window_fg_color      @cp_text;
+@define-color window_bg_color      @sol_base03;
+@define-color window_fg_color      @sol_base0;
 @define-color headerbar_bg_color   transparent;
-@define-color headerbar_fg_color   @cp_text;
-@define-color card_bg_color        @cp_surface0;
-@define-color card_fg_color        @cp_text;
-@define-color popover_bg_color     @cp_surface0;
-@define-color popover_fg_color     @cp_text;
-@define-color sidebar_bg_color     @cp_mantle;
-@define-color accent_color         @cp_overlay1;
-@define-color accent_bg_color      @cp_overlay1;
-@define-color accent_fg_color      @cp_base;
-@define-color destructive_color    @cp_red;
-@define-color destructive_bg_color @cp_red;
-@define-color destructive_fg_color #ffffff;
-@define-color theme_fg_color       @cp_text;
+@define-color headerbar_fg_color   @sol_base0;
+@define-color card_bg_color        @sol_base02;
+@define-color card_fg_color        @sol_base0;
+@define-color popover_bg_color     @sol_base02;
+@define-color popover_fg_color     @sol_base0;
+@define-color sidebar_bg_color     @sol_base03_dark;
+@define-color accent_color         @sol_base01;
+@define-color accent_bg_color      @sol_base01;
+@define-color accent_fg_color      @sol_base3;
+@define-color destructive_color    @sol_red;
+@define-color destructive_bg_color @sol_red;
+@define-color destructive_fg_color @sol_base3;
+@define-color theme_fg_color       @sol_base0;
 
-/* ── Catppuccin palette mapped onto os-dark's fixed slots ── */
-@define-color red_3     @cp_red;
-@define-color orange_3  @cp_peach;
-@define-color green_4   @cp_green;
-@define-color blue_3    @cp_blue;
-@define-color purple_3  @cp_mauve;
-@define-color dark_2    @cp_overlay0;
+/* ── Solarized palette mapped onto os-dark's fixed slots ── */
+@define-color red_3     @sol_red;
+@define-color orange_3  @sol_orange;
+@define-color green_4   @sol_green;
+@define-color blue_3    @sol_blue;
+@define-color purple_3  @sol_violet;
+@define-color dark_2    @sol_base01;
 
 /* ── Theme root ── */
 :root {
-  --accent-color: #8c8fa1;
-  --shadow: rgba(124, 127, 147, 0.15);
-  --shadow-hover: rgba(124, 127, 147, 0.25);
+  --accent-color: #586e75;
+  --shadow: rgba(0, 20, 25, 0.6);
+  --shadow-hover: rgba(0, 20, 25, 0.75);
   --font-main: "Inter", "Helvetica Neue", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
   letter-spacing: 0px;
@@ -145,7 +154,7 @@ headerbar .suggested-action {
   border-top: 1px solid alpha(@window_fg_color, 0.15);
   border-left: 1px solid alpha(@window_fg_color, 0.1);
   border-right: 1px solid alpha(@window_fg_color, 0.05);
-  border-bottom: 1px solid alpha(black, 0.1);
+  border-bottom: 1px solid alpha(black, 0.4);
   border-radius: 0.35em;
   padding: 0.3em 0.8em;
   margin: 0 0.6em;
@@ -154,7 +163,7 @@ headerbar .suggested-action {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: alpha(@window_fg_color, 0.5);
-  box-shadow: 0 0.15em 0 alpha(black, 0.1);
+  box-shadow: 0 0.15em 0 alpha(black, 0.3);
   transition: all 150ms ease-out;
 }
 
@@ -162,7 +171,7 @@ headerbar .suggested-action {
   background-color: alpha(@accent_color, 0.1);
   color: @accent_color;
   transform: translateY(-0.1em);
-  box-shadow: 0 0.2em 0 alpha(black, 0.15);
+  box-shadow: 0 0.2em 0 alpha(black, 0.4);
 }
 
 .sort-label:active {
@@ -212,13 +221,13 @@ windowcontrols button:active {
 }
 
 windowcontrols button.close:hover {
-  background-color: alpha(@red_3, 0.2);
-  color: @red_3;
+  background-color: alpha(@sol_red, 0.25);
+  color: @sol_red;
 }
 
 windowcontrols button.close:active {
-  background-color: alpha(@red_3, 0.35);
-  color: @red_3;
+  background-color: alpha(@sol_red, 0.4);
+  color: @sol_red;
 }
 
 windowcontrols button.minimize:hover,
@@ -232,7 +241,7 @@ windowcontrols button.maximize:hover {
   background-color: @sidebar_bg_color;
   border-radius: 1.1em;
   border: 1px solid alpha(@theme_fg_color, 0.08);
-  box-shadow: 0 0.3em 1.5em rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0.3em 1.5em rgba(0, 0, 0, 0.4);
 }
 
 .sidebar-inner {
@@ -332,7 +341,7 @@ windowcontrols button.maximize:hover {
 .sidebar-mount {
   background: transparent;
   border: 1px solid alpha(@theme_fg_color, 0.06);
-  border-bottom-color: alpha(black, 0.04);
+  border-bottom-color: alpha(black, 0.12);
   border-radius: 0.65em;
   min-height: 1.8em;
   padding: 0.1em 0.5em;
@@ -495,13 +504,13 @@ button.breadcrumb-btn:hover:not(:last-child) {
   );
   box-shadow:
     inset 0 1px 0 alpha(@window_fg_color, 0.08),
-    0 0.15em 0.3em rgba(0, 0, 0, 0.08);
+    0 0.15em 0.3em rgba(0, 0, 0, 0.1);
   border-color: alpha(@theme_fg_color, 0.18);
   color: @theme_fg_color;
 }
 
 button.breadcrumb-btn:active:not(:last-child) {
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
   transform: translateY(1px);
 }
 
@@ -569,11 +578,11 @@ gridview child:selected .flux-label {
 }
 
 .flux-card--restricted {
-  border-left: 2px solid @orange_3;
+  border-left: 2px solid @sol_orange;
 }
 
 .flux-lock-badge {
-  color: @orange_3;
+  color: @sol_orange;
   -gtk-icon-size: 1em;
 }
 
@@ -634,17 +643,17 @@ entry.flux-rename-entry {
 }
 
 .flux-card.flux-card--broken-symlink {
-  border-right: 2.5px solid @red_3;
+  border-right: 2.5px solid @sol_red;
 }
 
 .flux-card.flux-card--broken-symlink .flux-label {
-  color: @red_3;
+  color: @sol_red;
   text-decoration-line: line-through;
 }
 
 .flux-card.flux-card--cut {
-  background-color: alpha(@orange_3, 0.1);
-  box-shadow: inset 0 0 0 1.5px alpha(@orange_3, 0.45);
+  background-color: alpha(@sol_orange, 0.1);
+  box-shadow: inset 0 0 0 1.5px alpha(@sol_orange, 0.45);
   opacity: 0.6;
 }
 
@@ -884,7 +893,7 @@ textview text {
   border-radius: 0.9em;
   padding: 0.45em 1.2em;
   min-height: 2.2em;
-  box-shadow: 0 0.3em 1.2em rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0.3em 1.2em rgba(0, 0, 0, 0.3);
   margin-bottom: 0.6em;
 }
 
@@ -910,7 +919,7 @@ textview text {
   border: 1px solid alpha(@theme_fg_color, 0.05);
   border-radius: 999px;
   min-height: 0.45em;
-  box-shadow: inset 0 1px 2px alpha(black, 0.1);
+  box-shadow: inset 0 1px 2px alpha(black, 0.35);
 }
 
 .selection-status progressbar progress {
@@ -935,7 +944,7 @@ textview text {
   min-height: 1.6em;
   font-size: 0.8em;
   font-family: var(--font-mono);
-  box-shadow: 0 1px 2px alpha(black, 0.08);
+  box-shadow: 0 1px 2px alpha(black, 0.25);
   transition:
     background-color 150ms ease,
     border-color 150ms ease,
@@ -954,28 +963,28 @@ textview text {
 }
 
 .selection-status button.destructive-action {
-  background-color: alpha(@red_3, 0.14);
-  border: 1px solid alpha(@red_3, 0.25);
+  background-color: alpha(@sol_red, 0.14);
+  border: 1px solid alpha(@sol_red, 0.25);
   border-radius: 0.45em;
-  color: @red_3;
+  color: @sol_red;
   padding: 0.15em 0.5em;
   min-height: 1.6em;
   font-size: 0.8em;
   font-family: var(--font-mono);
-  box-shadow: 0 1px 2px alpha(black, 0.08);
+  box-shadow: 0 1px 2px alpha(black, 0.25);
   transition:
     background-color 150ms ease,
     border-color 150ms ease;
 }
 
 .selection-status button.destructive-action:hover {
-  background-color: alpha(@red_3, 0.25);
-  border-color: alpha(@red_3, 0.45);
+  background-color: alpha(@sol_red, 0.25);
+  border-color: alpha(@sol_red, 0.45);
   color: @accent_fg_color;
 }
 
 .selection-status button.destructive-action:active {
-  background-color: @red_3;
+  background-color: @sol_red;
   color: @accent_fg_color;
 }
 
@@ -1011,7 +1020,7 @@ window:backdrop .selection-status button.destructive-action {
   border-radius: 0.9em;
   padding: 0.3em 0.5em;
   box-shadow:
-    0 0.6em 1.8em alpha(black, 0.12),
+    0 0.6em 1.8em alpha(black, 0.45),
     inset 0 1px 0 alpha(@popover_fg_color, 0.16);
 }
 
@@ -1030,7 +1039,7 @@ window:backdrop .selection-status button.destructive-action {
   border: 1px solid alpha(@popover_fg_color, 0.12);
   border-top-color: alpha(@popover_fg_color, 0.22);
   box-shadow:
-    0 1px 3px alpha(black, 0.08),
+    0 1px 3px alpha(black, 0.35),
     inset 0 1px 0 alpha(@popover_fg_color, 0.1);
   color: alpha(@theme_fg_color, 0.88);
   transition:
@@ -1046,7 +1055,7 @@ window:backdrop .selection-status button.destructive-action {
   font-size: 0.95em;
   font-weight: 500;
   letter-spacing: -0.01em;
-  text-shadow: 0 1px 2px alpha(black, 0.08);
+  text-shadow: 0 1px 2px alpha(black, 0.5);
 }
 
 .quick-panel button:hover:not(:checked):not(:active):not(.suggested-action),
@@ -1055,7 +1064,7 @@ window:backdrop .selection-status button.destructive-action {
   border-color: alpha(@popover_fg_color, 0.22);
   border-top-color: alpha(@popover_fg_color, 0.35);
   box-shadow:
-    0 2px 6px alpha(black, 0.1),
+    0 2px 6px alpha(black, 0.4),
     inset 0 1px 0 alpha(@popover_fg_color, 0.2);
 }
 
@@ -1094,7 +1103,7 @@ window:backdrop .selection-status button.destructive-action {
 .quick-panel-tab.suggested-action label {
   color: @accent_fg_color;
   font-weight: 700;
-  text-shadow: 0 1px 2px alpha(black, 0.2);
+  text-shadow: 0 1px 2px alpha(black, 0.5);
 }
 
 /* ── General buttons & actions ── */
@@ -1137,8 +1146,8 @@ window:backdrop .selection-status button.destructive-action {
 }
 
 .destructive-action {
-  background-color: alpha(@red_3, 0.1);
-  color: @red_3;
+  background-color: alpha(@sol_red, 0.1);
+  color: @sol_red;
   border-radius: 0.6em;
   padding: 0.5em 1.2em;
   font-weight: bold;
@@ -1146,11 +1155,11 @@ window:backdrop .selection-status button.destructive-action {
 }
 
 .destructive-action label {
-  color: @red_3;
+  color: @sol_red;
 }
 
 .destructive-action:hover {
-  background-color: alpha(@red_3, 0.2);
+  background-color: alpha(@sol_red, 0.2);
 }
 
 .linked > button {
@@ -1266,7 +1275,7 @@ levelbar block {
 }
 
 levelbar block.low {
-  background: @red_3;
+  background: @sol_red;
 }
 
 levelbar block.high {
@@ -1274,7 +1283,7 @@ levelbar block.high {
 }
 
 levelbar block.full {
-  background: @green_4;
+  background: @sol_green;
 }
 
 progressbar {
@@ -1462,9 +1471,9 @@ tooltip.background {
 
 /* ── Status feedback indicators ── */
 .error {
-  border: 1px solid @red_3;
-  background: alpha(@red_3, 0.08);
-  color: @red_3;
+  border: 1px solid @sol_red;
+  background: alpha(@sol_red, 0.08);
+  color: @sol_red;
 }
 
 .error image {
@@ -1474,9 +1483,9 @@ tooltip.background {
 }
 
 .warning {
-  border: 1px solid @orange_3;
-  background: alpha(@orange_3, 0.08);
-  color: @orange_3;
+  border: 1px solid @sol_orange;
+  background: alpha(@sol_orange, 0.08);
+  color: @sol_orange;
 }
 
 .warning image {
@@ -1486,7 +1495,7 @@ tooltip.background {
 }
 
 .success {
-  color: @green_4;
+  color: @sol_green;
 }
 
 /* ── Tabbar ── */
@@ -1575,7 +1584,7 @@ tabbar tab:selected label,
 tabbar tab.selected label {
   color: @accent_fg_color;
   font-weight: 700;
-  text-shadow: 0 1px 2px alpha(black, 0.2);
+  text-shadow: 0 1px 2px alpha(black, 0.5);
 }
 
 tabbar tab button.flat {
@@ -1627,7 +1636,7 @@ toast {
   background-color: alpha(@window_bg_color, 0.95);
   border: 1px solid alpha(@window_fg_color, 0.1);
   border-radius: 0.9em;
-  box-shadow: 0 0.3em 1.2em alpha(black, 0.08);
+  box-shadow: 0 0.3em 1.2em alpha(black, 0.15);
 }
 
 toast label {
@@ -1673,38 +1682,38 @@ toast button image {
   min-width: 1.2em;
   margin-top: 0.7em;
   margin-right: 0.7em;
-  box-shadow: 0 1px 3px alpha(black, 0.15);
+  box-shadow: 0 1px 3px alpha(black, 0.4);
 }
 
 .flux-git-untracked {
-  background-color: alpha(@dark_2, 0.25);
-  color: @dark_2;
+  background-color: alpha(@sol_base01, 0.25);
+  color: @sol_base01;
 }
 
 .flux-git-added {
-  background-color: alpha(@green_4, 0.25);
-  color: @green_4;
+  background-color: alpha(@sol_green, 0.25);
+  color: @sol_green;
 }
 
 .flux-git-modified,
 .flux-git-mixed {
-  background-color: alpha(@blue_3, 0.25);
-  color: @blue_3;
+  background-color: alpha(@sol_blue, 0.25);
+  color: @sol_blue;
 }
 
 .flux-git-staged {
-  background-color: alpha(@purple_3, 0.25);
-  color: @purple_3;
+  background-color: alpha(@sol_violet, 0.25);
+  color: @sol_violet;
 }
 
 .flux-git-deleted {
-  background-color: alpha(@red_3, 0.25);
-  color: @red_3;
+  background-color: alpha(@sol_red, 0.25);
+  color: @sol_red;
 }
 
 .flux-git-conflict {
-  background-color: alpha(@orange_3, 0.35);
-  color: @orange_3;
+  background-color: alpha(@sol_orange, 0.35);
+  color: @sol_orange;
 }
 
 .flux-header-git-btn {
@@ -1741,7 +1750,7 @@ toast button image {
   border: 1px solid alpha(@window_fg_color, 0.15);
   border-radius: 0.3em;
   padding: 0.1em 0.4em;
-  box-shadow: 0 1px 0 alpha(black, 0.08);
+  box-shadow: 0 1px 0 alpha(black, 0.2);
 }
 
 /* ── Background sync ── */
