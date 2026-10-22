@@ -1,0 +1,360 @@
+/* Flux - Frost (Adwaita/Libadwaita Edition)
+ * Matched to #93C0EA pastel folder color.
+ * Cool, frosted glass aesthetic with deep slate backgrounds.
+ */
+
+/* ── Foundation palette ── */
+@define-color frost_bg_base       #151923; /* Deep desaturated blue-slate */
+@define-color frost_accent        #93C0EA; /* The pastel folder blue */
+@define-color frost_accent_light  #b3d4f5; /* Lighter for hover */
+@define-color frost_accent_dark   #6f9ec9; /* Darker for pressed */
+
+@define-color frost_surface       #1c2130; /* Elevated UI surfaces / cards */
+@define-color frost_sidebar       #10131b; /* Deepest slate for sidebar */
+
+@define-color frost_text_primary  #e3ebf5; /* Very bright cool off-white */
+@define-color frost_text_secondary #b8c4d6;
+@define-color frost_text_muted    #8896ad;
+@define-color frost_text_inverse  #151923; /* Dark text for light blue buttons */
+
+@define-color frost_separator     #2e3647;
+@define-color frost_danger_text   #ff6b3d;
+@define-color frost_success_text  #a3d977;
+
+/* ── Libadwaita / Adwaita named colors ── */
+@define-color window_bg_color      @frost_bg_base;
+@define-color window_fg_color      @frost_text_primary;
+@define-color view_bg_color        @frost_bg_base;
+@define-color view_fg_color        @frost_text_primary;
+@define-color headerbar_bg_color   transparent;
+@define-color headerbar_fg_color   @frost_text_primary;
+@define-color sidebar_bg_color     @frost_sidebar;
+@define-color sidebar_fg_color     @frost_text_primary;
+@define-color card_bg_color        @frost_surface;
+@define-color card_fg_color        @frost_text_primary;
+@define-color dialog_bg_color      @frost_surface;
+@define-color dialog_fg_color      @frost_text_primary;
+@define-color popover_bg_color     @frost_surface;
+@define-color popover_fg_color     @frost_text_primary;
+@define-color theme_fg_color       @frost_text_primary;
+@define-color theme_bg_color       @frost_bg_base;
+@define-color theme_base_color     @frost_surface;
+@define-color theme_text_color     @frost_text_primary;
+
+/* Accent & Status */
+@define-color accent_color         @frost_accent;
+@define-color accent_bg_color      @frost_accent;
+@define-color accent_fg_color      @frost_text_inverse; /* Dark text on pastel blue */
+
+@define-color destructive_color    @frost_danger_text;
+@define-color destructive_bg_color @frost_danger_text;
+@define-color destructive_fg_color #ffffff;
+
+/* ── os-dark slot remaps ── */
+@define-color red_3     @frost_danger_text;
+@define-color orange_3  #ffb74d;
+@define-color green_4   @frost_success_text;
+@define-color blue_3    @frost_accent;
+@define-color purple_3  @frost_surface;
+@define-color dark_2    @frost_text_muted;
+
+/* ================================================= */
+/* ===== ADWAITA STRUCTURAL VARIABLES ============== */
+/* ================================================= */
+
+:root {
+  /* Core */
+  --color-bg-base: @frost_bg_base;
+  --color-bg-window: var(--color-bg-base);
+  --color-bg-panel: rgba(21, 25, 35, 0.9);
+  --color-bg-popover: @frost_surface;
+  --color-bg-searchbar: @frost_surface;
+  --color-bg-box-primary: var(--color-bg-surface);
+  --color-bg-box-secondary: var(--color-bg-surface);
+
+  /* Buttons */
+  --color-bg-button: @frost_surface;
+  --color-bg-button-hover: #262d3e;
+  --color-bg-button-active: #10131b;
+
+  /* Surfaces */
+  --color-bg-surface: @frost_surface;
+  --color-bg-raised: #262d3e;
+  --color-bg-deep: @frost_sidebar;
+  --color-bg-alt-row: #181d29;
+  --color-bg-transparent-active: rgba(147, 192, 234, 0.15);
+
+  --color-vibrancy-dark-blur: rgba(21, 25, 35, 0.9);
+  --color-vibrancy-light-blur: rgba(28, 33, 48, 0.9);
+  --opacity-vibrancy-bar: 0.9;
+
+  /* Foreground */
+  --color-fg-primary: @frost_text_primary;
+  --color-fg-secondary: @frost_text_secondary;
+  --color-fg-muted: @frost_text_muted;
+  --color-fg-subtle: #6a778e;
+  --color-fg-disabled: #4a5468;
+  --color-fg-inverse: @frost_text_inverse;
+  --color-fg-link-accessible: @frost_accent_light;
+
+  /* Accents */
+  --color-accent-blue: @frost_accent;
+  --color-accent-blue-dark: @frost_accent_dark;
+  --color-accent-text: @frost_accent_light;
+  --color-accent-gray: @frost_text_muted;
+
+  /* Status */
+  --color-status-success: @frost_success_text;
+  --color-status-danger: @frost_danger_text;
+  --color-status-warning: #ffb74d;
+  --color-status-success-bg: rgba(163, 217, 119, 0.16);
+  --color-status-danger-bg: rgba(255, 107, 61, 0.16);
+  --color-status-warning-bg: rgba(255, 183, 77, 0.16);
+
+  /* Separators */
+  --color-separator-line: @frost_separator;
+  --color-shadow-hue-bleed: rgba(147, 192, 234, 0.1);
+  --color-shadow-dark: rgba(0, 0, 0, 0.6);
+  --color-shadow-medium: rgba(0, 0, 0, 0.4);
+  --color-shadow-lighter: rgba(0, 0, 0, 0.2);
+
+  /* Hierarchy */
+  --theme-bg-view-primary: var(--color-bg-base);
+  --theme-bg-view-secondary: var(--color-bg-surface);
+  --theme-bg-view-tertiary: var(--color-bg-raised);
+  --theme-bg-view-vibrant: var(--color-vibrancy-dark-blur);
+
+  --theme-bg-control-base: var(--color-bg-raised);
+  --theme-bg-selected-primary: var(--color-accent-blue);
+  --theme-bg-selected-inactive: var(--color-bg-raised);
+  --theme-bg-selected-secondary: var(--color-bg-transparent-active);
+  --theme-bg-text-selection: rgba(147, 192, 234, 0.3);
+
+  --theme-bg-under-page: var(--color-bg-deep);
+  --theme-bg-alternating-row: var(--color-bg-alt-row);
+  --theme-bg-find-highlight: rgba(255, 183, 77, 0.3);
+
+  /* Widgets */
+  --color-bg-entry-base: var(--color-bg-surface);
+  --color-bg-entry-focus: var(--color-bg-raised);
+  --color-bg-entry-disabled: var(--color-bg-alt-row);
+  --color-bg-textview: var(--color-bg-surface);
+
+  --color-bg-button-flat: transparent;
+  --color-bg-button-flat-hover: var(--color-bg-transparent-active);
+  --color-bg-button-flat-active: var(--color-bg-button-active);
+  --color-bg-button-normal: var(--color-bg-raised);
+  --color-bg-button-normal-hover: var(--color-bg-button-hover);
+  --color-bg-button-normal-active: var(--color-bg-button-active);
+  --color-bg-button-suggested: var(--color-accent-blue);
+  --color-bg-button-suggested-hover: var(--color-accent-blue-dark);
+
+  --color-bg-menu-bar: var(--color-bg-surface);
+  --color-bg-menu-popup: var(--color-bg-popover);
+  --color-bg-menu-item-hover: var(--color-bg-transparent-active);
+  --color-bg-popover-content: var(--color-bg-popover);
+
+  --color-bg-list-header: var(--color-bg-raised);
+  --color-bg-tab-bar: var(--color-bg-surface);
+  --color-bg-tab-active: var(--color-bg-raised);
+  --color-bg-tab-inactive: var(--color-bg-surface);
+  --color-bg-tab-hover: var(--color-bg-raised);
+  --color-bg-treeview-header: var(--color-bg-raised);
+
+  --color-bg-toggle-off: var(--color-fg-muted);
+  --color-bg-toggle-on: var(--color-accent-blue);
+  --color-bg-check-radio-box: var(--color-bg-surface);
+
+  --color-bg-scrollbar-track: transparent;
+  --color-bg-scrollbar-slider: #8896adcc;
+  --color-bg-scrollbar-slider-hover: #b8c4d6cc;
+
+  --color-bg-status-bar: @frost_sidebar;
+  --color-bg-tooltip: var(--color-bg-raised);
+
+  /* Foreground Elements */
+  --theme-fg-label-primary: var(--color-fg-primary);
+  --theme-fg-label-secondary: var(--color-fg-secondary);
+  --theme-fg-label-tertiary: var(--color-fg-muted);
+  --theme-fg-label-quaternary: var(--color-fg-subtle);
+  --theme-fg-label-inverse: var(--color-fg-inverse);
+
+  --theme-fg-control-text: var(--color-fg-primary);
+  --theme-fg-control-text-disabled: var(--color-fg-disabled);
+  --theme-fg-link: var(--color-fg-link-accessible);
+  --theme-fg-placeholder: var(--color-fg-subtle);
+  --theme-fg-header-text: var(--color-fg-primary);
+
+  --theme-fg-text-selected: var(--color-fg-inverse);
+  --theme-fg-text-alternate-selected: var(--color-fg-primary);
+
+  /* Decorations */
+  --theme-decoration-separator: var(--color-separator-line);
+  --theme-decoration-grid-line: @frost_separator;
+  --theme-decoration-keyboard-focus:
+    0 0 0 2px var(--color-bg-base), 0 0 0 4px var(--color-fg-link-accessible);
+  --theme-decoration-border-control: var(--color-separator-line);
+  --color-border-entry-base: var(--color-separator-line);
+  --color-border-entry-focus: var(--color-accent-blue);
+  --color-focus-ring: var(--color-fg-link-accessible);
+
+  /* System/Status */
+  --theme-status-accent: var(--color-accent-blue);
+  --theme-status-accent-inactive: var(--color-accent-gray);
+  --theme-status-success: var(--color-status-success);
+  --theme-status-danger: var(--color-status-danger);
+  --theme-status-warning: var(--color-status-warning);
+  --theme-status-highlight-virtual: var(--color-bg-raised);
+
+  /* Semantic */
+  --primary-bg: var(--theme-bg-view-primary);
+  --secondary-bg: var(--theme-bg-view-secondary);
+  --tertiary-bg: var(--theme-bg-view-tertiary);
+  --header-border: var(--theme-decoration-separator);
+
+  --main-text: var(--theme-fg-label-primary);
+  --soft-text: var(--theme-fg-label-secondary);
+  --calendar-other-month: var(--theme-fg-label-tertiary);
+
+  --accent-blue: var(--theme-status-accent);
+  --success-green: var(--theme-status-success);
+  --danger-red: var(--theme-status-danger);
+
+  --success-green-light: var(--color-status-success-bg);
+  --window-control-hover-bg: var(--theme-bg-control-base);
+  --window-control-border-color: var(--primary-bg);
+
+  /* Shadows */
+  --shadow-dark: rgba(0, 0, 0, 0.6);
+  --shadow-medium: rgba(0, 0, 0, 0.4);
+  --shadow-subtle-white: rgba(255, 255, 255, 0.05) 0px 2px 4px;
+
+  --shadow-subtle: rgba(0, 0, 0, 0.2) 0px 2px 4px;
+  --shadow-elevated:
+    0 4px 8px var(--shadow-dark), 0 0 6px var(--color-shadow-hue-bleed);
+  --shadow-button-flat: none;
+  --shadow-control-small: none;
+  --shadow-control-small-hover: none;
+  --shadow-element-minimal: none;
+
+  --shadow-window-float:
+    0 8px 16px var(--shadow-dark), 0 0 10px var(--color-shadow-hue-bleed);
+  --shadow-menubar-separator: inset 0 -1px 0 var(--color-separator-line);
+
+  --shadow-neumorphic-inset-medium: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --shadow-neumorphic-outset-large: 0 2px 5px rgba(0, 0, 0, 0.6);
+  --shadow-neumorphic-press: inset 0 1px 4px rgba(0, 0, 0, 0.7);
+
+  /* Geometry */
+  --radius-title-content: 5px;
+  --shadow-title-inset-light: inset 1px 1px 3px rgba(255, 255, 255, 0.05);
+  --shadow-title-inset-dark: inset -1px -1px 3px rgba(0, 0, 0, 0.7);
+
+  --radius-window-control: 3px;
+  --padding-window-control-vertical: 3px;
+  --padding-window-control-horizontal: 8px;
+
+  --shadow-clock-inset: inset 0 0 3px rgba(0, 0, 0, 0.9);
+  --shadow-clock-border-highlight: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --shadow-clock-drop: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-clock-text-glow: 0 0 1px var(--soft-text);
+  --shadow-clock-text-haze: 0 0 3px rgba(147, 192, 234, 0.3);
+
+  --radius-xs: 3px;
+  --radius-s: 5px;
+  --radius-m: 8px;
+  --radius-l: 12px;
+  --radius-xl: 16px;
+  --radius-control-default: var(--radius-s);
+  --radius-control-circular: 50%;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  --border-color: alpha(@frost_text_primary, 0.08);
+  --disabled-opacity: 0.4;
+  --shadow: rgba(0, 0, 0, 0.6);
+  --shadow-hover: rgba(0, 0, 0, 0.8);
+  --font-main: "Inter", "Helvetica Neue", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  /* Flux palette fallbacks */
+  --color-fg: @frost_text_primary;
+  --color-window-bg: @frost_bg_base;
+  --color-window-fg: @frost_text_primary;
+  --color-card-bg: @frost_surface;
+  --color-sidebar-bg: @frost_sidebar;
+  --color-popover-bg: @frost_surface;
+  --color-popover-fg: @frost_text_primary;
+  --color-headerbar-bg: @frost_bg_base;
+  --color-headerbar-fg: @frost_text_primary;
+
+  --color-accent: @frost_accent;
+  --color-accent-fg: @frost_text_inverse;
+  --color-accent-text: @frost_accent_light;
+
+  --color-danger: @frost_danger_text;
+  --color-warn: #ffb74d;
+  --color-success: @frost_success_text;
+  --color-git-mod: @frost_accent_light;
+  --color-git-staged: @frost_surface;
+  --color-git-untracked: @frost_text_muted;
+
+  letter-spacing: 0px;
+}
+
+/* ── Structural overrides for Adwaita apps ── */
+headerbar {
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  border: none;
+}
+
+.view,
+.icon-view,
+textview,
+.file-list {
+  background-color: @frost_bg_base;
+  color: @frost_text_primary;
+}
+
+.sidebar,
+.navigation-sidebar,
+placessidebar {
+  border-right: 1px solid var(--border-color);
+  background-color: var(--color-sidebar-bg);
+}
+
+.selection-status {
+  background-color: @frost_sidebar;
+  color: @frost_text_primary;
+}
+
+statusbar,
+.statusbar,
+#statusbar {
+  background-color: var(--color-bg-status-bar);
+  color: var(--theme-fg-label-secondary);
+  border-top: 1px solid var(--border-color);
+}
+
+tab:checked {
+  color: @frost_text_inverse;
+}
+
+/* ── Outline & Focus Ring Removal ── */
+placessidebar > viewport.frame > list,
+placessidebar row:selected,
+.sidebar > viewport.frame > list,
+.sidebar row:selected,
+.view:selected,
+.view:focus,
+.view:focus-visible,
+treeview.view:selected,
+treeview.view:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+  background-image: none;
+}

@@ -1,0 +1,165 @@
+/* Flux - Blue theme (Matching #5294E2 Folders) */
+
+/* ── Foundation palette ── */
+@define-color rust_dark_blue  #1a1d24; /* Deep cool slate background */
+@define-color rust_orange     #5294E2; /* The new primary accent */
+@define-color rust_blue       #28607F;
+@define-color rust_silver     #737a8a;
+@define-color rust_green      #61784D;
+
+@define-color rust_dark_blue_light  #242832; /* Elevated surfaces / cards */
+@define-color rust_dark_blue_dark   #13151a; /* Sidebar / Status bar */
+@define-color rust_orange_light     #74aaf0; /* Lighter blue for hover/links */
+@define-color rust_orange_dark      #3b74bd; /* Darker blue for pressed state */
+@define-color rust_blue_light       #357a9e;
+@define-color rust_blue_dark        #1e4a63;
+@define-color rust_silver_light     #b0b6c4;
+@define-color rust_silver_dark      #4d5462;
+
+@define-color rust_white            #ffffff;
+@define-color rust_off_white        #f0f3f8; /* Cool off-white text */
+@define-color rust_gray_100         #e0e5ee;
+@define-color rust_gray_200         #cbd2e0;
+@define-color rust_gray_300         #b0b6c4;
+@define-color rust_gray_400         #939bad;
+@define-color rust_gray_500         #737a8a;
+@define-color rust_gray_600         #4d5462;
+@define-color rust_gray_700         #353a45;
+@define-color rust_gray_800         #20242c;
+@define-color rust_black            #0d0f12;
+
+@define-color rust_orange_text   #74aaf0;
+@define-color rust_orange_text_hi #a3c9f7;
+@define-color rust_green_text    #a3d977;
+@define-color rust_warning_text  #ffb74d;
+@define-color rust_danger_text   #ff6b3d;
+@define-color rust_blue_text     #7eb6d9;
+@define-color rust_separator     #353a45;
+
+/* ── Libadwaita named colors ── */
+@define-color window_bg_color      @rust_dark_blue;
+@define-color window_fg_color      @rust_off_white;
+@define-color view_bg_color        @rust_dark_blue;
+@define-color view_fg_color        @rust_off_white;
+@define-color headerbar_bg_color   transparent;
+@define-color headerbar_fg_color   @rust_off_white;
+@define-color sidebar_bg_color     @rust_dark_blue_dark;
+@define-color sidebar_fg_color     @rust_off_white;
+@define-color card_bg_color        @rust_dark_blue_light;
+@define-color card_fg_color        @rust_off_white;
+@define-color dialog_bg_color      @rust_dark_blue_light;
+@define-color dialog_fg_color      @rust_off_white;
+@define-color popover_bg_color     @rust_dark_blue_light;
+@define-color popover_fg_color     @rust_off_white;
+@define-color theme_fg_color       @rust_off_white;
+@define-color theme_bg_color       @rust_dark_blue;
+@define-color theme_base_color     @rust_dark_blue_light;
+@define-color theme_text_color     @rust_off_white;
+
+@define-color accent_color         @rust_orange;
+@define-color accent_bg_color      @rust_orange;
+@define-color accent_fg_color      @rust_white; /* White text on Blue buttons */
+
+@define-color destructive_color    @rust_danger_text;
+@define-color destructive_bg_color @rust_orange;
+@define-color destructive_fg_color @rust_white;
+
+/* ── os-dark slot remaps ── */
+@define-color red_3     @rust_danger_text;
+@define-color orange_3  @rust_warning_text;
+@define-color green_4   @rust_green_text;
+@define-color blue_3    @rust_blue_text;
+@define-color purple_3  @rust_dark_blue_light;
+@define-color dark_2    @rust_silver_light;
+
+/* ── Flux palette variables ── */
+:root {
+  --border-color: rgba(255, 255, 255, 0.08);
+  --disabled-opacity: 0.4;
+  --shadow: rgba(0, 0, 0, 0.6);
+  --shadow-hover: rgba(0, 0, 0, 0.8);
+  --font-main: "Inter", "Helvetica Neue", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  --color-fg: @rust_off_white;
+  --color-window-bg: @rust_dark_blue;
+  --color-window-fg: @rust_off_white;
+  --color-card-bg: @rust_dark_blue_light;
+  --color-sidebar-bg: @rust_dark_blue_dark;
+  --color-popover-bg: @rust_dark_blue_light;
+  --color-popover-fg: @rust_off_white;
+  --color-headerbar-bg: @rust_dark_blue;
+  --color-headerbar-fg: @rust_off_white;
+
+  --color-accent: @rust_orange;
+  --color-accent-fg: @rust_white;
+  --color-accent-text: @rust_orange_text;
+
+  --color-danger: @rust_danger_text;
+  --color-warn: @rust_warning_text;
+  --color-success: @rust_green_text;
+  --color-git-mod: @rust_blue_text;
+  --color-git-staged: @rust_dark_blue_light;
+  --color-git-untracked: @rust_silver_light;
+
+  --color-bg-status-bar: @rust_dark_blue_dark;
+  --theme-fg-label-secondary: #cbd2e0;
+
+  letter-spacing: 0px;
+}
+
+/* ── Structural overrides ── */
+headerbar {
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  border: none;
+}
+
+.view,
+.icon-view,
+textview,
+.file-list {
+  background-color: @rust_dark_blue;
+  color: @rust_off_white;
+}
+
+.sidebar,
+.navigation-sidebar,
+placessidebar {
+  border-right: 1px solid var(--border-color);
+  background-color: var(--color-sidebar-bg);
+}
+
+.selection-status {
+  background-color: @rust_dark_blue_dark;
+  color: @rust_off_white;
+}
+
+statusbar,
+.statusbar,
+#statusbar {
+  background-color: var(--color-bg-status-bar);
+  color: var(--theme-fg-label-secondary);
+  border-top: 1px solid var(--border-color);
+}
+
+tab:checked {
+  color: @rust_white;
+}
+
+/* ── Complete Outline & Focus Ring Removal ── */
+placessidebar > viewport.frame > list,
+placessidebar row:selected,
+.sidebar > viewport.frame > list,
+.sidebar row:selected,
+.view:selected,
+.view:focus,
+.view:focus-visible,
+treeview.view:selected,
+treeview.view:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+  background-image: none;
+}

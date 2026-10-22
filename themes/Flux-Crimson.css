@@ -1,0 +1,383 @@
+/* Flux - Crimson (Adwaita/Libadwaita Edition)
+ * Black UI with high-contrast Crimson accents and folders.
+ */
+
+/* ── Foundation palette ── */
+@define-color crimson_bg_base       #0a0a0c; /* Pure charcoal/black */
+@define-color crimson_accent        #a30002; /* Vibrant crimson accent */
+@define-color crimson_accent_light  #87191b;
+@define-color crimson_accent_dark   #620002;
+
+@define-color crimson_surface       #141417; /* Dark grey surfaces */
+@define-color crimson_sidebar       #050505; /* Pitch black sidebar */
+
+@define-color crimson_text_primary  #e4e4e4;
+@define-color crimson_text_secondary #a3a3a3;
+@define-color crimson_text_muted    #737373;
+@define-color crimson_text_white    #ffffff;
+@define-color crimson_text_inverse  #ffffff;
+
+@define-color crimson_separator     #27272a;
+@define-color crimson_danger_text   #ff5555;
+@define-color crimson_success_text  #50fa7b;
+
+/* ── Libadwaita / Adwaita named colors ── */
+@define-color window_bg_color      @crimson_bg_base;
+@define-color window_fg_color      @crimson_text_primary;
+@define-color view_bg_color        @crimson_bg_base;
+@define-color view_fg_color        @crimson_text_primary;
+@define-color headerbar_bg_color   transparent;
+@define-color headerbar_fg_color   @crimson_text_primary;
+@define-color sidebar_bg_color     @crimson_sidebar;
+@define-color sidebar_fg_color     @crimson_text_primary;
+@define-color card_bg_color        @crimson_surface;
+@define-color card_fg_color        @crimson_text_primary;
+@define-color dialog_bg_color      @crimson_surface;
+@define-color dialog_fg_color      @crimson_text_primary;
+@define-color popover_bg_color     @crimson_surface;
+@define-color popover_fg_color     @crimson_text_primary;
+@define-color theme_fg_color       @crimson_text_primary;
+@define-color theme_bg_color       @crimson_bg_base;
+@define-color theme_base_color     @crimson_surface;
+@define-color theme_text_color     @crimson_text_primary;
+
+/* Accent & Status */
+@define-color accent_color         @crimson_accent;
+@define-color accent_bg_color      @crimson_accent;
+@define-color accent_fg_color      @crimson_text_white;
+
+@define-color destructive_color    @crimson_danger_text;
+@define-color destructive_bg_color @crimson_danger_text;
+@define-color destructive_fg_color #ffffff;
+
+/* ── os-dark slot remaps ── */
+@define-color red_3     @crimson_accent;
+@define-color orange_3  #ffb86c;
+@define-color green_4   @crimson_success_text;
+@define-color blue_3    #8be9fd;
+@define-color purple_3  @crimson_surface;
+@define-color dark_2    @crimson_text_muted;
+
+/* ================================================= */
+/* ===== ADWAITA STRUCTURAL VARIABLES ============== */
+/* ================================================= */
+
+:root {
+  /* Core */
+  --color-bg-base: @crimson_bg_base;
+  --color-bg-window: var(--color-bg-base);
+  --color-bg-panel: rgba(10, 10, 12, 0.9);
+  --color-bg-popover: @crimson_surface;
+  --color-bg-searchbar: @crimson_surface;
+  --color-bg-box-primary: var(--color-bg-surface);
+  --color-bg-box-secondary: var(--color-bg-surface);
+
+  /* Buttons */
+  --color-bg-button: @crimson_accent;
+  --color-bg-button-hover: @crimson_accent_light;
+  --color-bg-button-active: @crimson_accent_dark;
+
+  /* Surfaces */
+  --color-bg-surface: @crimson_surface;
+  --color-bg-raised: #1e1e22;
+  --color-bg-deep: @crimson_sidebar;
+  --color-bg-alt-row: #0f0f12;
+  --color-bg-transparent-active: rgba(163, 0, 2, 0.3);
+
+  --color-vibrancy-dark-blur: rgba(10, 10, 12, 0.9);
+  --color-vibrancy-light-blur: rgba(20, 20, 23, 0.9);
+  --opacity-vibrancy-bar: 0.9;
+
+  /* Foreground */
+  --color-fg-primary: @crimson_text_primary;
+  --color-fg-secondary: @crimson_text_secondary;
+  --color-fg-muted: @crimson_text_muted;
+  --color-fg-subtle: #52525b;
+  --color-fg-disabled: #3f3f46;
+  --color-fg-inverse: @crimson_text_inverse;
+  --color-fg-link-accessible: @crimson_text_white;
+
+  /* Accents */
+  --color-accent-blue: @crimson_accent;
+  --color-accent-blue-dark: @crimson_accent_dark;
+  --color-accent-text: @crimson_text_white;
+  --color-accent-gray: @crimson_text_muted;
+
+  /* Status */
+  --color-status-success: @crimson_success_text;
+  --color-status-danger: @crimson_danger_text;
+  --color-status-warning: #ffb86c;
+  --color-status-success-bg: rgba(80, 250, 123, 0.15);
+  --color-status-danger-bg: rgba(255, 85, 85, 0.15);
+  --color-status-warning-bg: rgba(255, 184, 108, 0.15);
+
+  /* Separators */
+  --color-separator-line: @crimson_separator;
+  --color-shadow-hue-bleed: rgba(163, 0, 2, 0.1);
+  --color-shadow-dark: rgba(0, 0, 0, 0.8);
+  --color-shadow-medium: rgba(0, 0, 0, 0.6);
+  --color-shadow-lighter: rgba(0, 0, 0, 0.4);
+
+  /* Hierarchy */
+  --theme-bg-view-primary: var(--color-bg-base);
+  --theme-bg-view-secondary: var(--color-bg-surface);
+  --theme-bg-view-tertiary: var(--color-bg-raised);
+  --theme-bg-view-vibrant: var(--color-vibrancy-dark-blur);
+
+  --theme-bg-control-base: var(--color-bg-raised);
+  --theme-bg-selected-primary: var(--color-accent-blue);
+  --theme-bg-selected-inactive: var(--color-bg-raised);
+  --theme-bg-selected-secondary: var(--color-bg-transparent-active);
+  --theme-bg-text-selection: rgba(163, 0, 2, 0.4);
+
+  --theme-bg-under-page: var(--color-bg-deep);
+  --theme-bg-alternating-row: var(--color-bg-alt-row);
+  --theme-bg-find-highlight: rgba(255, 184, 108, 0.3);
+
+  /* Widgets */
+  --color-bg-entry-base: var(--color-bg-surface);
+  --color-bg-entry-focus: var(--color-bg-raised);
+  --color-bg-entry-disabled: var(--color-bg-alt-row);
+  --color-bg-textview: var(--color-bg-surface);
+
+  --color-bg-button-flat: transparent;
+  --color-bg-button-flat-hover: var(--color-bg-transparent-active);
+  --color-bg-button-flat-active: var(--color-bg-button-active);
+  --color-bg-button-normal: var(--color-bg-raised);
+  --color-bg-button-normal-hover: var(--color-bg-button-hover);
+  --color-bg-button-normal-active: var(--color-bg-button-active);
+  --color-bg-button-suggested: var(--color-accent-blue);
+  --color-bg-button-suggested-hover: var(--color-accent-blue-dark);
+
+  --color-bg-menu-bar: var(--color-bg-surface);
+  --color-bg-menu-popup: var(--color-bg-popover);
+  --color-bg-menu-item-hover: var(--color-bg-transparent-active);
+  --color-bg-popover-content: var(--color-bg-popover);
+
+  --color-bg-list-header: var(--color-bg-raised);
+  --color-bg-tab-bar: var(--color-bg-surface);
+  --color-bg-tab-active: var(--color-bg-raised);
+  --color-bg-tab-inactive: var(--color-bg-surface);
+  --color-bg-tab-hover: var(--color-bg-raised);
+  --color-bg-treeview-header: var(--color-bg-raised);
+
+  --color-bg-toggle-off: var(--color-fg-muted);
+  --color-bg-toggle-on: var(--color-accent-blue);
+  --color-bg-check-radio-box: var(--color-bg-surface);
+
+  --color-bg-scrollbar-track: transparent;
+  --color-bg-scrollbar-slider: #a30002cc;
+  --color-bg-scrollbar-slider-hover: #87191bcc;
+
+  --color-bg-status-bar: @crimson_sidebar;
+  --color-bg-tooltip: var(--color-bg-raised);
+
+  /* Foreground Elements */
+  --theme-fg-label-primary: var(--color-fg-primary);
+  --theme-fg-label-secondary: var(--color-fg-secondary);
+  --theme-fg-label-tertiary: var(--color-fg-muted);
+  --theme-fg-label-quaternary: var(--color-fg-subtle);
+  --theme-fg-label-inverse: var(--color-fg-inverse);
+
+  --theme-fg-control-text: var(--color-fg-primary);
+  --theme-fg-control-text-disabled: var(--color-fg-disabled);
+  --theme-fg-link: var(--color-fg-link-accessible);
+  --theme-fg-placeholder: var(--color-fg-subtle);
+  --theme-fg-header-text: var(--color-fg-primary);
+
+  --theme-fg-text-selected: var(--color-fg-primary);
+  --theme-fg-text-alternate-selected: var(--color-fg-primary);
+
+  /* Decorations */
+  --theme-decoration-separator: var(--color-separator-line);
+  --theme-decoration-grid-line: @crimson_separator;
+  --theme-decoration-keyboard-focus:
+    0 0 0 2px var(--color-bg-base), 0 0 0 4px var(--color-fg-link-accessible);
+  --theme-decoration-border-control: var(--color-separator-line);
+  --color-border-entry-base: var(--color-separator-line);
+  --color-border-entry-focus: var(--color-accent-blue);
+  --color-focus-ring: var(--color-fg-link-accessible);
+
+  /* System/Status */
+  --theme-status-accent: var(--color-accent-blue);
+  --theme-status-accent-inactive: var(--color-accent-gray);
+  --theme-status-success: var(--color-status-success);
+  --theme-status-danger: var(--color-status-danger);
+  --theme-status-warning: var(--color-status-warning);
+  --theme-status-highlight-virtual: var(--color-bg-raised);
+
+  /* Semantic */
+  --primary-bg: var(--theme-bg-view-primary);
+  --secondary-bg: var(--theme-bg-view-secondary);
+  --tertiary-bg: var(--theme-bg-view-tertiary);
+  --header-border: var(--theme-decoration-separator);
+
+  --main-text: var(--theme-fg-label-primary);
+  --soft-text: var(--theme-fg-label-secondary);
+  --calendar-other-month: var(--theme-fg-label-tertiary);
+
+  --accent-blue: var(--theme-status-accent);
+  --success-green: var(--theme-status-success);
+  --danger-red: var(--theme-status-danger);
+
+  --success-green-light: var(--color-status-success-bg);
+  --window-control-hover-bg: var(--theme-bg-control-base);
+  --window-control-border-color: var(--primary-bg);
+
+  /* Shadows */
+  --shadow-dark: rgba(0, 0, 0, 0.8);
+  --shadow-medium: rgba(0, 0, 0, 0.6);
+  --shadow-subtle-white: rgba(255, 255, 255, 0.05) 0px 2px 4px;
+
+  --shadow-subtle: rgba(0, 0, 0, 0.4) 0px 2px 4px;
+  --shadow-elevated:
+    0 4px 8px var(--shadow-dark), 0 0 6px var(--color-shadow-hue-bleed);
+  --shadow-button-flat: none;
+  --shadow-control-small: none;
+  --shadow-control-small-hover: none;
+  --shadow-element-minimal: none;
+
+  --shadow-window-float:
+    0 8px 16px var(--shadow-dark), 0 0 10px var(--color-shadow-hue-bleed);
+  --shadow-menubar-separator: inset 0 -1px 0 var(--color-separator-line);
+
+  --shadow-neumorphic-inset-medium: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --shadow-neumorphic-outset-large: 0 2px 5px rgba(0, 0, 0, 0.6);
+  --shadow-neumorphic-press: inset 0 1px 4px rgba(0, 0, 0, 0.7);
+
+  /* Geometry */
+  --radius-title-content: 5px;
+  --shadow-title-inset-light: inset 1px 1px 3px rgba(255, 255, 255, 0.05);
+  --shadow-title-inset-dark: inset -1px -1px 3px rgba(0, 0, 0, 0.7);
+
+  --radius-window-control: 3px;
+  --padding-window-control-vertical: 3px;
+  --padding-window-control-horizontal: 8px;
+
+  --shadow-clock-inset: inset 0 0 3px rgba(0, 0, 0, 0.9);
+  --shadow-clock-border-highlight: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --shadow-clock-drop: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-clock-text-glow: 0 0 1px var(--soft-text);
+  --shadow-clock-text-haze: 0 0 3px rgba(163, 0, 2, 0.3);
+
+  --radius-xs: 3px;
+  --radius-s: 5px;
+  --radius-m: 8px;
+  --radius-l: 12px;
+  --radius-xl: 16px;
+  --radius-control-default: var(--radius-s);
+  --radius-control-circular: 50%;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  --border-color: alpha(@crimson_text_primary, 0.08);
+  --disabled-opacity: 0.4;
+  --shadow: rgba(0, 0, 0, 0.8);
+  --shadow-hover: rgba(0, 0, 0, 1);
+  --font-main: "Inter", "Helvetica Neue", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  /* Flux palette fallbacks */
+  --color-fg: @crimson_text_primary;
+  --color-window-bg: @crimson_bg_base;
+  --color-window-fg: @crimson_text_primary;
+  --color-card-bg: @crimson_surface;
+  --color-sidebar-bg: @crimson_sidebar;
+  --color-popover-bg: @crimson_surface;
+  --color-popover-fg: @crimson_text_primary;
+  --color-headerbar-bg: @crimson_bg_base;
+  --color-headerbar-fg: @crimson_text_primary;
+
+  --color-accent: @crimson_accent;
+  --color-accent-fg: @crimson_text_white;
+  --color-accent-text: @crimson_text_white;
+
+  --color-danger: @crimson_danger_text;
+  --color-warn: #ffb86c;
+  --color-success: @crimson_success_text;
+  --color-git-mod: @crimson_text_white;
+  --color-git-staged: @crimson_surface;
+  --color-git-untracked: @crimson_text_muted;
+
+  letter-spacing: 0px;
+}
+
+/* ── Structural overrides for Adwaita apps ── */
+headerbar {
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  border: none;
+}
+
+.view,
+.icon-view,
+textview,
+.file-list {
+  background-color: @crimson_bg_base;
+  color: @crimson_text_primary;
+}
+
+.sidebar,
+.navigation-sidebar,
+placessidebar {
+  border-right: 1px solid var(--border-color);
+  background-color: var(--color-sidebar-bg);
+}
+
+.selection-status {
+  background-color: @crimson_sidebar;
+  color: @crimson_text_primary;
+}
+
+statusbar,
+.statusbar,
+#statusbar {
+  background-color: var(--color-bg-status-bar);
+  color: var(--theme-fg-label-secondary);
+  border-top: 1px solid var(--border-color);
+}
+
+tab:checked {
+  color: @crimson_text_white;
+}
+
+/* ── Sidebar Hover & Selection ── */
+.sidebar row:hover,
+placessidebar row:hover {
+  background-color: @crimson_accent_light;
+  border-radius: 6px;
+}
+
+.sidebar row:selected,
+placessidebar row:selected {
+  background-color: @crimson_accent;
+  color: @crimson_text_white;
+  border-radius: 6px;
+}
+
+/* ── Clean Folder Selection (No Outline) ── */
+.view:selected,
+.view:focus,
+.view:focus-visible,
+iconview:selected,
+iconview:focus,
+treeview.view:selected,
+treeview.view:focus,
+rubberband,
+.flowboxchild:focus,
+flowboxchild:selected {
+  outline: none;
+  outline-width: 0;
+  outline-style: none;
+  outline-color: transparent;
+  box-shadow: none;
+  background-image: none;
+}
+
+/* Dark hover for files/folders */
+iconview.view:selected {
+  background-color: rgba(163, 0, 2, 0.3);
+  border-radius: 8px;
+}
